@@ -1,0 +1,69 @@
+.define public PHI0_GPIO 0
+.define public TEENSY_EMIT_GPIO 1
+
+; Notes:
+; Address and RW signals from 65c02 are valid 140ns after PHI1
+; Data write signals from 65c02 are valid 75ns after PHI0
+; Data read signals must be valid min 50ns before PHI1 and min 10ns after
+;   - 50ns before PHI1 is 448 after PHI0
+
+; When PHI0 is detected as low or high, the time in the cycle is about 32ns
+; after the actual clock transition.  Giving 16ns propagation delay through
+; the transceiver, plus 2 cycles (8 ns each) for the input sync done on PHI0.
+; Each subsequent cycle is labeled with the phase time as of the start of the
+; instruction.
+
+; phi0 control
+; control pins are: addrlo enable, bus data enable, teeny data enable,
+;                   bus data direction
+; JMP pin is set to TEENSY_EMIT_GPIO, which active-low indicates a bus emit
+; Address lines are stable at P1+160 (140ns + transceiver delay + 
+;   signal settle time), which is when we can signal the Teensy
+; TEENSY_EMIT_GPIO must be stable by P0+400 (because of two cycles of input
+;   synchronization) in order to successfully signal an emit.  Otherwise
+;   the bus data will be garbage on the read
+; Data lines are stable for read by P0+448, which is when we can signal
+;   the Teensy
+
+.program phi0_control
+
+.wrap_target
+phi0_control_begin:
+
+; Phase P1 (video)
+    push noblock ; push a dummy value to signal SM operation
+    wait 0 GPIO, PHI0_GPIO [1] ; wait for PHI0 to fall (P1 begin)
+      ; the extra wait is to give a little more hold time after P1 begin
+      ; should we have just completed an emit cycle
+    set PINS, 0b0110 ; P1+40, enable addrlo and disable data
+
+; Phase P0 (data)
+    wait 1 GPIO, PHI0_GPIO [31]; wait for PHI0 to rise
+    set PINS, 0b1110 [16] ; P1+280, disable address to leave bus idle
+    jmp handle_read ; P1+416, if high, we are reading from the bus
+; we are emitting to the data bus
+    set PINS, 0b1101 ; P1+424, enable data write
+    jmp phi0_control_begin ; P1+432
+handle_read:
+; we are reading from the data bus
+    set PINS, 0b1010 ; P1+424, disable addrlo, enable data read
+.wrap
+
+; phi0_signal generates the timing signals to the Teensy.
+; control pins are address signal and data signal.
+; JMP pin is set to TEENSY_RDY_INH, so that we can also use this state
+; machine to assert or release INH on behalf of the Teensy, appropriately
+; phased for the bus cycle.
+
+.program phi0_signal
+
+.wrap_target
+phi0_signal_begin:
+    push noblock ; push a dummy value to signal SM operation
+    wait 0 GPIO, PHI0_GPIO [16] ; wait for PHI0 to fall (P1 begin)
+    set PINS, 0b01 ; P0+168, signal address phase ready
+    wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI1 to rise (P0 begin)
+    mov Y, Y [19] ; P0+288, NOP for more delay
+    set PINS, 0b10 ; P0+338, signal data phase ready
+.wrap    
+    
