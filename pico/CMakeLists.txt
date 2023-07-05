@@ -1,16 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Pull in SDK (must be before project)
-if(NOT DEFINED PICO_SDK_PATH)
-    set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)
-    message(STATUS "PICO_SDK_PATH = ${PICO_SDK_PATH}")
-endif()
+#if(NOT DEFINED PICO_SDK_PATH)
+#    set(PICO_SDK_PATH ${CMAKE_SOURCE_DIR}/pico-sdk)
+#    message(STATUS "PICO_SDK_PATH = ${PICO_SDK_PATH}")
+#endif()
 
 include(cmake/pico_sdk_import.cmake)
 
 project(appletini)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
+set(PICO_BOARD pico_w)
 
 pico_sdk_init()
 
@@ -33,8 +34,7 @@ target_sources(appletini PUBLIC
 target_include_directories(appletini PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(appletini PUBLIC
     pico_stdlib
-    hardware_spi
-    hardware_dma
+    pico_cyw43_arch_none
     hardware_pio
 )
 

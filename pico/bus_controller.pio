@@ -39,14 +39,14 @@ phi0_control_begin:
 
 ; Phase P0 (data)
     wait 1 GPIO, PHI0_GPIO [31]; wait for PHI0 to rise
-    set PINS, 0b1110 [16] ; P1+280, disable address to leave bus idle
-    jmp handle_read ; P1+416, if high, we are reading from the bus
+    set PINS, 0b1110 [16] ; P0+280, disable address to leave bus idle
+    jmp handle_read ; P0+416, if high, we are reading from the bus
 ; we are emitting to the data bus
-    set PINS, 0b1101 ; P1+424, enable data write
-    jmp phi0_control_begin ; P1+432
+    set PINS, 0b1101 ; P0+424, enable data write
+    jmp phi0_control_begin ; P0+432
 handle_read:
 ; we are reading from the data bus
-    set PINS, 0b1010 ; P1+424, disable addrlo, enable data read
+    set PINS, 0b1010 ; P0+424, disable addrlo, enable data read
 .wrap
 
 ; phi0_signal generates the timing signals to the Teensy.
@@ -64,6 +64,6 @@ phi0_signal_begin:
     set PINS, 0b01 ; P0+168, signal address phase ready
     wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI1 to rise (P0 begin)
     mov Y, Y [19] ; P0+288, NOP for more delay
-    set PINS, 0b10 ; P0+338, signal data phase ready
+    set PINS, 0b10 ; P0+448, signal data phase ready
 .wrap    
     

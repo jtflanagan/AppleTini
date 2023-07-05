@@ -1,6 +1,6 @@
 #include <pico/stdlib.h>
 #include <stdio.h>
-#include "pico/cyw43_arch.h"
+#include <pico/cyw43_arch.h>
 #include "bus_controller.pio.h"
 
 enum {
@@ -14,13 +14,14 @@ enum {
 #define BUS_PIN_CONTROL_BASE 2 // 4 pins, 2-5
 #define BUS_PIN_SIGNAL_BASE 26 // 2 pins, 26-27
 #define BUS_PIN_DATA_OUT 28
+#define BUS_PIN_BUS_ENABLES 6
 
 static void phi0_control_setup(PIO pio, uint sm) {
   uint program_offset = pio_add_program(pio, &phi0_control_program);
   pio_sm_claim(pio, sm);
   pio_sm_config c = phi0_control_program_get_default_config(program_offset);
-  // set RW pin as jump pin for control sm
-  sm_config_set_jmp_pin(&c, BUS_PIN_RW);
+  // set DATA_OUT pin as jump pin for control sm
+  sm_config_set_jmp_pin(&c, BUS_PIN_DATA_OUT);
   // note, no call to set_out_pins as we do not have any
   // map the SET pin group to the transceiver control signals
   sm_config_set_set_pins(&c, BUS_PIN_CONTROL_BASE, 4);
@@ -30,15 +31,15 @@ static void phi0_control_setup(PIO pio, uint sm) {
 			    (uint32_t)0xf << BUS_PIN_CONTROL_BASE);
   pio_sm_set_pindirs_with_mask(pio, sm,
 			       (0xf << BUS_PIN_CONTROL_BASE),
-			       ((1 << BUS_PIN_PHI0) | (1 << BUS_PIN_RW) |
+			       ((1 << BUS_PIN_PHI0) | (1 << BUS_PIN_DATA_OUT) |
 				(0xf << BUS_PIN_CONTROL_BASE)));
   pio_gpio_init(pio, BUS_PIN_PHI0);
   gpio_set_pulls(BUS_PIN_PHI0, false, false);
-  pio_gpio_init(pio, BUS_PIN_RW);
-  gpio_set_pulls(BUS_PIN_RW, false, false);
+  pio_gpio_init(pio, BUS_PIN_DATA_OUT);
+  gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
   for (int i = 0; i < 4; ++i) {
     pio_gpio_init(pio, BUS_PIN_CONTROL_BASE + i);
-    gpio_set_pulls(BUS_PIN_CONTROL_BASE + i, true, false);
+    gpio_set_pulls(BUS_PIN_CONTROL_BASE + i, false, false);
   }
 }
 
@@ -46,8 +47,7 @@ static void phi0_signal_setup(PIO pio, uint sm) {
   uint program_offset = pio_add_program(pio, &phi0_signal_program);
   pio_sm_claim(pio, sm);
   pio_sm_config c = phi0_signal_program_get_default_config(program_offset);
-  // set DATA_OUT pin as jump pin for signal sm
-  sm_config_set_jmp_pin(&c, BUS_PIN_DATA_OUT);
+  // note, no call to set_jmp_pin, we don't jump
   // note, no call to set_out_pins as we do not have any
   // map the SET pin group to the teensy control signals
   sm_config_set_set_pins(&c, BUS_PIN_SIGNAL_BASE, 2);
@@ -57,34 +57,43 @@ static void phi0_signal_setup(PIO pio, uint sm) {
 			    (uint32_t)0x3 << BUS_PIN_SIGNAL_BASE);
   pio_sm_set_pindirs_with_mask(pio, sm,
 			       (0x3 << BUS_PIN_SIGNAL_BASE),
-			       ((1 << BUS_PIN_PHI0) | (1 << BUS_PIN_DATA_OUT) |
+			       ((1 << BUS_PIN_PHI0) |
 				(0x3 << BUS_PIN_SIGNAL_BASE)));
   // PHI0 pin already configured in other machine
   //pio_gpio_init(pio, BUS_PIN_PHI0);
   //gpio_set_pulls(BUS_PIN_PHI0, false, false);
-  pio_gpio_init(pio, BUS_PIN_DATA_OUT);
-  gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
+  //pio_gpio_init(pio, BUS_PIN_DATA_OUT);
+  //gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
   for (int i = 0; i < 2; ++i) {
     pio_gpio_init(pio, BUS_PIN_SIGNAL_BASE + i);
-    gpio_set_pulls(BUS_PIN_SIGNAL_BASE + i, true, false);  
+    gpio_set_pulls(BUS_PIN_SIGNAL_BASE + i, false, false);  
+  }
 }
-
 
 int main() {
   uint64_t last_bus_us = 0;
-  set_sys_clock_khz(126 * 1000);
+  uint32_t bus_event_count = 0;
+  set_sys_clock_khz(126 * 1000, true);
 
+  stdio_init_all();
+
+  sleep_ms(2000);
 
   if (cyw43_arch_init()) {
     while (1) {}
   }
-  
+
+  printf("setting up pio\n");
   // do pio init
   phi0_control_setup(BUS_PIO, PHI0_CONTROL_SM);
   phi0_signal_setup(BUS_PIO, PHI0_SIGNAL_SM);
+  gpio_init(BUS_PIN_BUS_ENABLES);
+  gpio_set_pulls(BUS_PIN_BUS_ENABLES, true, false);
+  gpio_put(BUS_PIN_BUS_ENABLES, 0);
+  gpio_set_dir(BUS_PIN_BUS_ENABLES, 1);
 
   pio_enable_sm_mask_in_sync(BUS_PIO, 
-			     (1 << PHI0_CONTROL_SM) | (1 << PHIO_SIGNAL_SM));
+			     (1 << PHI0_CONTROL_SM) | (1 << PHI0_SIGNAL_SM));
 
   // loop forever, pulling sm events and blinking the LED every
   // million bus events, approximately once a second
@@ -92,8 +101,10 @@ int main() {
   int led_state = 1;
   while (1) {
     uint64_t now = time_us_64();
+    //printf("now: %llu\n",now);
     // turn LED on if we haven't received a bus event in over a second
     if (now > last_bus_us + 1000000) {
+      last_bus_us = now;
       cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
       led_state = 1;
     }
