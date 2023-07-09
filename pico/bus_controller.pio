@@ -38,19 +38,20 @@ phi0_control_begin:
     set PINS, 0b0110 ; P1+40, enable addrlo and disable data
 
 ; Phase P0 (data)
-    wait 1 GPIO, PHI0_GPIO [31]; wait for PHI0 to rise
-    set PINS, 0b1110 [16] ; P0+280, disable address to leave bus idle
-    jmp handle_read ; P0+416, if high, we are reading from the bus
+    wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI0 to rise
+    mov Y, Y [9] ; NOP for delay
+    ;set PINS, 0b1110 ; P0+240, disable address to leave bus idle
+    jmp handle_read ; P0+248, if high, we are reading from the bus
 ; we are emitting to the data bus
-    set PINS, 0b1101 ; P0+424, enable data write
-    jmp phi0_control_begin ; P0+432
+    set PINS, 0b1010 ; P0+256, enable data write
+    jmp phi0_control_begin ; P0+264
 handle_read:
 ; we are reading from the data bus
-    set PINS, 0b1010 ; P0+424, disable addrlo, enable data read
+    set PINS, 0b1010 ; P0+256, disable addrlo, enable data read
 .wrap
 
 ; phi0_signal generates the timing signals to the Teensy.
-; control pins are address signal and data signal.
+; control pin is just the interrupt signal
 ; JMP pin is set to TEENSY_RDY_INH, so that we can also use this state
 ; machine to assert or release INH on behalf of the Teensy, appropriately
 ; phased for the bus cycle.
@@ -60,10 +61,12 @@ handle_read:
 .wrap_target
 phi0_signal_begin:
     push noblock ; push a dummy value to signal SM operation
-    wait 0 GPIO, PHI0_GPIO [16] ; wait for PHI0 to fall (P1 begin)
-    set PINS, 0b01 ; P0+168, signal address phase ready
+    wait 0 GPIO, PHI0_GPIO [22] ; wait for PHI0 to fall (P1 begin)
+    set PINS, 0b0 [1]; P1+216, falling edge signal address phase ready
+    set PINS, 0b1 ; P1+232, return to high for next edge
     wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI1 to rise (P0 begin)
-    mov Y, Y [19] ; P0+288, NOP for more delay
-    set PINS, 0b10 ; P0+448, signal data phase ready
+    mov Y, Y [15] ; NOP for delay
+    set PINS, 0b0 [1]; P0+288, falling edge signal data phase ready
+    set PINS, 0b1 ; P0+304, return to high for next edge
 .wrap    
     

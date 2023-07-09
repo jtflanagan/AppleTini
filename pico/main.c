@@ -39,7 +39,7 @@ static void phi0_control_setup(PIO pio, uint sm) {
   gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
   for (int i = 0; i < 4; ++i) {
     pio_gpio_init(pio, BUS_PIN_CONTROL_BASE + i);
-    gpio_set_pulls(BUS_PIN_CONTROL_BASE + i, false, false);
+    //gpio_set_pulls(BUS_PIN_CONTROL_BASE + i, false, false);
   }
 }
 
@@ -66,7 +66,8 @@ static void phi0_signal_setup(PIO pio, uint sm) {
   //gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
   for (int i = 0; i < 2; ++i) {
     pio_gpio_init(pio, BUS_PIN_SIGNAL_BASE + i);
-    gpio_set_pulls(BUS_PIN_SIGNAL_BASE + i, false, false);  
+    gpio_set_drive_strength(BUS_PIN_SIGNAL_BASE+i, GPIO_DRIVE_STRENGTH_12MA);
+    //gpio_set_pulls(BUS_PIN_SIGNAL_BASE + i, false, false);  
   }
 }
 
