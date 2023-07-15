@@ -43,11 +43,11 @@ phi0_control_begin:
     ;set PINS, 0b1110 ; P0+240, disable address to leave bus idle
     jmp handle_read ; P0+248, if high, we are reading from the bus
 ; we are emitting to the data bus
-    set PINS, 0b1010 ; P0+256, enable data write
+    set PINS, 0b1001 ; P0+256, disable addrlo, enable teensy data write
     jmp phi0_control_begin ; P0+264
 handle_read:
 ; we are reading from the data bus
-    set PINS, 0b1010 ; P0+256, disable addrlo, enable data read
+    set PINS, 0b1010 ; P0+256, disable addrlo, enable bus data read
 .wrap
 
 ; phi0_signal generates the timing signals to the Teensy.
