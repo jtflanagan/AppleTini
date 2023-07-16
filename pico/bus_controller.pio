@@ -41,7 +41,7 @@ phi0_control_begin:
     wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI0 to rise
     mov Y, Y [9] ; NOP for delay
     ;set PINS, 0b1110 ; P0+240, disable address to leave bus idle
-    jmp handle_read ; P0+248, if high, we are reading from the bus
+    jmp PIN, handle_read ; P0+248, if high, we are reading from the bus
 ; we are emitting to the data bus
     set PINS, 0b1001 ; P0+256, disable addrlo, enable teensy data write
     jmp phi0_control_begin ; P0+264

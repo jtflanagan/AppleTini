@@ -57,7 +57,7 @@ uint8_t event_ring_begin = 0;
 volatile uint8_t event_ring_end = 0;
 uint8_t slotc3rom = 0;
 uint8_t intcxrom = 0;
-uint8_t appletini_rom_enabled = 0;
+uint8_t appletini_dev_enabled = 0;
 volatile bool reset_occurred = false;
 bool reset_pin = true;
 uint8_t result_buf[256];
@@ -91,13 +91,13 @@ uint32_t last_timestamp_reference = 0;
 // the two clumps of 4 at 0-3 and 16-19 are the
 // low and high half of the data byte, the remaining bit
 // is the data_out_control pin
-#define DATA_OUT_MASK 0x000f020f
+#define DATA_OUT_MASK 0x000f040f
 
 FASTRUN static inline void check_soft_switches(uint8_t data) {
   if ((bus_address & 0xf000) == 0xc000) {
     if (bus_rw) {
       // read switches of interest
-      if (appletini_rom_enabled && (bus_address & IOSEL_MASK) == IOSEL_RANGE) {
+      if (appletini_dev_enabled && (bus_address & IOSEL_MASK) == IOSEL_RANGE) {
         io_strobe = true;
       } else if (bus_address == 0xcfff) {
         io_strobe = false;
@@ -106,29 +106,38 @@ FASTRUN static inline void check_soft_switches(uint8_t data) {
 #if APPLETINI_SLOT == 3
       } else if (bus_address == RDC3ROM) {
         slotc3rom = (data & 0x80) != 0;
-        appletini_rom_enabled = slotc3rom || intcxrom;
+        appletini_dev_enabled = !slotc3rom || !intcxrom;
 #else
-        appletini_rom_enabled = intcxrom;
+        appletini_dev_enabled = !intcxrom;
 #endif
       }
     } else {
+      if ((bus_address & DEVSEL_MASK) == DEVSEL_RANGE) {
+        handle_devsel_address_write(bus_address, data);
+      }
       if (bus_address == CLRINTCXROM) {
+        //Serial.println("CLRINTCXROM");
         intcxrom = false;
       }
       if (bus_address == SETINTCXROM) {
+        //Serial.println("SETINTCXROM");
         intcxrom = true;
       }
 #if APPLETINI_SLOT == 3
       if (bus_address == CLRSLOTC3ROM) {
+        //Serial.println("CLRSLOTC3ROM");
         slotc3rom = false;
       }
       if (bus_address == SETSLOTC3ROM) {
+        //Serial.println("SETSLOTC3ROM");
         slotc3rom = true;
       }
-      appletini_rom_enabled = slotc3rom || intcxrom;
+      appletini_dev_enabled = !slotc3rom || !intcxrom;
 #else
-      appletini_rom_enabled = intcxrom;
+      appletini_dev_enabled = !intcxrom;
 #endif
+      //Serial.print("appletini_dev_enabled:");
+      //Serial.println(appletini_dev_enabled);
     }
   }
 }
@@ -156,6 +165,8 @@ FASTRUN static inline void handle_reset() {
 }
 
 FASTRUN static inline uint8_t handle_devsel_address_read(uint16_t address) {
+  //Serial.print("handledevsel:");
+  //Serial.println(address);
   uint8_t val = address & 0x0f;
   switch (val) {
     // currently only handle result address read in byte 3
@@ -170,27 +181,32 @@ FASTRUN static inline uint8_t handle_devsel_address_read(uint16_t address) {
 }
 
 FASTRUN static inline void handle_card_command(uint8_t val) {
+  //Serial.print("card command:");
+  //Serial.print(val);
   switch (val) {
-    case 0: {
-      uint32_t now = millis();
-      int32_t adj = now - last_timestamp_reference;
-      last_timestamp_reference = now;
-      int32_t adj_millis = last_timestamp.millis + adj;
-      // compiler might be smart enough to optimize this
-      // automatically but being explicit using div()
-      ldiv_t ret = ldiv(adj_millis, (int32_t)1000);
-      last_timestamp.epoch_sec += ret.quot;
-      last_timestamp.millis = ret.rem;
-      result_ptr = result_buf;
-      result_len = 7;
-      result_buf[0] = result_len;
-      result_buf[1] = last_timestamp.epoch_sec & 0xff;
-      result_buf[2] = (last_timestamp.epoch_sec >> 8) & 0xff;
-      result_buf[3] = (last_timestamp.epoch_sec >> 16) & 0xff;
-      result_buf[4] = (last_timestamp.epoch_sec >> 24) & 0xff;
-      result_buf[5] = last_timestamp.millis & 0xff;
-      result_buf[6] = (last_timestamp.millis >> 8) & 0xff;
-    } break;
+    case 0:
+      {
+        //Serial.println("sending time");
+        uint32_t now = millis();
+        int32_t adj = now - last_timestamp_reference;
+        last_timestamp_reference = now;
+        int32_t adj_millis = last_timestamp.millis + adj;
+        // compiler might be smart enough to optimize this
+        // automatically but being explicit using div()
+        ldiv_t ret = ldiv(adj_millis, (int32_t)1000);
+        last_timestamp.epoch_sec += ret.quot;
+        last_timestamp.millis = ret.rem;
+        result_ptr = result_buf;
+        result_len = 7;
+        result_buf[0] = result_len;
+        result_buf[1] = last_timestamp.epoch_sec & 0xff;
+        result_buf[2] = (last_timestamp.epoch_sec >> 8) & 0xff;
+        result_buf[3] = (last_timestamp.epoch_sec >> 16) & 0xff;
+        result_buf[4] = (last_timestamp.epoch_sec >> 24) & 0xff;
+        result_buf[5] = last_timestamp.millis & 0xff;
+        result_buf[6] = (last_timestamp.millis >> 8) & 0xff;
+      }
+      break;
     default: break;
   }
 }
@@ -199,7 +215,7 @@ FASTRUN static inline void handle_devsel_address_write(uint16_t address, uint8_t
   uint8_t addr_val = address & 0x0f;
   switch (addr_val) {
     // currently only handle writes to card command address in byte 2
-    case 2: handle_card_command(val); break; 
+    case 2: handle_card_command(val); break;
     default: break;
   }
 }
@@ -214,25 +230,37 @@ FASTRUN static inline void do_address_phase(uint32_t pins) {
   bus_rw = (pins >> 13) & 0x01;
   bus_user1 = (pins >> 12) & 0x01;
   // check if this is a read that we will service
-  // if (appletini_rom_enabled && bus_rw) {
-  //   uint8_t data_byte;
-  //   bool emit = true;
-  //   if ((bus_address & DEVSEL_RANGE) == DEVSEL_MASK) {
-  //     data_byte = handle_devsel_address_read(bus_address);
-  //   } else if ((bus_address & IOSEL_RANGE) == IOSEL_MASK) {
-  //     data_byte = iosel_memory[bus_address & 0x00ff];
-  //   } else if (io_strobe && ((bus_address & STROBE_RANGE) == STROBE_MASK)) {
-  //     data_byte = rom_strobe_memory[bus_address & 0x7ff];
-  //   } else {
-  //     emit = false;
-  //   }
-  //   if (emit) {
-  //     uint32_t data_register = ((uint32_t)data_byte & 0xf0) << 12;
-  //     data_register |= data_byte & 0x0f;
-  //     GPIO7_DR_CLEAR = DATA_OUT_MASK;
-  //     GPIO7_DR_SET = data_register;
-  //   }
-  // }
+  if (bus_rw && ((bus_address & DEVSEL_MASK) == DEVSEL_RANGE)) {
+    uint8_t data_byte = handle_devsel_address_read(bus_address);
+    //Serial.print("emit:");
+    //Serial.print(bus_address);
+    //Serial.print(":");
+    //Serial.println(data_byte);
+    uint32_t data_register = ((uint32_t)data_byte & 0xf0) << 12;
+    data_register |= data_byte & 0x0f;
+    GPIO7_DR_CLEAR = DATA_OUT_MASK;
+    GPIO7_DR_SET = data_register;
+  } else if (appletini_dev_enabled && bus_rw) {
+    uint8_t data_byte;
+    bool emit = true;
+    if ((bus_address & IOSEL_MASK) == IOSEL_RANGE) {
+      data_byte = iosel_memory[bus_address & 0x00ff];
+    } else if (io_strobe && ((bus_address & STROBE_MASK) == STROBE_RANGE)) {
+      data_byte = rom_strobe_memory[bus_address & 0x7ff];
+    } else {
+      emit = false;
+    }
+    if (emit) {
+      //Serial.print("emit:");
+      //Serial.print(bus_address);
+      //Serial.print(":");
+      //Serial.println(data_byte);
+      uint32_t data_register = ((uint32_t)data_byte & 0xf0) << 12;
+      data_register |= data_byte & 0x0f;
+      GPIO7_DR_CLEAR = DATA_OUT_MASK;
+      GPIO7_DR_SET = data_register;
+    }
+  }
 }
 
 
@@ -343,7 +371,6 @@ void setup() {
   // skip dispatching
   attachInterruptVector(IRQ_GPIO6789, &bus_handler);
 
-
   // start the Ethernet
   qn::Ethernet.begin(ipaddr, netmask, gw);
 
@@ -354,7 +381,7 @@ void setup() {
   // }
 
   // Serial.println("starting udp");
-  // start UDP
+  // // start UDP
   Udp.begin(localPort);
   // Serial.println("started udp");
 
@@ -379,6 +406,9 @@ void handle_echo(uint8_t* buf, int size) {
 void handle_timestamp(uint8_t* buf, int size) {
   last_timestamp_reference = millis();
   memcpy((void*)&last_timestamp, (void*)buf, sizeof(last_timestamp));
+  // Serial.print(last_timestamp.epoch_sec);
+  // Serial.print(".");
+  // Serial.println(last_timestamp.millis);
 }
 
 void handle_rx_packet(uint8_t* buf, int size) {

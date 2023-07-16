@@ -30,13 +30,14 @@ static void phi0_control_setup(PIO pio, uint sm) {
 			    (uint32_t)0xe << BUS_PIN_CONTROL_BASE,
 			    (uint32_t)0xf << BUS_PIN_CONTROL_BASE);
   pio_sm_set_pindirs_with_mask(pio, sm,
-			       (0xf << BUS_PIN_CONTROL_BASE),
-			       ((1 << BUS_PIN_PHI0) | (1 << BUS_PIN_DATA_OUT) |
-				(0xf << BUS_PIN_CONTROL_BASE)));
+			       ((uint32_t)0xf << BUS_PIN_CONTROL_BASE),
+			       ((uint32_t)1 << BUS_PIN_PHI0) | 
+			       ((uint32_t)1 << BUS_PIN_DATA_OUT) |
+			       ((uint32_t)0xf << BUS_PIN_CONTROL_BASE));
   pio_gpio_init(pio, BUS_PIN_PHI0);
   gpio_set_pulls(BUS_PIN_PHI0, false, false);
   pio_gpio_init(pio, BUS_PIN_DATA_OUT);
-  gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
+  gpio_set_pulls(BUS_PIN_DATA_OUT, true, false);
   for (int i = 0; i < 4; ++i) {
     pio_gpio_init(pio, BUS_PIN_CONTROL_BASE + i);
     //gpio_set_pulls(BUS_PIN_CONTROL_BASE + i, false, false);
@@ -56,9 +57,9 @@ static void phi0_signal_setup(PIO pio, uint sm) {
 			    (uint32_t)0x3 << BUS_PIN_SIGNAL_BASE,
 			    (uint32_t)0x3 << BUS_PIN_SIGNAL_BASE);
   pio_sm_set_pindirs_with_mask(pio, sm,
-			       (0x3 << BUS_PIN_SIGNAL_BASE),
-			       ((1 << BUS_PIN_PHI0) |
-				(0x3 << BUS_PIN_SIGNAL_BASE)));
+			       ((uint32_t)0x3 << BUS_PIN_SIGNAL_BASE),
+			       (((uint32_t)1 << BUS_PIN_PHI0) |
+				((uint32_t)0x3 << BUS_PIN_SIGNAL_BASE)));
   // PHI0 pin already configured in other machine
   //pio_gpio_init(pio, BUS_PIN_PHI0);
   //gpio_set_pulls(BUS_PIN_PHI0, false, false);
@@ -66,7 +67,7 @@ static void phi0_signal_setup(PIO pio, uint sm) {
   //gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
   for (int i = 0; i < 2; ++i) {
     pio_gpio_init(pio, BUS_PIN_SIGNAL_BASE + i);
-    gpio_set_drive_strength(BUS_PIN_SIGNAL_BASE+i, GPIO_DRIVE_STRENGTH_12MA);
+    //gpio_set_drive_strength(BUS_PIN_SIGNAL_BASE+i, GPIO_DRIVE_STRENGTH_12MA);
     //gpio_set_pulls(BUS_PIN_SIGNAL_BASE + i, false, false);  
   }
 }
