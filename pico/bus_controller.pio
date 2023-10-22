@@ -68,5 +68,33 @@ phi0_signal_begin:
     mov Y, Y [15] ; NOP for delay
     set PINS, 0b0 [1]; P0+288, falling edge signal data phase ready
     set PINS, 0b1 ; P0+304, return to high for next edge
-.wrap    
-    
+.wrap
+
+; rdy and inh need to be timed in their transitions to avoid confusing
+; the CPU.  The teensy can also pull INTOUT and IRQ, but can do those
+; at any time, we don't have any cycle-specific demands on interrupts, we
+; just need to follow the rules on asserting.
+
+.program rdy_tx
+.wrap_target
+rdy_begin:
+  wait 1 GPIO, PHI0_GPIO ; safe time to pull/release RDY is rising PHI0 edge
+  jmp PIN, rdy_high
+  set PINS, 0
+  jmp rdy_begin
+rdh_high:
+  set PINS, 1
+.wrap
+
+.program inh_tx
+.wrap_target
+inh_begin:
+  wait 1 GPIO, PHI0_GPIO [25] ; can pull/release INH any time before PHI0+300,
+                              ; we give it some error margin before that
+  jmp PIN, inh_high
+  set PINS, 0
+  jmp inh_begin
+inh_high:
+  set PINS, 1
+.wrap
+  
