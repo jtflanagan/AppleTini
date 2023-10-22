@@ -456,7 +456,7 @@
         "pattern": "+3.3V"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "GND"
       },
       {
