@@ -470,6 +470,18 @@
       {
         "netclass": "Power",
         "pattern": "+5V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "-5V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+12V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "-12V"
       }
     ]
   },
