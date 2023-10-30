@@ -2553,6 +2553,10 @@
     (effects (font (size 0.762 0.762)) (justify left bottom))
     (uuid 7cbb5a1b-1bb3-4746-9cb8-57e55de12dde)
   )
+  (label "VIN" (at 172.72 100.33 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 812e2bd9-11ae-404b-9755-db2bc341c459)
+  )
   (label "RES" (at 198.12 43.18 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 82e5a203-fa3f-44ac-b598-57182a65812b)
@@ -3136,31 +3140,6 @@
       (project "appletini"
         (path "/9f80e081-bf13-4e25-8624-a45101464ae2"
           (reference "SW1") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "power:+5V") (at 172.72 100.33 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 5c803120-8a5c-4979-902c-76ebae9ae495)
-    (property "Reference" "#PWR028" (at 172.72 104.14 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "+5V" (at 172.72 96.52 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 172.72 100.33 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 172.72 100.33 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 63543045-75ae-4b9b-b41b-a982bc141af4))
-    (instances
-      (project "appletini"
-        (path "/9f80e081-bf13-4e25-8624-a45101464ae2"
-          (reference "#PWR028") (unit 1)
         )
       )
     )
