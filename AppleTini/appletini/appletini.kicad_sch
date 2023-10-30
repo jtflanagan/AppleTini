@@ -2954,7 +2954,7 @@
   (symbol (lib_id "RPi_Pico:Pico") (at 143.51 132.08 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 451328fe-bab6-47c5-9ee9-7f4d35ac7936)
-    (property "Reference" "U16" (at 143.51 101.6 0)
+    (property "Reference" "U7" (at 143.51 101.6 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Pico" (at 143.51 104.14 0)
@@ -3009,7 +3009,7 @@
     (instances
       (project "appletini"
         (path "/9f80e081-bf13-4e25-8624-a45101464ae2"
-          (reference "U16") (unit 1)
+          (reference "U7") (unit 1)
         )
       )
     )
@@ -3043,7 +3043,7 @@
   (symbol (lib_id "teensy:Teensy4.1") (at 227.33 85.09 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 5bf931aa-1259-49d2-a209-7a6470cf42bf)
-    (property "Reference" "U17" (at 227.33 20.32 0)
+    (property "Reference" "U8" (at 227.33 20.32 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Teensy4.1" (at 227.33 22.86 0)
@@ -3106,7 +3106,7 @@
     (instances
       (project "appletini"
         (path "/9f80e081-bf13-4e25-8624-a45101464ae2"
-          (reference "U17") (unit 1)
+          (reference "U8") (unit 1)
         )
       )
     )
@@ -3125,6 +3125,9 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 185.42 128.27 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "LCSC" "C410366" (at 185.42 133.35 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid ba6161ac-27c4-45cd-a305-2ddaac44fbf3))
