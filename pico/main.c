@@ -6,15 +6,19 @@
 enum {
   PHI0_CONTROL_SM = 0,
   PHI0_SIGNAL_SM = 1,
+  BUS_RDY_TX_SM = 2,
+  BUS_INH_TX_SM = 3,
 };
 
 #define BUS_PIO pio0
 #define BUS_PIN_PHI0 0
-#define BUS_PIN_RW 1
-#define BUS_PIN_CONTROL_BASE 2 // 4 pins, 2-5
-#define BUS_PIN_SIGNAL_BASE 26 // 2 pins, 26-27
-#define BUS_PIN_DATA_OUT 28
-#define BUS_PIN_BUS_ENABLES 6
+#define BUS_PIN_CONTROL_BASE 16 // 4 transceiver control pins, 16-19
+#define BUS_PIN_INH 20 // pin to control bus INH
+#define BUS_PIN_RDY 21 // pin to control bus RDY
+#define BUS_PIN_INH_REQ 22 // pin from teensy to request INH pull
+#define BUS_PIN_RDY_REQ 26 // pin from teensy to request RDY pull
+#define BUS_PIN_TEENSY_IRQ 27 // teensy interrupt pin
+#define BUS_PIN_OUT_D_REQ 28 // pin from teensy to request bus data emit
 
 static void phi0_control_setup(PIO pio, uint sm) {
   uint program_offset = pio_add_program(pio, &phi0_control_program);
@@ -31,16 +35,17 @@ static void phi0_control_setup(PIO pio, uint sm) {
 			    (uint32_t)0xf << BUS_PIN_CONTROL_BASE);
   pio_sm_set_pindirs_with_mask(pio, sm,
 			       ((uint32_t)0xf << BUS_PIN_CONTROL_BASE),
-			       ((uint32_t)1 << BUS_PIN_PHI0) | 
-			       ((uint32_t)1 << BUS_PIN_DATA_OUT) |
+			       ((uint32_t)0x1 << BUS_PIN_PHI0) | 
+			       ((uint32_t)0x1 << BUS_PIN_OUT_D_REQ) |
 			       ((uint32_t)0xf << BUS_PIN_CONTROL_BASE));
   pio_gpio_init(pio, BUS_PIN_PHI0);
+  // no pulls on PHI0 to maximize responsiveness
   gpio_set_pulls(BUS_PIN_PHI0, false, false);
-  pio_gpio_init(pio, BUS_PIN_DATA_OUT);
-  gpio_set_pulls(BUS_PIN_DATA_OUT, true, false);
+  pio_gpio_init(pio, BUS_PIN_OUT_D_REQ);
+  // pullup on OUT_D_REQ to hold it high if teensy is not driving it
+  gpio_set_pulls(BUS_PIN_PIN_OUT_D_REQ, true, false);
   for (int i = 0; i < 4; ++i) {
     pio_gpio_init(pio, BUS_PIN_CONTROL_BASE + i);
-    //gpio_set_pulls(BUS_PIN_CONTROL_BASE + i, false, false);
   }
 }
 
@@ -50,26 +55,67 @@ static void phi0_signal_setup(PIO pio, uint sm) {
   pio_sm_config c = phi0_signal_program_get_default_config(program_offset);
   // note, no call to set_jmp_pin, we don't jump
   // note, no call to set_out_pins as we do not have any
-  // map the SET pin group to the teensy control signals
-  sm_config_set_set_pins(&c, BUS_PIN_SIGNAL_BASE, 2);
+  // map the SET pin group to the teensy interrupt
+  sm_config_set_set_pins(&c, BUS_PIN_TEENSY_IRQ, 2);
   pio_sm_init(pio, sm, program_offset, &c);
   pio_sm_set_pins_with_mask(pio, sm,
-			    (uint32_t)0x3 << BUS_PIN_SIGNAL_BASE,
-			    (uint32_t)0x3 << BUS_PIN_SIGNAL_BASE);
+			    (uint32_t)0x1 << BUS_PIN_TEENSY_IRQ,
+			    (uint32_t)0x1 << BUS_PIN_TEENSY_IRQ);
   pio_sm_set_pindirs_with_mask(pio, sm,
-			       ((uint32_t)0x3 << BUS_PIN_SIGNAL_BASE),
+			       ((uint32_t)0x1 << BUS_PIN_TEENSY_IRQ),
 			       (((uint32_t)1 << BUS_PIN_PHI0) |
-				((uint32_t)0x3 << BUS_PIN_SIGNAL_BASE)));
-  // PHI0 pin already configured in other machine
-  //pio_gpio_init(pio, BUS_PIN_PHI0);
-  //gpio_set_pulls(BUS_PIN_PHI0, false, false);
-  //pio_gpio_init(pio, BUS_PIN_DATA_OUT);
-  //gpio_set_pulls(BUS_PIN_DATA_OUT, false, false);
-  for (int i = 0; i < 2; ++i) {
-    pio_gpio_init(pio, BUS_PIN_SIGNAL_BASE + i);
-    //gpio_set_drive_strength(BUS_PIN_SIGNAL_BASE+i, GPIO_DRIVE_STRENGTH_12MA);
-    //gpio_set_pulls(BUS_PIN_SIGNAL_BASE + i, false, false);  
-  }
+				((uint32_t)0x3 << BUS_PIN_TEENSY_IRQ)));
+  // PHI0 pin already configured in other machine, don't reconfigure
+  // only configure TEENSY_IRQ
+  pio_gpio_init(pio, BUS_PIN_TEENSY_IRQ);
+}
+
+static void rdy_tx_setup(PIO pio, uint sm) {
+  uint program_offset = pio_add_program(pio, &rdy_tx_program);
+  pio_sm_claim(pio, sm);
+  pio_sm_config c = rdy_tx_program_get_default_config(program_offset);
+  // set BUS_PIN_RDY_REQ as jump pin
+  sm_config_set_jmp_pin(&c, BUS_PIN_RDY_REQ);
+  // note, no call to set_out_pins as we do not have any
+  // map the SET pin group to the BUS_PIN_RDY pin
+  sm_config_set_set_pins(&c, BUS_PIN_RDY, 1);
+  pio_sm_init(pio, sm, program_offset, &c);
+  pio_sm_set_pins_with_mask(pio, sm,
+                            (uint32_t)0x1 << BUS_PIN_RDY),
+                            (uint32_t)0x1 << BUS_PIN_RDY));
+  pio_sm_set_pindirs_withm_mask(pio, sm,
+                                ((uint32_t)0x1 << BUS_PIN_RDY),
+                                ((uint32_t)0x1 << BUS_PIN_PHI0) |
+                                ((uint32_t)0x1 << BUS_PIN_RDY) |
+                                ((uint32_t)0x1 << BUS_PIN_RDY_REQ));
+  pio_gpio_init(pio, BUS_PIN_RDY_REQ);
+  // pullup on RDY_REQ to hold it high if teensy is not driving it
+  gpio_set_pulls(pio, BUS_PIN_RDY_REQ, true, false);
+  pio_gpio_init(pio, BUS_PIN_RDY);
+}
+
+static void inh_tx_setup(PIO pio, uint sm) {
+  uint program_offset = pio_add_program(pio, &inh_tx_program);
+  pio_sm_claim(pio, sm);
+  pio_sm_config c = inh_tx_program_get_default_config(program_offset);
+  // set BUS_PIN_INH_REQ as jump pin
+  sm_config_set_jmp_pin(&c, BUS_PIN_INH_REQ);
+  // note, no call to set_out_pins as we do not have any
+  // map the SET pin group to the BUS_PIN_INH pin
+  sm_config_set_set_pins(&c, BUS_PIN_INH, 1);
+  pio_sm_init(pio, sm, program_offset, &c);
+  pio_sm_set_pins_with_mask(pio, sm,
+                            (uint32_t)0x1 << BUS_PIN_INH),
+                            (uint32_t)0x1 << BUS_PIN_INH));
+  pio_sm_set_pindirs_withm_mask(pio, sm,
+                                ((uint32_t)0x1 << BUS_PIN_INH),
+                                ((uint32_t)0x1 << BUS_PIN_PHI0) |
+                                ((uint32_t)0x1 << BUS_PIN_INH) |
+                                ((uint32_t)0x1 << BUS_PIN_INH_REQ));
+  pio_gpio_init(pio, BUS_PIN_INH_REQ);
+  // pullup on INH_REQ to hold it high if teensy is not driving it
+  gpio_set_pulls(pio, BUS_PIN_INH_REQ, true, false);
+  pio_gpio_init(pio, BUS_PIN_INH);
 }
 
 int main() {
@@ -89,13 +135,12 @@ int main() {
   // do pio init
   phi0_control_setup(BUS_PIO, PHI0_CONTROL_SM);
   phi0_signal_setup(BUS_PIO, PHI0_SIGNAL_SM);
-  gpio_init(BUS_PIN_BUS_ENABLES);
-  gpio_set_pulls(BUS_PIN_BUS_ENABLES, true, false);
-  gpio_put(BUS_PIN_BUS_ENABLES, 0);
-  gpio_set_dir(BUS_PIN_BUS_ENABLES, 1);
+  rdy_tx_setup(BUS_PIO, RDY_TX_SM);
+  inh_tx_setup(BUS_PIO, INH_TX_SM);
 
   pio_enable_sm_mask_in_sync(BUS_PIO, 
-			     (1 << PHI0_CONTROL_SM) | (1 << PHI0_SIGNAL_SM));
+			     (1 << PHI0_CONTROL_SM) | (1 << PHI0_SIGNAL_SM)
+                             | (1 << RDY_TX_SM) | (1 << INH_TX_SM));
 
   // loop forever, pulling sm events and blinking the LED every
   // million bus events, approximately once a second
