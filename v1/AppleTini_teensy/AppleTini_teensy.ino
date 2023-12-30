@@ -6,7 +6,7 @@
  When AddressReady signals, the ISR reads the 16 bits of Apple bus address,
  and the RW bit, and saves them for the DataReady phase.  In addition, if
  the RW flag indicates a read, it examines the address and decides whether
- to emit the byte read, or not.  It sets the active-low DataOutput pin
+ to emit the byte read, or not.  It sets the active-low OUT_D_REQ pin
  appropriately, and puts the emitted byte onto the 8 data-out pins.
 
  When DataReady signals, the ISR reads the 8 bits of Apple bus data (which
@@ -25,10 +25,10 @@
 // byte mac[] = {
 //   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 // };
-IPAddress ipaddr(192, 168, 1, 177);
+IPAddress ipaddr(192, 168, 155, 251);
 IPAddress netmask(255, 255, 255, 0);
-IPAddress gw(192, 168, 1, 1);
-IPAddress host(192, 168, 1, 107);
+IPAddress gw(192, 168, 155, 1);
+IPAddress host(192, 168, 155, 250);
 
 namespace qn = qindesign::network;
 
@@ -49,6 +49,8 @@ uint32_t next_tx_seqno = 0;
 uint16_t bus_address = 0;
 uint8_t bus_user1 = true;
 uint8_t bus_rw = true;
+uint8_t bus_m2b0 = true;
+uint8_t bus_usync = true;
 bool io_strobe = false;
 uint8_t iosel_memory[256];
 uint8_t rom_strobe_memory[2048];
@@ -89,9 +91,18 @@ uint32_t last_timestamp_reference = 0;
 
 // data bits are scattered on GPIO7 register.
 // the two clumps of 4 at 0-3 and 16-19 are the
-// low and high half of the data byte, the remaining bit
-// is the data_out_control pin
-#define DATA_OUT_MASK 0x000f040f
+// low and high half of the data byte.
+#define DATA_OUT_MASK 0x000f000f
+// OUT_D_REQ is on GPIO8, bit 22
+#define OUT_D_REQ_MASK 0x00400000
+// RDY_REQ is on GPIO7, bit 28
+#define RDY_REQ_MASK 0x10000000
+// INH_REQ is on GPIO7, bit 29
+#define INH_REQ_MASK 0x20000000
+// IRQ is on GPIO6, bit 02
+#define IRQ_MASK 0x00000004
+// INTOUT is on GPIO6, bit 03
+#define INTOUT_MASK 0x00000008
 
 FASTRUN static inline void check_soft_switches(uint8_t data) {
   if ((bus_address & 0xf000) == 0xc000) {
@@ -220,15 +231,27 @@ FASTRUN static inline void handle_devsel_address_write(uint16_t address, uint8_t
   }
 }
 
-FASTRUN static inline void do_address_phase(uint32_t pins) {
-  // first disable data_out_control pin (set high, as it is active-low)
-  GPIO7_DR_SET = CORE_PIN6_BITMASK;
+FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_pins) {
+  // first disable OUT_D_REQ pin (set high, as it is active-low)
+  GPIO8_DR_SET = OUT_D_REQ_MASK;
 
   // we arranged for the address pins to be the contiguous set of bits 16-31
-  bus_address = (pins >> 16) & 0xffff;
+  bus_address = (gpio6_pins >> 16) & 0xffff;
   // toggle io_strobe if needed
-  bus_rw = (pins >> 13) & 0x01;
-  bus_user1 = (pins >> 12) & 0x01;
+  bus_rw = (gpio9_pins >> 8) & 0x01;
+  bus_m2b0 = (gpio6_pins >> 12) & 0x01;
+  bus_usync = (gpio6_pins >> 13) & 0x01;
+  // // forward INTIN to INTOUT
+  // // TODO- if we ever do our own interrupt, we would need to flag it
+  // // Thinking more about this, we should be doing this in hardware, auto
+  // // forwarding instantly by default and only pulling it down if we decide
+  // // it's safe because INTIN is high, and we want to do an interrupt
+  // uint32_t intin = (gpio9_pins >> 4) & 0x01;
+  // if (intin) {
+  //   GPIO6_DR_SET = INTOUT_MASK;
+  // } else {
+  //   GPIO6_DR_CLEAR = INTOUT_MASK;
+  // }
   // check if this is a read that we will service
   if (bus_rw && ((bus_address & DEVSEL_MASK) == DEVSEL_RANGE)) {
     uint8_t data_byte = handle_devsel_address_read(bus_address);
@@ -259,22 +282,23 @@ FASTRUN static inline void do_address_phase(uint32_t pins) {
       data_register |= data_byte & 0x0f;
       GPIO7_DR_CLEAR = DATA_OUT_MASK;
       GPIO7_DR_SET = data_register;
+      // clear OUT_D_REQ (active low, to indicate byte write) 
+      GPIO8_DR_CLEAR = OUT_D_REQ_MASK;
     }
   }
 }
 
 
-FASTRUN static inline void do_data_phase(uint32_t pins) {
-  // reset pin on GPIO7, and handling reset not time critical so do in data phase
-  uint32_t port7_pins = GPIO7_PSR;
-  bool new_reset_pin = (port7_pins >> 11) & 0x01;
+FASTRUN static inline void do_data_phase(uint32_t port6_pins, uint32_t port9_pins) {
+  // reset pin on GPIO9 06, and handling reset not time critical so do in data phase
+  bool new_reset_pin = (port9_pins >> 6) & 0x01;
   if (new_reset_pin != reset_pin) {
     reset_pin = new_reset_pin;
     if (reset_pin == 0) {
       reset_occurred = true;
     }
   }
-  uint8_t data = (pins >> 24) & 0xff;
+  uint8_t data = (port6_pins >> 16) & 0xff;
   check_soft_switches(data);
 
   uint32_t event = data;
@@ -290,18 +314,23 @@ FASTRUN static inline void do_data_phase(uint32_t pins) {
 
 FASTRUN void bus_handler() {
   // snap the pins immediately
-  uint32_t port6_pins = GPIO6_PSR;
+  uint32_t port6_pins = GPIO6_PSR;  // address/data, and M2B0/uSYNC
+  uint32_t port7_pins = GPIO7_PSR;  // PHI0 is on GPIO7 12
+  uint32_t port9_pins = GPIO9_PSR;
   // clear interrupts.  We are doing it slightly faster than the
   // stock interrupt code, because we know we are the only gpio
-  // interrupt running, and we are only on GPIO6.
-  volatile uint32_t* drp = &GPIO6_DR;
+  // interrupt running, and we are only on GPIO8 23 (TEENSY_IRQ).
+  volatile uint32_t* drp = &GPIO8_DR;
   uint32_t interrupt_status = drp[ISR_INDEX] & drp[IMR_INDEX];
   drp[ISR_INDEX] = interrupt_status;  // this clears the interrupt
 
-  if (port6_pins & CORE_PIN1_BITMASK) {
-    do_data_phase(port6_pins);
+  // PHI0 (pin 32, GPIO7 bit 12)
+  if (port7_pins & CORE_PIN32_BITMASK) {
+    //Serial.println("data");
+    do_data_phase(port6_pins, port9_pins);
   } else {
-    do_address_phase(port6_pins);
+    //Serial.println("addr");
+    do_address_phase(port6_pins, port9_pins);
   }
   asm("dsb");  // memory barrier to flush everything
 }
@@ -322,9 +351,9 @@ void setup() {
     pinMode(i, INPUT_DISABLE);
   }
 
-  // GPIO6 pins start here
   // addr0-16, numbers are wacky because the pin->register bit
   // mapping is totally wacky
+  // these are GPIO6 16-31
   pinMode(19, INPUT);
   pinMode(18, INPUT);
   pinMode(14, INPUT);
@@ -341,31 +370,64 @@ void setup() {
   pinMode(39, INPUT);
   pinMode(26, INPUT);
   pinMode(27, INPUT);
-  // user1
-  pinMode(24, INPUT);
-  // rw pin
-  pinMode(25, INPUT);
+
+  // misc inputs
+  // INTIN
+  pinMode(2, INPUT); // GPIO9 04
+  // DMA
+  pinMode(3, INPUT); // GPIO9 05
+  // RES
+  pinMode(4, INPUT); // GPIO9 06
+  // RW
+  pinMode(5, INPUT); // GPIO9 08 (yes, it skips 07)
+  // M2B0
+  pinMode(24, INPUT); // GPIO6 12
+  // uSYNC
+  pinMode(25, INPUT); // GPIO6 13
+  // TEENSY_IRQ
+  pinMode(30, INPUT); // GPIO8 23
   // PHI0
-  pinMode(1, INPUT);
-  // interrupt
-  pinMode(0, INPUT);
-  // GPIO7 ports start here
-  // data_out_control
-  pinMode(6, OUTPUT);
-  // RESET
-  pinMode(9, INPUT);  // note, input, as we ran out of GPIO6 inputs
+  pinMode(32, INPUT); // GPIO7 12
+  
+  // misc outputs
+  // INTOUT
+  // default INTOUT high, but ultimately it will be set to (INTIN & IRQ)
+  pinMode(0, INPUT);  // disabled
+  //pinMode(0, OUTPUT); // GPIO6 03
+  //digitalWrite(0, HIGH);
+  // IRQ
+  // default IRQ high, we can pull it low to request bus interrupt
+  pinMode(1, INPUT); // disabled
+  //pinMode(1, OUTPUT); // GPIO6 02
+  //digitalWrite(1, HIGH);
+  // OUT_D_REQ
+  // default high, we pull low when we want to put a byte on the bus
+  pinMode(31, INPUT); // disabled
+  //pinMode(31, OUTPUT); // GPIO8 22
+  //digitalWrite(31, HIGH);
+  // INH_REQ
+  // default high, we pull low when we want to inhibit (and serve) memory
+  pinMode(32, INPUT); // disabled
+  //pinMode(34, OUTPUT); // GPIO7 29
+  //digitalWrite(34, HIGH);
+  // RDY_REQ
+  // default high, we pull low when we want to stall the bus
+  pinMode(35, INPUT); // disabled
+  //pinMode(35, OUTPUT); // GPIO7 28
+  //digitalWrite(35, HIGH);
+
   // data_out0-8
-  pinMode(10, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(13, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(36, OUTPUT);
-  pinMode(37, OUTPUT);
+  pinMode(10, OUTPUT); // GPIO7 00
+  pinMode(12, OUTPUT); // GPIO7 01
+  pinMode(11, OUTPUT); // GPIO7 02
+  pinMode(13, OUTPUT); // GPIO7 03
+  pinMode(8, OUTPUT);  // GPIO7 16
+  pinMode(7, OUTPUT);  // GPIO7 17
+  pinMode(36, OUTPUT); // GPIO7 18
+  pinMode(37, OUTPUT); // GPIO7 19
 
   // let the lib code in attachInterrupt do its config details
-  attachInterrupt(digitalPinToInterrupt(0), bus_handler, FALLING);
+  attachInterrupt(digitalPinToInterrupt(30), bus_handler, FALLING);
 
   // override the vector for gpio directly to our handler to
   // skip dispatching
@@ -375,15 +437,15 @@ void setup() {
   qn::Ethernet.begin(ipaddr, netmask, gw);
 
   // Open serial communications and wait for port to open:
-  // Serial.begin(9600);
-  // while (!Serial) {
-  //   ;  // wait for serial port to connect. Needed for native USB port only
-  // }
+  //Serial.begin(9600);
+  //while (!Serial) {
+  //  ;  // wait for serial port to connect. Needed for native USB port only
+  //}
 
-  // Serial.println("starting udp");
+  //Serial.println("starting udp");
   // // start UDP
-  Udp.begin(localPort);
-  // Serial.println("started udp");
+  //Udp.begin(localPort);
+  //Serial.println("started udp");
 
   // set GPIO priority to highest priority, as
   // handling the bus is hard-realtime
@@ -474,6 +536,7 @@ void loop() {
   } else {
     buffered_events = ring_end - event_ring_begin;
   }
+  //Serial.println(buffered_events);
   while (buffered_events >= 8) {
     buffered_events -= 8;
     if (p == tx_buf) {

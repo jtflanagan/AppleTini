@@ -1,6 +1,9 @@
 .define public PHI0_GPIO 0
 .define public TEENSY_EMIT_GPIO 1
 
+; A good resource to compile this for Arduino IDE is:
+; https://wokwi.com/tools/pioasm
+
 ; Notes:
 ; Address and RW signals from 65c02 are valid 140ns after PHI1
 ; Data write signals from 65c02 are valid 75ns after PHI0
@@ -25,6 +28,11 @@
 ; Data lines are stable for read by P0+448, which is when we can signal
 ;   the Teensy
 
+; set bit 3 is out_d_en (active low)
+; set bit 2 is d_dir (0 is bus-read, 1 is bus-write)
+; set bit 1 is d_en (active low)
+; set bit 0 is alo_en (active low)
+
 .program phi0_control
 
 .wrap_target
@@ -35,19 +43,23 @@ phi0_control_begin:
     wait 0 GPIO, PHI0_GPIO [1] ; wait for PHI0 to fall (P1 begin)
       ; the extra wait is to give a little more hold time after P1 begin
       ; should we have just completed an emit cycle
-    set PINS, 0b0110 ; P1+40, enable addrlo and disable data
+    set PINS, 0b1010 ; P1+40, enable addrlo and disable data
+    ;set PINS, 0b1111 ;
 
 ; Phase P0 (data)
     wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI0 to rise
     mov Y, Y [9] ; NOP for delay
-    ;set PINS, 0b1110 ; P0+240, disable address to leave bus idle
+    set PINS, 0b1011 ; P0+240, disable address to leave bus idle
+    ;set PINS, 0b1111 ;
     jmp PIN, handle_read ; P0+248, if high, we are reading from the bus
 ; we are emitting to the data bus
-    set PINS, 0b1001 ; P0+256, disable addrlo, enable teensy data write
+    set PINS, 0b0101 ; P0+256, disable addrlo, enable teensy data write
+    ;set PINS, 0b1111 ;
     jmp phi0_control_begin ; P0+264
 handle_read:
 ; we are reading from the data bus
-    set PINS, 0b1010 ; P0+256, disable addrlo, enable bus data read
+    set PINS, 0b1001 ; P0+256, disable addrlo, enable bus data read
+    ;set PINS, 0b1111 ;
 .wrap
 
 ; phi0_signal generates the timing signals to the Teensy.
@@ -65,7 +77,7 @@ phi0_signal_begin:
     set PINS, 0b0 [1]; P1+216, falling edge signal address phase ready
     set PINS, 0b1 ; P1+232, return to high for next edge
     wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI1 to rise (P0 begin)
-    mov Y, Y [15] ; NOP for delay
+    mov Y, Y [13] ; NOP for delay
     set PINS, 0b0 [1]; P0+288, falling edge signal data phase ready
     set PINS, 0b1 ; P0+304, return to high for next edge
 .wrap
@@ -82,7 +94,7 @@ rdy_begin:
   jmp PIN, rdy_high
   set PINS, 0
   jmp rdy_begin
-rdh_high:
+rdy_high:
   set PINS, 1
 .wrap
 

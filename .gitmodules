@@ -1,6 +1,0 @@
-[submodule "pico/pico-sdk"]
-	path = pico/pico-sdk
-	url = https://github.com/raspberrypi/pico-sdk.git
-[submodule "pico/mbedtls"]
-	path = pico/mbedtls
-	url = https://github.com/ARMmbed/mbedtls.git
