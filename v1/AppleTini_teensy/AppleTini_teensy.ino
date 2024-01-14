@@ -60,11 +60,11 @@ volatile uint8_t event_ring_end = 0;
 uint8_t slotc3rom = 0;
 uint8_t intcxrom = 0;
 uint8_t appletini_dev_enabled = 0;
-volatile bool reset_occurred = false;
 bool reset_pin = true;
 uint8_t result_buf[256];
 uint8_t result_len = 0;
 uint8_t* result_ptr = result_buf;
+uint8_t reset_detect_state = 0;
 
 struct time_struct {
   int32_t epoch_sec;
@@ -286,18 +286,27 @@ FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_
       GPIO8_DR_CLEAR = OUT_D_REQ_MASK;
     }
   }
+  // check for reset sequence
+  // stolen from markadev/AppleII-VGA,
+  // which was stolen from how the IIe IOU chip does reset detect
+  if (bus_address & 0x0100) {
+    if (reset_detect_state < 3) {
+      ++reset_detect_state;
+    } else if (reset_detect_state > 3) {
+      reset_detect_state = 1;
+    }
+  } else if ((reset_detect_state == 3) && (bus_address == 0xfffc)) {
+    reset_detect_state = 4;
+  } else if ((reset_detect_state == 4) && (bus_address == 0xfffd)) {
+    handle_reset();
+    reset_detect_state = 0;
+  }
+  reset_detect_state = 0;
+
 }
 
 
 FASTRUN static inline void do_data_phase(uint32_t port6_pins, uint32_t port9_pins) {
-  // reset pin on GPIO9 06, and handling reset not time critical so do in data phase
-  bool new_reset_pin = (port9_pins >> 6) & 0x01;
-  if (new_reset_pin != reset_pin) {
-    reset_pin = new_reset_pin;
-    if (reset_pin == 0) {
-      reset_occurred = true;
-    }
-  }
   uint8_t data = (port6_pins >> 16) & 0xff;
   check_soft_switches(data);
 
@@ -514,11 +523,6 @@ void handle_rx_packet(uint8_t* buf, int size) {
 }
 
 void loop() {
-  // if a reset occurred, process it
-  if (reset_occurred) {
-    reset_occurred = false;
-    handle_reset();
-  }
   // if there's data available, read a packet
   int packetSize = Udp.parsePacket();
   if (packetSize >= 0) {
