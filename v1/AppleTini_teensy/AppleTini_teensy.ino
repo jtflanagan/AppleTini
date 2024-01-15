@@ -71,7 +71,7 @@ struct time_struct {
 uint32_t last_timestamp_reference = 0;
 
 #define APPLETINI_SLOT 2
-#define APPLEIIGS_MODE 1
+#define APPLEIIGS_MODE 0
 
 #define DEVSEL_RANGE (0xc080 + (APPLETINI_SLOT << 4))
 #define DEVSEL_MASK 0xfff0
