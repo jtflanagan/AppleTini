@@ -35,28 +35,25 @@ namespace qn = qindesign::network;
 unsigned int localPort = 8080;  // local port to listen on
 
 // buffers for receiving and sending data
-uint8_t packetBuffer[1500];  // buffer to hold incoming packet,
-//char ReplyBuffer[] = "acknowledged";        // a string to send back
+uint32_t rx_buf[512];  // buffer to hold incoming packet
+uint32_t tx_buf[512];  // buffer to hold outgoing (non-bus) packet
 
 // An EthernetUDP instance to let us send and receive packets over UDP
 qn::EthernetUDP Udp;
 
 uint32_t last_micros = 0;
-uint8_t tx_buf[2048];
-uint8_t* p = tx_buf;
-uint16_t prev_tx_address = 0;
 uint32_t next_tx_seqno = 0;
 uint16_t bus_address = 0;
 uint8_t bus_user1 = true;
 uint8_t bus_rw = true;
 uint8_t bus_m2b0 = true;
-uint8_t bus_usync = true;
+uint8_t bus_m2sel = true;
 bool io_strobe = false;
 uint8_t iosel_memory[256];
 uint8_t rom_strobe_memory[2048];
-uint32_t event_ring[256];
-uint8_t event_ring_begin = 0;
-volatile uint8_t event_ring_end = 0;
+uint32_t event_bufs[2][256];
+volatile uint8_t event_buf_index = 2;
+volatile uint8_t writing_buf = 0;
 uint8_t slotc3rom = 0;
 uint8_t intcxrom = 0;
 uint8_t appletini_dev_enabled = 0;
@@ -74,6 +71,7 @@ struct time_struct {
 uint32_t last_timestamp_reference = 0;
 
 #define APPLETINI_SLOT 2
+#define APPLEIIGS_MODE 1
 
 #define DEVSEL_RANGE (0xc080 + (APPLETINI_SLOT << 4))
 #define DEVSEL_MASK 0xfff0
@@ -158,22 +156,9 @@ FASTRUN static inline void handle_reset() {
   // Serial.println("Reset occurred");
   intcxrom = false;
   slotc3rom = false;
-  if (p != tx_buf) {
-    // write out the current packet in progress immediately
-    Udp.beginPacket(host, localPort);
-    Udp.write(tx_buf, p - tx_buf);
-    Udp.endPacket();
-    p = tx_buf;
-  }
-  *p++ = next_tx_seqno & 0xff;
-  *p++ = (next_tx_seqno >> 8) & 0xff;
-  *p++ = (next_tx_seqno >> 16) & 0xff;
-  *p++ = (next_tx_seqno >> 24) & 0xff;
-  *p++ = 2;  // reset is message type 2
-  Udp.beginPacket(host, localPort);
-  Udp.write(tx_buf, p - tx_buf);
-  Udp.endPacket();
-  p = tx_buf;
+  tx_buf[0] = next_tx_seqno++;
+  tx_buf[1] = 2;  // reset is message type 2
+  Udp.send(host, localPort, (const uint8_t*)tx_buf, 8);
 }
 
 FASTRUN static inline uint8_t handle_devsel_address_read(uint16_t address) {
@@ -241,7 +226,7 @@ FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_
   // toggle io_strobe if needed
   bus_rw = (gpio9_pins >> 8) & 0x01;
   bus_m2b0 = (gpio6_pins >> 12) & 0x01;
-  bus_usync = (gpio6_pins >> 13) & 0x01;
+  bus_m2sel = (gpio6_pins >> 13) & 0x01;
   // // forward INTIN to INTOUT
   // // TODO- if we ever do our own interrupt, we would need to flag it
   // // Thinking more about this, we should be doing this in hardware, auto
@@ -254,27 +239,11 @@ FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_
   //   GPIO6_DR_CLEAR = INTOUT_MASK;
   // }
   // check if this is a read that we will service
-  if (bus_rw && ((bus_address & DEVSEL_MASK) == DEVSEL_RANGE)) {
-    uint8_t data_byte = handle_devsel_address_read(bus_address);
-    //Serial.print("emit:");
-    //Serial.print(bus_address);
-    //Serial.print(":");
-    //Serial.println(data_byte);
-    uint32_t data_register = ((uint32_t)data_byte & 0xf0) << 12;
-    data_register |= data_byte & 0x0f;
-    GPIO7_DR_CLEAR = DATA_OUT_MASK;
-    GPIO7_DR_SET = data_register;
-  } else if (appletini_dev_enabled && bus_rw) {
-    uint8_t data_byte;
-    bool emit = true;
-    if ((bus_address & IOSEL_MASK) == IOSEL_RANGE) {
-      data_byte = iosel_memory[bus_address & 0x00ff];
-    } else if (io_strobe && ((bus_address & STROBE_MASK) == STROBE_RANGE)) {
-      data_byte = rom_strobe_memory[bus_address & 0x7ff];
-    } else {
-      emit = false;
-    }
-    if (emit) {
+  if (!APPLEIIGS_MODE || !bus_m2sel) {
+    // we only check these if NOT in IIGS mode, or if in IIGS mode
+    // but bus_m2sel is active-low
+    if (bus_rw && ((bus_address & DEVSEL_MASK) == DEVSEL_RANGE)) {
+      uint8_t data_byte = handle_devsel_address_read(bus_address);
       //Serial.print("emit:");
       //Serial.print(bus_address);
       //Serial.print(":");
@@ -283,8 +252,28 @@ FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_
       data_register |= data_byte & 0x0f;
       GPIO7_DR_CLEAR = DATA_OUT_MASK;
       GPIO7_DR_SET = data_register;
-      // clear OUT_D_REQ (active low, to indicate byte write) 
-      GPIO8_DR_CLEAR = OUT_D_REQ_MASK;
+    } else if (appletini_dev_enabled && bus_rw) {
+      uint8_t data_byte;
+      bool emit = true;
+      if ((bus_address & IOSEL_MASK) == IOSEL_RANGE) {
+        data_byte = iosel_memory[bus_address & 0x00ff];
+      } else if (io_strobe && ((bus_address & STROBE_MASK) == STROBE_RANGE)) {
+        data_byte = rom_strobe_memory[bus_address & 0x7ff];
+      } else {
+        emit = false;
+      }
+      if (emit) {
+        //Serial.print("emit:");
+        //Serial.print(bus_address);
+        //Serial.print(":");
+        //Serial.println(data_byte);
+        uint32_t data_register = ((uint32_t)data_byte & 0xf0) << 12;
+        data_register |= data_byte & 0x0f;
+        GPIO7_DR_CLEAR = DATA_OUT_MASK;
+        GPIO7_DR_SET = data_register;
+        // clear OUT_D_REQ (active low, to indicate byte write)
+        GPIO8_DR_CLEAR = OUT_D_REQ_MASK;
+      }
     }
   }
   // check for reset sequence
@@ -311,12 +300,18 @@ FASTRUN static inline void do_data_phase(uint32_t port6_pins, uint32_t port9_pin
   uint8_t data = (port6_pins >> 16) & 0xff;
   check_soft_switches(data);
 
-  uint32_t event = data;
-  event |= (uint32_t)bus_address << 8;
-  if (bus_rw) {
-    event |= 1 << 24;
+  uint32_t& event = event_bufs[writing_buf][event_buf_index];
+  ++event_buf_index;
+  if (!event_buf_index) {
+    // drop event rather than overflow
+    event_buf_index = 255;
   }
-  event_ring[event_ring_end++] = event;
+  event = data;
+  event |= (uint32_t)bus_address << 8;
+  event |= (bus_rw << 24);
+  event |= (bus_m2sel << 25);
+  event |= (bus_m2b0 << 26);
+  event |= (APPLEIIGS_MODE << 31);
 }
 
 #define IMR_INDEX 5
@@ -383,22 +378,22 @@ void setup() {
 
   // misc inputs
   // INTIN
-  pinMode(2, INPUT); // GPIO9 04
+  pinMode(2, INPUT);  // GPIO9 04
   // DMA
-  pinMode(3, INPUT); // GPIO9 05
+  pinMode(3, INPUT);  // GPIO9 05
   // RES
-  pinMode(4, INPUT); // GPIO9 06
+  pinMode(4, INPUT);  // GPIO9 06
   // RW
-  pinMode(5, INPUT); // GPIO9 08 (yes, it skips 07)
+  pinMode(5, INPUT);  // GPIO9 08 (yes, it skips 07)
   // M2B0
-  pinMode(24, INPUT); // GPIO6 12
+  pinMode(24, INPUT);  // GPIO6 12
   // uSYNC
-  pinMode(25, INPUT); // GPIO6 13
+  pinMode(25, INPUT);  // GPIO6 13
   // TEENSY_IRQ
-  pinMode(30, INPUT); // GPIO8 23
+  pinMode(30, INPUT);  // GPIO8 23
   // PHI0
-  pinMode(32, INPUT); // GPIO7 12
-  
+  pinMode(32, INPUT);  // GPIO7 12
+
   // misc outputs
   // INTOUT
   // default INTOUT high, but ultimately it will be set to (INTIN & IRQ)
@@ -407,34 +402,34 @@ void setup() {
   //digitalWrite(0, HIGH);
   // IRQ
   // default IRQ high, we can pull it low to request bus interrupt
-  pinMode(1, INPUT); // disabled
+  pinMode(1, INPUT);  // disabled
   //pinMode(1, OUTPUT); // GPIO6 02
   //digitalWrite(1, HIGH);
   // OUT_D_REQ
   // default high, we pull low when we want to put a byte on the bus
-  pinMode(31, INPUT); // disabled
+  pinMode(31, INPUT);  // disabled
   //pinMode(31, OUTPUT); // GPIO8 22
   //digitalWrite(31, HIGH);
   // INH_REQ
   // default high, we pull low when we want to inhibit (and serve) memory
-  pinMode(32, INPUT); // disabled
+  pinMode(32, INPUT);  // disabled
   //pinMode(34, OUTPUT); // GPIO7 29
   //digitalWrite(34, HIGH);
   // RDY_REQ
   // default high, we pull low when we want to stall the bus
-  pinMode(35, INPUT); // disabled
+  pinMode(35, INPUT);  // disabled
   //pinMode(35, OUTPUT); // GPIO7 28
   //digitalWrite(35, HIGH);
 
   // data_out0-8
-  pinMode(10, OUTPUT); // GPIO7 00
-  pinMode(12, OUTPUT); // GPIO7 01
-  pinMode(11, OUTPUT); // GPIO7 02
-  pinMode(13, OUTPUT); // GPIO7 03
-  pinMode(8, OUTPUT);  // GPIO7 16
-  pinMode(7, OUTPUT);  // GPIO7 17
-  pinMode(36, OUTPUT); // GPIO7 18
-  pinMode(37, OUTPUT); // GPIO7 19
+  pinMode(10, OUTPUT);  // GPIO7 00
+  pinMode(12, OUTPUT);  // GPIO7 01
+  pinMode(11, OUTPUT);  // GPIO7 02
+  pinMode(13, OUTPUT);  // GPIO7 03
+  pinMode(8, OUTPUT);   // GPIO7 16
+  pinMode(7, OUTPUT);   // GPIO7 17
+  pinMode(36, OUTPUT);  // GPIO7 18
+  pinMode(37, OUTPUT);  // GPIO7 19
 
   // let the lib code in attachInterrupt do its config details
   attachInterrupt(digitalPinToInterrupt(30), bus_handler, FALLING);
@@ -470,57 +465,44 @@ void setup() {
   }
 }
 
-void handle_echo(uint8_t* buf, int size) {
-  memcpy(p, buf, size);
-  p += size;
+uint32_t* handle_echo(uint32_t* dest_buf, uint32_t* buf, int size) {
+  memcpy(dest_buf, buf, size * 4);
+  return dest_buf + size;
 }
 
-void handle_timestamp(uint8_t* buf, int size) {
+uint32_t* handle_timestamp(uint32_t* dest_buf, uint32_t* buf, int size) {
   last_timestamp_reference = millis();
   memcpy((void*)&last_timestamp, (void*)buf, sizeof(last_timestamp));
+  return dest_buf;
   // Serial.print(last_timestamp.epoch_sec);
   // Serial.print(".");
   // Serial.println(last_timestamp.millis);
 }
 
-void handle_rx_packet(uint8_t* buf, int size) {
-  if (p != tx_buf) {
-    // write out the current packet in progress immediately
-    Udp.beginPacket(host, localPort);
-    Udp.write(tx_buf, p - tx_buf);
-    Udp.endPacket();
-    p = tx_buf;
-  }
-  ++next_tx_seqno;
-  *p++ = next_tx_seqno & 0xff;
-  *p++ = (next_tx_seqno >> 8) & 0xff;
-  *p++ = (next_tx_seqno >> 16) & 0xff;
-  *p++ = (next_tx_seqno >> 24) & 0xff;
-  // get the msg type and echo back the rx seqno
-  uint8_t msg_type = buf[4];
-  *p++ = msg_type;
-  *p++ = buf[0];
-  *p++ = buf[1];
-  *p++ = buf[2];
-  *p++ = buf[3];
-  buf += 5;
+void handle_rx_packet(uint32_t* buf, int size) {
+  uint32_t rx_seqno = *buf++;
+  uint32_t msg_type = *buf++;
+  uint32_t* dest_buf = tx_buf;
+  *dest_buf++ = next_tx_seqno++;
+  *dest_buf++ = msg_type;
+  *dest_buf++ = rx_seqno;
+
+  uint32_t* dest_buf_end = dest_buf;
+
   switch (msg_type) {
     case 1:
-      handle_echo(buf, size - 5);
+      dest_buf_end = handle_echo(dest_buf, buf, size - 2);
       break;
     case 2:
       // reset message, should never be getting it
       break;
     case 3:
       // timestamp message
-      handle_timestamp(buf, size - 5);
+      dest_buf_end = handle_timestamp(dest_buf, buf, size - 2);
     default:
       break;
   }
-  Udp.beginPacket(host, localPort);
-  Udp.write(tx_buf, p - tx_buf);
-  Udp.endPacket();
-  p = tx_buf;
+  Udp.send(host, localPort, (const uint8_t*)tx_buf, (dest_buf_end - tx_buf) * 4);
 }
 
 void loop() {
@@ -531,59 +513,26 @@ void loop() {
   int packetSize = Udp.parsePacket();
   if (packetSize >= 0) {
     // read the packet into packetBufffer
-    Udp.read(packetBuffer, packetSize);
-    handle_rx_packet(packetBuffer, packetSize);
+    Udp.read((uint8_t*)rx_buf, packetSize);
+    handle_rx_packet(rx_buf, packetSize / 4);
   }
-  // make safe nonvolatile copy of event_ring_end for processing
-  //cli();
-  uint32_t ring_end = event_ring_end;
-  //sei();
-  uint32_t buffered_events;
-  if (ring_end < event_ring_begin) {
-    buffered_events = 256 + ring_end - event_ring_begin;
+  // swap buffers and get buffer length
+  cli();
+  uint8_t send_index = event_buf_index;
+  uint8_t send_buf;
+  if (send_index > 64) {
+    send_buf = writing_buf;
+    writing_buf = !writing_buf;
+    event_buf_index = 2;
   } else {
-    buffered_events = ring_end - event_ring_begin;
+    send_index = 0;
   }
-  //Serial.println(buffered_events);
-  while (buffered_events >= 8) {
-    buffered_events -= 8;
-    if (p == tx_buf) {
-      ++next_tx_seqno;
-      *p++ = next_tx_seqno & 0xff;
-      *p++ = (next_tx_seqno >> 8) & 0xff;
-      *p++ = (next_tx_seqno >> 16) & 0xff;
-      *p++ = (next_tx_seqno >> 24) & 0xff;
-      *p++ = 0;
-    }
-    uint8_t* rw_flags = p++;
-    uint8_t* seq_flags = p++;
-    uint8_t* data_p = p;
-    *rw_flags = 0;
-    *seq_flags = 0;
-    p += 8;
-    for (int i = 0; i < 8; ++i) {
-      uint32_t event = event_ring[event_ring_begin++];
-      //Serial.println(event, HEX);
-      if (event & (1 << 24)) {
-        *rw_flags |= 1 << i;
-      }
-      uint8_t data = event & 0xff;
-      data_p[i] = data;
-      uint16_t address = (event >> 8) & 0xffff;
-      if (address != prev_tx_address + 1) {
-        *seq_flags |= 1 << i;
-        uint8_t addrlo = address & 0xff;
-        *p++ = addrlo;
-        uint8_t addrhi = (address >> 8) & 0xff;
-        *p++ = addrhi;
-      }
-      prev_tx_address = address;
-    }
-    if (p - tx_buf >= 256) {
-      Udp.beginPacket(host, localPort);
-      Udp.write(tx_buf, p - tx_buf);
-      Udp.endPacket();
-      p = tx_buf;
-    }
+  sei();
+
+  if (send_index) {
+    uint32_t* event_buf = event_bufs[send_buf];
+    event_buf[0] = next_tx_seqno++;
+    event_buf[1] = 0;
+    Udp.send(host, localPort, (const uint8_t*)event_buf, send_index * 4);
   }
 }
