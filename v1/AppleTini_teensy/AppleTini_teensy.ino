@@ -60,7 +60,7 @@ volatile uint8_t event_ring_end = 0;
 uint8_t slotc3rom = 0;
 uint8_t intcxrom = 0;
 uint8_t appletini_dev_enabled = 0;
-bool reset_pin = true;
+volatile bool reset_happened = false;
 uint8_t result_buf[256];
 uint8_t result_len = 0;
 uint8_t* result_ptr = result_buf;
@@ -154,6 +154,7 @@ FASTRUN static inline void check_soft_switches(uint8_t data) {
 }
 
 FASTRUN static inline void handle_reset() {
+  reset_happened = false;
   // Serial.println("Reset occurred");
   intcxrom = false;
   slotc3rom = false;
@@ -289,7 +290,7 @@ FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_
   // check for reset sequence
   // stolen from markadev/AppleII-VGA,
   // which was stolen from how the IIe IOU chip does reset detect
-  if (bus_address & 0x0100) {
+  if ((bus_address & 0xff00) == 0x0100) {
     if (reset_detect_state < 3) {
       ++reset_detect_state;
     } else if (reset_detect_state > 3) {
@@ -298,11 +299,11 @@ FASTRUN static inline void do_address_phase(uint32_t gpio6_pins, uint32_t gpio9_
   } else if ((reset_detect_state == 3) && (bus_address == 0xfffc)) {
     reset_detect_state = 4;
   } else if ((reset_detect_state == 4) && (bus_address == 0xfffd)) {
-    handle_reset();
+    reset_happened = true;
+    reset_detect_state = 0;
+  } else {
     reset_detect_state = 0;
   }
-  reset_detect_state = 0;
-
 }
 
 
@@ -523,6 +524,9 @@ void handle_rx_packet(uint8_t* buf, int size) {
 }
 
 void loop() {
+  if (reset_happened) {
+    handle_reset();
+  }
   // if there's data available, read a packet
   int packetSize = Udp.parsePacket();
   if (packetSize >= 0) {
