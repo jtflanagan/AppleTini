@@ -61,7 +61,7 @@ static const uint16_t phi0_signal_program_instructions[] = {
     0xe100, //  2: set    pins, 0                [1] 
     0xe001, //  3: set    pins, 1                    
     0x3f80, //  4: wait   1 gpio, 0              [31]
-    0xad42, //  5: nop                           [13]
+    0xa842, //  5: nop                           [8]
     0xe100, //  6: set    pins, 0                [1] 
     0xe001, //  7: set    pins, 1                    
             //     .wrap

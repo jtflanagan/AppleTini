@@ -73,11 +73,11 @@ handle_read:
 .wrap_target
 phi0_signal_begin:
     push noblock ; push a dummy value to signal SM operation
-    wait 0 GPIO, PHI0_GPIO [22] ; wait for PHI0 to fall (P1 begin)
+    ;wait 0 GPIO, PHI0_GPIO [22] ; wait for PHI0 to fall (P1 begin)
     set PINS, 0b0 [1]; P1+216, falling edge signal address phase ready
     set PINS, 0b1 ; P1+232, return to high for next edge
     wait 1 GPIO, PHI0_GPIO [31] ; wait for PHI1 to rise (P0 begin)
-    mov Y, Y [13] ; NOP for delay
+    mov Y, Y [8] ; NOP for delay (IIe-600Mhz Teensy timing)
     set PINS, 0b0 [1]; P0+288, falling edge signal data phase ready
     set PINS, 0b1 ; P0+304, return to high for next edge
 .wrap
