@@ -452,7 +452,7 @@
     "netclass_assignments": null,
     "netclass_patterns": [
       {
-        "netclass": "Default",
+        "netclass": "Power",
         "pattern": "+3.3V"
       },
       {
@@ -468,7 +468,7 @@
         "pattern": "/VBUS"
       },
       {
-        "netclass": "Default",
+        "netclass": "Power",
         "pattern": "+5V"
       },
       {
