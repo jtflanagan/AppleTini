@@ -452,39 +452,39 @@
     "netclass_assignments": null,
     "netclass_patterns": [
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "+3.3V"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "GND"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "/VSYS"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "/VBUS"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "+5V"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "-5V"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "+12V"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "-12V"
       },
       {
-        "netclass": "Power",
+        "netclass": "Default",
         "pattern": "/VIN"
       }
     ]
