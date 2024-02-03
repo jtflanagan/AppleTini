@@ -1,23 +1,27 @@
 
+;pins are GPIO5) TEENSY_IRQ, GPIO4) ADDR_RX_LATCH, GPIO3) DATA_RX_LATCH
 
 .program teensy_irq_gen
 .wrap_target
     push noblock;
     wait 0 GPIO, PHI0_GPIO [19] ; P1+16, wait for PHI0 to fall, addr phase begin
-    set PINS, 0b101 [1]; P1+176, PICO_A_LEBA low to accept address
-    set PINS, 0b011 [1] ; P1+192, TEENSY_IRQ negative edge, PICO_A_LEBA high to latch address
+    set PINS, 0b101 [1]; P1+176, ADDR_RX_LATCH low to accept address
+    set PINS, 0b011 [1] ; P1+192, TEENSY_IRQ negative edge, ADDR_RX_LATCH high to latch address
     set PINS, 0b111 ; TEENSY_IRQ resume high
     wait 1 GPIO [31] ; P0+16, wait for PHI0 to rise, data phase begin
-    set PINS, 0b110 [21] ; P0+272, PICO_D_LEBA low to accept data
-    set PINS, 0b111 ; P0+448, PICO_D_LEBA high to latch data
+    set PINS, 0b110 [21] ; P0+272, DATA_RX_LATCH low to accept data
+    set PINS, 0b111 ; P0+448, DATA_RX_LATCH high to latch data
 .wrap
+
+;pins are GPIO2) DMA, GPIO1) DATA_TX_ENABLE
+;jump pin is GPIO1) DMA_CYCLE_ACTIVE
 
 .program dma_loop
 .wrap_target
 addr_loop_begin:
     wait 0 GPIO, PHI0_GPIO ; P1+16, wait for PHI0 to fall, addr phase begin
     jmp PIN, dma_cycle_high ; P1+24, check if this is dma cycle (assert high)
-    set PINS, 0b10 ; P1+32, PICO_A_OEAB high to disable output
+    set PINS, 0b10 ; P1+32, DATA_TX_ENABLE high to disable output
     set PINDIRS, 0b10 ; P1+40, set DMA dir to input (high impedance)
     wait 1 GPIO, PHI0_GPIO [31] ; wait for data phase
     mov Y, Y [6] ; P0+272, wait a little longer for non-dma emit check
@@ -25,19 +29,21 @@ addr_loop_begin:
     jmp dma_loop_begin;
 dma_cycle_high:
     set PINDIRS, 0b11 [5]; P1+32, set DMA pindir to output (drive DMA low)
-    set PINS, 0b00 ; P1+80, PICO_A_OEAB low to enable output
+    set PINS, 0b00 ; P1+80, DATA_TX_ENABLE low to enable output
     wait 1 GPIO, PHI0_GPIO [15] ; wait for data phase
     irq 0 ; P0+144, signal data phase check
 .wrap
 
+;pins are GPIO1) DATA_TX_ENABLE
+; jump pin is GPIO8) TEENSY_EMIT_DATA
 
 .program dma_data_loop
 data_loop_begin:
     wait 0 GPIO, PHI0_GPIO ; wait for PHI0 to fall, addr phase begin
-    set PINS, 0b1 ; P1+16, PICO_D_OEAB high to disable output
+    set PINS, 0b1 ; P1+16, DATA_TX_ENABLE high to disable output
     wait 1 IRQ 0 ; P1+48
     jmp PIN, emit_data_high; P0+152 or 336, determine if we are reading or emitting
     jmp dma_data_loop_begin ; if there's no emit we don't have anything to do
 emit_data_high:
-    set PINS, 0b0 ; P0+160 or 342, PICO_D_OEAB high to enable output
+    set PINS, 0b0 ; P0+160 or 342, DATA_TX_ENABLE high to enable output
 .wrap
