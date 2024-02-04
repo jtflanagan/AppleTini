@@ -1,3 +1,5 @@
+.define public PHI0_GPIO 7
+
 
 ;pins are GPIO5) TEENSY_IRQ, GPIO4) ADDR_RX_LATCH, GPIO3) DATA_RX_LATCH
 
@@ -8,28 +10,42 @@
     set PINS, 0b101 [1]; P1+176, ADDR_RX_LATCH low to accept address
     set PINS, 0b011 [1] ; P1+192, TEENSY_IRQ negative edge, ADDR_RX_LATCH high to latch address
     set PINS, 0b111 ; TEENSY_IRQ resume high
-    wait 1 GPIO [31] ; P0+16, wait for PHI0 to rise, data phase begin
+    wait 1 GPIO, PHI0_GPIO [31] ; P0+16, wait for PHI0 to rise, data phase begin
     set PINS, 0b110 [21] ; P0+272, DATA_RX_LATCH low to accept data
     set PINS, 0b111 ; P0+448, DATA_RX_LATCH high to latch data
 .wrap
 
-;pins are GPIO2) DMA, GPIO1) DATA_TX_ENABLE
+;pins are GPIO2) DMA, GPIO1) ADDR_TX_ENABLE
 ;jump pin is GPIO1) DMA_CYCLE_ACTIVE
 
-.program dma_loop
+.program addr_loop
 .wrap_target
 addr_loop_begin:
     wait 0 GPIO, PHI0_GPIO ; P1+16, wait for PHI0 to fall, addr phase begin
     jmp PIN, dma_cycle_high ; P1+24, check if this is dma cycle (assert high)
-    set PINS, 0b10 ; P1+32, DATA_TX_ENABLE high to disable output
-    set PINDIRS, 0b10 ; P1+40, set DMA dir to input (high impedance)
+    set PINS, 0b11 [11]; P1+32, ADDR_TX_ENABLE high to disable output, also set DMA pin high
+      ; - if the previous cycle was not a DMA cycle, the DMA pin will be set to input and
+      ; hence high impedance.  Setting the output value of the pin will have no effect.
+      ; - if the previous cycle was a DMA cycle, but the DMA series is ending this cycle,
+      ; then pulling the DMA line high briefly is done to help speed the DMA line returning
+      ; to high, as the pullup resistor on the Apple motherboard will not pull it very fast.
+    set PINDIRS, 0b01 ; P1+128, set DMA dir to input (high impedance)
+      ; - if the previous cycle wasn't DMA, the DMA line will already be high impedance
+      ; and no high pulse will happen-  it will just remain high impedance through the cycle.
+      ; - if the previous cycle was DMA, turning the input line to high impedance stops us
+      ; driving the signal high, and the pullup resistor on the motherboard will take it
+      ; from there.
+    set PINS, 0b01 ; P1+136, bring DMA low again to be ready for the next DMA active cycle
+      ; At this point the pin is already set high-impedance.  Changing this setting just
+      ; ensures that for the next DMA cycle, turning the PINDIR to output will immediately
+      ; bring the line low. 
     wait 1 GPIO, PHI0_GPIO [31] ; wait for data phase
     mov Y, Y [6] ; P0+272, wait a little longer for non-dma emit check
     irq 0 ; P1+328, signal data phase check
-    jmp dma_loop_begin;
+    jmp addr_loop_begin
 dma_cycle_high:
     set PINDIRS, 0b11 [5]; P1+32, set DMA pindir to output (drive DMA low)
-    set PINS, 0b00 ; P1+80, DATA_TX_ENABLE low to enable output
+    set PINS, 0b00 ; P1+80, ADDR_TX_ENABLE low to enable output
     wait 1 GPIO, PHI0_GPIO [15] ; wait for data phase
     irq 0 ; P0+144, signal data phase check
 .wrap
@@ -37,13 +53,16 @@ dma_cycle_high:
 ;pins are GPIO1) DATA_TX_ENABLE
 ; jump pin is GPIO8) TEENSY_EMIT_DATA
 
-.program dma_data_loop
+.program data_loop
 data_loop_begin:
     wait 0 GPIO, PHI0_GPIO ; wait for PHI0 to fall, addr phase begin
     set PINS, 0b1 ; P1+16, DATA_TX_ENABLE high to disable output
-    wait 1 IRQ 0 ; P1+48
-    jmp PIN, emit_data_high; P0+152 or 336, determine if we are reading or emitting
-    jmp dma_data_loop_begin ; if there's no emit we don't have anything to do
-emit_data_high:
+    ; the delivery time of the interrupt is sooner if it's a DMA cycle emit,
+    ; later if it's a conventional cycle emit.  Both paths signal IRQ 0.
+    ; waiting on IRQ 0 effectively lets us wait a variable time without a branch
+    wait 1 IRQ 0 ; P1+48; wait to be signaled for emit check
+    ; if TEENSY_EMIT_DATA is high, then there is no emit, end of loop
+    jmp PIN, data_loop_begin; P0+152 or 336, determine if we are emitting or not
+    ; otherwise, we put the latched data byte outbound on the bus
     set PINS, 0b0 ; P0+160 or 342, DATA_TX_ENABLE high to enable output
 .wrap

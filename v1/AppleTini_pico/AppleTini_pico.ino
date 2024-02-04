@@ -79,7 +79,7 @@ enum {
 #define BUS_PIN_INH 20           // pin to control bus INH
 #define BUS_PIN_RDY 21           // pin to control bus RDY
 #define BUS_PIN_INH_REQ 22       // pin from teensy to request INH pull
-#define BUS_PIN_RDY_REQ 26       // pin from teensy to request RDY pull
+#define BUS_PIN_RDY_REQ 26       // pin from teensy to request RDY pull|
 #define BUS_PIN_TEENSY_IRQ 27    // teensy interrupt pin
 #define BUS_PIN_OUT_D_REQ 28     // pin from teensy to request bus data emit
 
