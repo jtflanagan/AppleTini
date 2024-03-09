@@ -373,16 +373,16 @@ void setup() {
   // start the Ethernet
   qn::Ethernet.begin();
 
-  Serial.begin(9600);
-  while (!Serial) {
-    // wait for connect
-  }
-  if (CrashReport) {
-    Serial.print(CrashReport);
-    delay(5000);
-  }
+  // Serial.begin(9600);
+  // while (!Serial) {
+  //   // wait for connect
+  // }
+  // if (CrashReport) {
+  //   Serial.print(CrashReport);
+  //   delay(5000);
+  // }
 
-  Serial.println("initializing");
+  // Serial.println("initializing");
 
   // demote any top-priority interrupts and set the GPIO interrupt
   // to top priority, so that the bus handler preempts everything else.
@@ -401,22 +401,22 @@ void setup() {
 void loop() {
   auto now = millis();
   if (!host_found && (now > last_host_check + 5000) ) {
-    Serial.println("looking up host");
+    // Serial.println("looking up host");
     host_found = qn::Ethernet.hostByName("raspberrypi.local", host);
-    if (host_found) {
-      Serial.println("host found");
-    } else {
-      Serial.println("host not found");
-    }
+    // if (host_found) {
+    //   Serial.println("host found");
+    // } else {
+    //   Serial.println("host not found");
+    // }
   }
   if (!host_found) {
     return;
   }
 
   if (reset_happened) {
-    Serial.println("reset detected");
+    // Serial.println("reset detected");
     handle_reset();
-    Serial.println("reset notification sent");
+    // Serial.println("reset notification sent");
   }
 
   //int packetSize = Udp.parsePacket();
