@@ -20,6 +20,7 @@
 extern uint32_t ss_mode;
 extern uint32_t last_ramwrite_flag;
 
+void initialize_memory_page_handlers();
 void initialize_soft_switch_handlers();
 
 #endif

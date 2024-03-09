@@ -1,139 +1,135 @@
 #include "globals.h"
-#include "soft_switches.h"
+#include "memory.h"
 
-FASTRUN void complete_main_rom_event(bool unused, uint32_t data) {
-  main_rom[bus_address - 0xc100] = data;
-}
+IPAddress host;
+bool host_found = false;
+uint32_t last_host_check = 0;
 
-FASTRUN void store_data_callback(bool data_phase, uint32_t data) {
-  int32_t offset = 0;
-  if (prev_bus_address < 0x0200) {
-    // only switch that matters here is ALTZP=
-    if (ss_mode & MF_ALTZP) {
-      offset = 0x10000;
-    }
-  } else if (prev_bus_address < 0xc000) {
-    if (prev_bus_rw) {
-      if (ss_mode & MF_AUXREAD) {
-        offset = 0x10000;
-      } 
-    } else {
-      if (ss_mode & MF_AUXWRITE) {
-        offset = 0x10000;
-      }
-    }
-    // 80store overrides AUXREAD/AUXWRITE
-    if (ss_mode & MF_80STORE) {
-      if (prev_bus_address >= 0x0400 && prev_bus_address < 0x0800) {
-        if (ss_mode & MF_PAGE2) {
-          offset = 0x10000;
-        } else {
-          offset = 0;
-        }
-      }
-      if (ss_mode & MF_HIRES) {
-        if (prev_bus_address >= 0x2000 && prev_bus_address < 0x4000) {
-          if (ss_mode & MF_PAGE2) {
-            offset = 0x10000;
-          } else {
-            offset = 0;
-          }
-        }
-      }
-    }
-  } else if (ss_mode & MF_HIGHRAM) {
-    if (ss_mode & MF_ALTZP) {
-      offset = 0x10000;
-    }
-    if (ss_mode & MF_BANK2) {
-      // bank 2 is tucked back where 0xc000 would be
-      offset -= 0x1000;
-    }
-    if (!prev_bus_rw) {
-      if ( (ss_mode & MF_WRITERAM) == 0) {
-        //ignoring writes to RAM
-        return;
-      }
-    }
-  } else {
-    // addressing high rom
-    if (!prev_bus_rw) {
-      // ignore writes to ROM
-      return;
-    }
-    // store the value in ROM space if it's a read, ignore if it's a write
-    lc_rom[prev_bus_address - 0xc000] = (uint8_t)data;
-    return;
-  }
-  apple_main_memory[prev_bus_address+offset] = (uint8_t)data;
+// FASTRUN void complete_main_rom_event(bool unused, uint32_t data) {
+//   main_rom[bus_address - 0xc100] = data;
+// }
 
-}
+// FASTRUN void store_data_callback(bool data_phase, uint32_t data) {
+//   int32_t offset = 0;
+//   if (prev_bus_address < 0x0200) {
+//     // only switch that matters here is ALTZP=
+//     if (ss_mode & MF_ALTZP) {
+//       offset = 0x10000;
+//     }
+//   } else if (prev_bus_address < 0xc000) {
+//     if (prev_bus_rw) {
+//       if (ss_mode & MF_AUXREAD) {
+//         offset = 0x10000;
+//       } 
+//     } else {
+//       if (ss_mode & MF_AUXWRITE) {
+//         offset = 0x10000;
+//       }
+//     }
+//     // 80store overrides AUXREAD/AUXWRITE
+//     if (ss_mode & MF_80STORE) {
+//       if (prev_bus_address >= 0x0400 && prev_bus_address < 0x0800) {
+//         if (ss_mode & MF_PAGE2) {
+//           offset = 0x10000;
+//         } else {
+//           offset = 0;
+//         }
+//       }
+//       if (ss_mode & MF_HIRES) {
+//         if (prev_bus_address >= 0x2000 && prev_bus_address < 0x4000) {
+//           if (ss_mode & MF_PAGE2) {
+//             offset = 0x10000;
+//           } else {
+//             offset = 0;
+//           }
+//         }
+//       }
+//     }
+//   } else if (ss_mode & MF_HIGHRAM) {
+//     if (ss_mode & MF_ALTZP) {
+//       offset = 0x10000;
+//     }
+//     if (ss_mode & MF_BANK2) {
+//       // bank 2 is tucked back where 0xc000 would be
+//       offset -= 0x1000;
+//     }
+//     if (!prev_bus_rw) {
+//       if ( (ss_mode & MF_WRITERAM) == 0) {
+//         //ignoring writes to RAM
+//         return;
+//       }
+//     }
+//   } else {
+//     // addressing high rom
+//     if (!prev_bus_rw) {
+//       // ignore writes to ROM
+//       return;
+//     }
+//     // store the value in ROM space if it's a read, ignore if it's a write
+//     lc_rom[prev_bus_address - 0xc000] = (uint8_t)data;
+//     return;
+//   }
+//   apple_main_memory[prev_bus_address+offset] = (uint8_t)data;
 
-inline void handle_main_rom_event() {
-  if (!bus_rw) {
-    return;
-  }
-  data_completion_callback = &complete_main_rom_event;
-}
+// }
 
-inline bool check_cxxx_range() {
-  if ((bus_address & 0xff00) != 0xc000) {
-    return false;
-  }
-  if (bus_address < 0xc090) {
-    uint32_t switch_byte = (bus_address & 0x00ff);
-    (*(handle_soft_switch[switch_byte]))(false, 0);
-    return true;
-  }
-  if (bus_address < 0xc100) {
-    uint32_t slot_number = (bus_address & 0x0070) >> 8;
-    uint32_t slot_byte = (bus_address & 0x000f);
-    (*(handle_card_io_event[slot_number]))(slot_byte);
-    return true;
-  }
-  if (bus_address < 0xc800) {
-    uint32_t slot_number = (bus_address & 0x0700) >> 16;
-    uint32_t slot_byte = (bus_address & 0x00ff);
-    bool is_slot_access = false;
-    if (slot_number == 3) {
-      if ((ss_mode & MF_SLOTC3ROM) == 0) {
-        ss_mode |= MF_INTC8ROM;
-      }
-      if ( !(ss_mode & MF_INTC8ROM) && (ss_mode & MF_SLOTC3ROM)) {
-        is_slot_access = true;
-      }
-    } else {
-      is_slot_access = ss_mode & MF_INTC8ROM;
-    }
-    if (is_slot_access) {
-      card_shared_owner = slot_number;
-      (*(handle_card_page_event)[slot_number])(slot_byte);
-    } else {
-      handle_main_rom_event();
-    }
-    return true;
-  }
-  if (bus_address == 0xcfff) {
-    card_shared_owner = 0;
-    ss_mode &= ~MF_INTC8ROM;
-  }
-  uint32_t slot_byte = (bus_address & 0x07ff);
-  if (ss_mode & MF_INTC8ROM) {
-    handle_main_rom_event();
-  } else {
-    (*handle_card_shared_event[card_shared_owner])(slot_byte);
-  }
-  return true;
-}
+// inline void check_memory() {
+//   uint8_t memory_page = (bus_address & 0xff00) >> 8;
+//   check_memory_page(memory_page);
+//   if ((bus_address & 0xff00) != 0xc000) {
+//     return false;
+//   }
+//   if (bus_address < 0xc090) {
+//     uint32_t switch_byte = (bus_address & 0x00ff);
+//     (*(handle_soft_switch[switch_byte]))(false);
+//     return true;
+//   }
+//   if (bus_address < 0xc100) {
+//     uint32_t slot_number = (bus_address & 0x0070) >> 8;
+//     (*(handle_card_io_event[slot_number]))();
+//     return true;
+//   }
+//   if (bus_address < 0xc800) {
+//     uint32_t slot_number = (bus_address & 0x0700) >> 16;
+//     bool is_slot_access = false;
+//     if (slot_number == 3) {
+//       if ((ss_mode & MF_SLOTC3ROM) == 0) {
+//         ss_mode |= MF_INTC8ROM;
+//       }
+//       if ( !(ss_mode & MF_INTC8ROM) && (ss_mode & MF_SLOTC3ROM)) {
+//         is_slot_access = true;
+//       }
+//     } else {
+//       is_slot_access = ss_mode & MF_INTC8ROM;
+//     }
+//     if (is_slot_access) {
+//       card_shared_owner = slot_number;
+//       (*(handle_card_page_event)[slot_number])();
+//     } else {
+//       //handle_main_rom_event();
+//     }
+//     return true;
+//   }
+//   if (bus_address == 0xcfff) {
+//     card_shared_owner = 0;
+//     ss_mode &= ~MF_INTC8ROM;
+//   }
+//   if (ss_mode & MF_INTC8ROM) {
+//     //handle_main_rom_event();
+//   } else {
+//     (*handle_card_shared_event[card_shared_owner])();
+//   }
+//   return true;
+// }
 
 inline void determine_bus_cycle_action() {
   if (APPLEIIGS_MODE && bus_m2sel) {
     // not a valid IIgs bus cycle, ignore it
     return;
   }
-  // if (!check_cxxx_range()) {
-  //   data_completion_callback = &store_data_callback;
-  // }
+  // uint8_t pre_memory_page = (bus_address & 0xff00) >> 8;
+  // memory_page_callback[pre_memory_page](bus_address, 0, false);
+  //check_cxxx_range();
 
   // check for reset sequence
   // stolen from markadev/AppleII-VGA,
@@ -146,12 +142,23 @@ inline void determine_bus_cycle_action() {
     }
   } else if ((reset_detect_state == 3) && (bus_address == 0xfffc)) {
     reset_detect_state = 4;
+    //inhibit_apple_bus();
+    //emit_byte(0x00); // inject low byte of our boot vector
   } else if ((reset_detect_state == 4) && (bus_address == 0xfffd)) {
     reset_happened = true;
+    //inhibit_apple_bus();
+    //emit_byte(true, 0xc0 | TINI_SLOT); // inject high byte of our boot vector
+    // after injecting our boot vector into the boot sequence, the CPU should start
+    // executing our Cx00 code, which initially will just generate a tone to prove
+    // that we're getting there.  Ultimately we want to do machine identification,
+    // detect the VBL cycle, mirror the full memory image, and maybe provide a pre-boot menu.
     reset_detect_state = 0;
   } else {
     reset_detect_state = 0;
   }
+
+  // uint8_t post_memory_page = (prev_bus_address & 0xff00) >> 8;
+  // memory_page_callback[post_memory_page](prev_bus_address, bus_data, true);
 
 }
 
@@ -205,9 +212,9 @@ FASTRUN void bus_handler() {
 
   // make whatever decision as to what to do on this bus cycle based on
   // the bus state
-  if (data_completion_callback) {
-    data_completion_callback(true, bus_data);
-  }
+  // if (data_completion_callback) {
+  //   data_completion_callback(true, bus_data);
+  // }
   determine_bus_cycle_action();
 
   // since it's not time critical, write the event out to the buffer
@@ -241,20 +248,29 @@ inline void init_output_pin(uint8_t pin, uint8_t level) {
 }
 
 // handler for card memory slots where we are not configured to respond
-void card_null_handler(uint32_t addr_byte) {
+void card_null_handler() {
   return;
 }
 
+void tini_io_event() {}
+
+void tini_page_event() {}
+
+void tini_shared_event() {}
+
 void setup() {
 
-  // initialize card handlers
-  for (int i = 0; i < 8; ++i) {
-    handle_card_io_event[i] = &card_null_handler;
-    handle_card_page_event[i] = &card_null_handler;
-    handle_card_shared_event[i] = &card_null_handler;
-  }
+  // // initialize card handlers
+  // for (int i = 0; i < 8; ++i) {
+  //   handle_card_io_event[i] = &card_null_handler;
+  //   handle_card_page_event[i] = &card_null_handler;
+  //   handle_card_shared_event[i] = &card_null_handler;
+  // }
+  // handle_card_io_event[TINI_SLOT] = &tini_io_event;
+  // handle_card_page_event[TINI_SLOT] = &tini_page_event;
+  // handle_card_shared_event[TINI_SLOT] = &tini_shared_event;
   
-  initialize_soft_switch_handlers();
+  // initialize_soft_switch_handlers();
 
 
   for (int i = 0; i < 42; ++i) {
@@ -355,18 +371,18 @@ void setup() {
   attachInterruptVector(IRQ_GPIO6789, &bus_handler);
 
   // start the Ethernet
-  qn::Ethernet.begin(ipaddr, netmask, gw);
+  qn::Ethernet.begin();
 
-  // Serial.begin(9600);
-  // while (!Serial) {
-  //   // wait for connect
-  // }
-  // if (CrashReport) {
-  //   Serial.print(CrashReport);
-  //   delay(5000);
-  // }
+  Serial.begin(9600);
+  while (!Serial) {
+    // wait for connect
+  }
+  if (CrashReport) {
+    Serial.print(CrashReport);
+    delay(5000);
+  }
 
-  // Serial.println("initializing");
+  Serial.println("initializing");
 
   // demote any top-priority interrupts and set the GPIO interrupt
   // to top priority, so that the bus handler preempts everything else.
@@ -383,13 +399,28 @@ void setup() {
 }
 
 void loop() {
-  if (reset_happened) {
-    // Serial.println("reset detected");
-    handle_reset();
-    // Serial.println("reset notification sent");
+  auto now = millis();
+  if (!host_found && (now > last_host_check + 5000) ) {
+    Serial.println("looking up host");
+    host_found = qn::Ethernet.hostByName("raspberrypi.local", host);
+    if (host_found) {
+      Serial.println("host found");
+    } else {
+      Serial.println("host not found");
+    }
+  }
+  if (!host_found) {
+    return;
   }
 
-  int packetSize = Udp.parsePacket();
+  if (reset_happened) {
+    Serial.println("reset detected");
+    handle_reset();
+    Serial.println("reset notification sent");
+  }
+
+  //int packetSize = Udp.parsePacket();
+  Udp.parsePacket();
   // ignore them for now
 
   // swap buffers and get buffer length

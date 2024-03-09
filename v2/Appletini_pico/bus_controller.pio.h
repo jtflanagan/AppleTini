@@ -25,7 +25,7 @@ static const uint16_t teensy_irq_gen_program_instructions[] = {
     0xe300, //  3: set    pins, 0                [3] 
     0xe004, //  4: set    pins, 4                    
     0x3f87, //  5: wait   1 gpio, 7              [31]
-    0xed05, //  6: set    pins, 5                [13]
+    0xf705, //  6: set    pins, 5                [23]
     0xe004, //  7: set    pins, 4                    
             //     .wrap
 };

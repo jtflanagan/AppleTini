@@ -2,13 +2,10 @@
 
 namespace qn = qindesign::network;
 
-// set this to 1 if generating IIGS-mode firmware
-#define APPLEIIGS_MODE 0
-
-IPAddress ipaddr(192, 168, 155, 251);
-IPAddress netmask(255, 255, 255, 0);
-IPAddress gw(192, 168, 155, 1);
-IPAddress host(192, 168, 155, 250);
+//IPAddress ipaddr(192, 168, 155, 251);
+//IPAddress netmask(255, 255, 255, 0);
+//IPAddress gw(192, 168, 155, 1);
+//IPAddress host(192, 168, 155, 250);
 
 unsigned int localPort = 8080;  // local port to listen on
 
@@ -36,19 +33,20 @@ uint32_t port9_pins = 0;
 uint32_t bus_address = 0;
 uint32_t prev_bus_address = 0;
 uint32_t bus_data = 0;
-uint32_t card_shared_owner = 0;
+int32_t card_shared_owner = 0;
 bool bus_rw = false;
 bool prev_bus_rw = false;
+bool brain_transplant_mode = false;
 bool bus_m2sel = false;
 bool bus_m2b0 = false;
 volatile bool reset_happened = false;
 uint32_t reset_detect_state = 0;
 // function pointers for card_io bus events (0xc090-0xc0ff)
-void (*handle_card_io_event[8]) (uint32_t addr_byte);
+void (*handle_card_io_event[8]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 // function pointers for card page events (0xc100->0xc7ff)
-void (*handle_card_page_event[8]) (uint32_t addr_byte);
+void (*handle_card_page_event[8]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 // function pointers for card shared range events (0xc800->0xcfff)
-void (*handle_card_shared_event[8]) (uint32_t addr_byte);
+void (*handle_card_shared_event[8]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 // function pointers for soft switches (0xc000-0xc08f)
-void (*handle_soft_switch[144]) (bool data_phase, uint32_t data);
-void (*data_completion_callback) (bool data_phase, uint32_t data);
+void (*handle_soft_switch[144]) (bool data_phase);
+void (*memory_page_callback[256]) (uint16_t addr, uint8_t bus_data, bool data_phase);

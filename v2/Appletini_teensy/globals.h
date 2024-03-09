@@ -8,10 +8,13 @@ namespace qn = qindesign::network;
 // set this to 1 if generating IIGS-mode firmware
 #define APPLEIIGS_MODE 0
 
-extern IPAddress ipaddr;
-extern IPAddress netmask;
-extern IPAddress gw;
-extern IPAddress host;
+// set this to the slot the Tini is advertising itself in
+#define TINI_SLOT 2
+
+//extern IPAddress ipaddr;
+//extern IPAddress netmask;
+//extern IPAddress gw;
+//extern IPAddress host;
 
 extern unsigned int localPort;  // local port to listen on
 
@@ -39,22 +42,23 @@ extern uint32_t port9_pins;
 extern uint32_t bus_address;
 extern uint32_t prev_bus_address;
 extern uint32_t bus_data;
-extern uint32_t card_shared_owner;
+extern int32_t card_shared_owner;
 extern bool bus_rw;
 extern bool bus_m2sel;
 extern bool bus_m2b0;
 extern bool prev_bus_rw;
+extern bool brain_transplant_mode;
 extern volatile bool reset_happened;
 extern uint32_t reset_detect_state;
 // function pointers for card_io bus events (0xc090-0xc0ff)
-extern void (*handle_card_io_event[8]) (uint32_t addr_byte);
+extern void (*handle_card_io_event[8]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 // function pointers for card page events (0xc100->0xc7ff)
-extern void (*handle_card_page_event[8]) (uint32_t addr_byte);
+extern void (*handle_card_page_event[8]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 // function pointers for card shared range events (0xc800->0xcfff)
-extern void (*handle_card_shared_event[8]) (uint32_t addr_byte);
+extern void (*handle_card_shared_event[8]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 // function pointers for soft switches (0xc000-0xc08f)
-extern void (*handle_soft_switch[144]) (bool data_phase, uint32_t data);
-extern void (*data_completion_callback) (bool data_phase, uint32_t data);
+extern void (*handle_soft_switch[144]) (bool data_phase);
+extern void (*memory_page_callback[256]) (uint16_t addr, uint8_t bus_data, bool data_phase);
 
 
 #define ADDR_RX_ENABLE_MASK (1 << 2)
