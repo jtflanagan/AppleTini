@@ -5,131 +5,45 @@ IPAddress host;
 bool host_found = false;
 uint32_t last_host_check = 0;
 
-// FASTRUN void complete_main_rom_event(bool unused, uint32_t data) {
-//   main_rom[bus_address - 0xc100] = data;
-// }
+FASTRUN void emit_byte(uint8_t emitted_byte) {
+  if (!bus_rw) {
+    return;
+  }
+  // bring ADDR_RX_ENABLE high to shut it off (is is default bus owner)
+  // also set TEENSY_EMIT_DATA low to signal we are emitting this cycle
+  // also set DATA_TX_LATCH high to accept data
+  GPIO7_DR_SET = ADDR_RX_ENABLE_MASK | DATA_TX_LATCH_MASK;
+  GPIO7_DR_CLEAR = TEENSY_EMIT_DATA_MASK;
+  // set bus0-7 to output
+  GPIO6_GDIR |= BUS_DATA_MASK;
+  // put byte onto bus- clear all 8 bits and then set the ones which
+  // are set in the emitted byte
+  GPIO6_DR_CLEAR = BUS_DATA_MASK;
+  GPIO6_DR_SET = BUS_DATA_MASK & (emitted_byte << 16);
+  // figure out how long to wait for stability, try discarding a GPIO read or two
+  discard_pins = GPIO9_PSR;
+  discard_pins = GPIO9_PSR;
+  // bring DATA_TX_LATCH low to latch the emitted byte
+  GPIO7_DR_CLEAR = DATA_TX_LATCH_MASK;
+  // set bus0-7 to input
+  GPIO6_GDIR &= ~(BUS_DATA_MASK);
+  // return ADDR_RX_ENABLE low for it to be ready for the next address cycle
+  GPIO7_DR_CLEAR = ADDR_RX_ENABLE_MASK;
+  emitting_byte = true;
+}
 
-// FASTRUN void store_data_callback(bool data_phase, uint32_t data) {
-//   int32_t offset = 0;
-//   if (prev_bus_address < 0x0200) {
-//     // only switch that matters here is ALTZP=
-//     if (ss_mode & MF_ALTZP) {
-//       offset = 0x10000;
-//     }
-//   } else if (prev_bus_address < 0xc000) {
-//     if (prev_bus_rw) {
-//       if (ss_mode & MF_AUXREAD) {
-//         offset = 0x10000;
-//       } 
-//     } else {
-//       if (ss_mode & MF_AUXWRITE) {
-//         offset = 0x10000;
-//       }
-//     }
-//     // 80store overrides AUXREAD/AUXWRITE
-//     if (ss_mode & MF_80STORE) {
-//       if (prev_bus_address >= 0x0400 && prev_bus_address < 0x0800) {
-//         if (ss_mode & MF_PAGE2) {
-//           offset = 0x10000;
-//         } else {
-//           offset = 0;
-//         }
-//       }
-//       if (ss_mode & MF_HIRES) {
-//         if (prev_bus_address >= 0x2000 && prev_bus_address < 0x4000) {
-//           if (ss_mode & MF_PAGE2) {
-//             offset = 0x10000;
-//           } else {
-//             offset = 0;
-//           }
-//         }
-//       }
-//     }
-//   } else if (ss_mode & MF_HIGHRAM) {
-//     if (ss_mode & MF_ALTZP) {
-//       offset = 0x10000;
-//     }
-//     if (ss_mode & MF_BANK2) {
-//       // bank 2 is tucked back where 0xc000 would be
-//       offset -= 0x1000;
-//     }
-//     if (!prev_bus_rw) {
-//       if ( (ss_mode & MF_WRITERAM) == 0) {
-//         //ignoring writes to RAM
-//         return;
-//       }
-//     }
-//   } else {
-//     // addressing high rom
-//     if (!prev_bus_rw) {
-//       // ignore writes to ROM
-//       return;
-//     }
-//     // store the value in ROM space if it's a read, ignore if it's a write
-//     lc_rom[prev_bus_address - 0xc000] = (uint8_t)data;
-//     return;
-//   }
-//   apple_main_memory[prev_bus_address+offset] = (uint8_t)data;
-
-// }
-
-// inline void check_memory() {
-//   uint8_t memory_page = (bus_address & 0xff00) >> 8;
-//   check_memory_page(memory_page);
-//   if ((bus_address & 0xff00) != 0xc000) {
-//     return false;
-//   }
-//   if (bus_address < 0xc090) {
-//     uint32_t switch_byte = (bus_address & 0x00ff);
-//     (*(handle_soft_switch[switch_byte]))(false);
-//     return true;
-//   }
-//   if (bus_address < 0xc100) {
-//     uint32_t slot_number = (bus_address & 0x0070) >> 8;
-//     (*(handle_card_io_event[slot_number]))();
-//     return true;
-//   }
-//   if (bus_address < 0xc800) {
-//     uint32_t slot_number = (bus_address & 0x0700) >> 16;
-//     bool is_slot_access = false;
-//     if (slot_number == 3) {
-//       if ((ss_mode & MF_SLOTC3ROM) == 0) {
-//         ss_mode |= MF_INTC8ROM;
-//       }
-//       if ( !(ss_mode & MF_INTC8ROM) && (ss_mode & MF_SLOTC3ROM)) {
-//         is_slot_access = true;
-//       }
-//     } else {
-//       is_slot_access = ss_mode & MF_INTC8ROM;
-//     }
-//     if (is_slot_access) {
-//       card_shared_owner = slot_number;
-//       (*(handle_card_page_event)[slot_number])();
-//     } else {
-//       //handle_main_rom_event();
-//     }
-//     return true;
-//   }
-//   if (bus_address == 0xcfff) {
-//     card_shared_owner = 0;
-//     ss_mode &= ~MF_INTC8ROM;
-//   }
-//   if (ss_mode & MF_INTC8ROM) {
-//     //handle_main_rom_event();
-//   } else {
-//     (*handle_card_shared_event[card_shared_owner])();
-//   }
-//   return true;
-// }
+FASTRUN void inhibit_bus() {
+  // set INH output, assert low
+  GPIO9_GDIR |= INH_MASK;
+  GPIO9_DR_CLEAR |= INH_MASK;
+  bus_inhibited = true;
+}
 
 inline void determine_bus_cycle_action() {
   if (APPLEIIGS_MODE && bus_m2sel) {
     // not a valid IIgs bus cycle, ignore it
     return;
   }
-  // uint8_t pre_memory_page = (bus_address & 0xff00) >> 8;
-  // memory_page_callback[pre_memory_page](bus_address, 0, false);
-  //check_cxxx_range();
 
   // check for reset sequence
   // stolen from markadev/AppleII-VGA,
@@ -141,25 +55,73 @@ inline void determine_bus_cycle_action() {
       reset_detect_state = 1;
     }
   } else if ((reset_detect_state == 3) && (bus_address == 0xfffc)) {
+    // if we get this far, a reset is imminent.  Reset the soft switches
+    // now, to ensure that the function handling the initial boot injection
+    // is the high rom handler.
+    reset_soft_switch_state();
     reset_detect_state = 4;
-    //inhibit_apple_bus();
-    //emit_byte(0x00); // inject low byte of our boot vector
+
+    // if (HAVE_BOOT_STAGE1) {
+    //   inhibit_bus();
+    //   emit_byte(0x00);
+    // }
   } else if ((reset_detect_state == 4) && (bus_address == 0xfffd)) {
     reset_happened = true;
-    //inhibit_apple_bus();
-    //emit_byte(true, 0xc0 | TINI_SLOT); // inject high byte of our boot vector
-    // after injecting our boot vector into the boot sequence, the CPU should start
-    // executing our Cx00 code, which initially will just generate a tone to prove
-    // that we're getting there.  Ultimately we want to do machine identification,
-    // detect the VBL cycle, mirror the full memory image, and maybe provide a pre-boot menu.
-    reset_detect_state = 0;
+    reset_detect_state = 5;
+    // if (HAVE_BOOT_STAGE1) {
+    //   inhibit_bus();
+    //   emit_byte(0xd0);
+    //   boot_injection_stage = 1;
+    // }
+
   } else {
     reset_detect_state = 0;
   }
 
-  // uint8_t post_memory_page = (prev_bus_address & 0xff00) >> 8;
-  // memory_page_callback[post_memory_page](prev_bus_address, bus_data, true);
+  uint32_t pre_memory_page = ((uint32_t)bus_rw << 8) + ((bus_address & 0xff00) >> 8);
+  AddrCallback addr_cb = *(memory_page_addr_callbacks[pre_memory_page]);
+  addr_cb(bus_address, bus_rw);
 
+  // // hack to do writes to the byte we have selected as the INH override byte
+  // if (!prev_bus_rw && (prev_bus_address == 0x4000)) {
+  //   inh_override_byte = bus_data;
+  // }
+
+  // // hack for byte emits
+  // if (bus_rw && (bus_address >= 0xc090) && (bus_address < 0xc0a0)) {
+  //   emit_byte(slot1_data[bus_address - 0xc090]);
+  // } else if (bus_address >= 0xd000 && bus_address <= 0xd020) {
+  //   inhibit_bus();
+  //   emit_byte(injection_vector[bus_address - 0xd000]);
+  // } else if (bus_address == 0xfffc) {
+  //   inhibit_bus();
+  //   emit_byte(0x00);
+  // } else if (bus_address == 0xfffd) {
+  //   inhibit_bus();
+  //   emit_byte(0xd0);
+  // }
+
+  if (bus_inhibited) {
+    bus_inhibited = false;
+  } else {
+    // if the bus is not inhibited this cycle, deassert INH in case
+    // it had been previously asserted
+    GPIO9_GDIR &= ~(INH_MASK);
+  }
+
+  if (emitting_byte) {
+    emitting_byte = false;
+  } else {
+    // since we're not emitting here, disable TEENSY_EMIT_DATA in case
+    // it had been set the prior phase
+    GPIO7_DR_SET = TEENSY_EMIT_DATA_MASK;
+  }
+
+
+
+  uint32_t post_memory_page = (prev_bus_rw << 8) + ((prev_bus_address & 0xff00) >> 8);
+  DataCallback data_cb = *(memory_page_data_callbacks[post_memory_page]);
+  data_cb(prev_bus_address, bus_data, prev_bus_rw);
 }
 
 FASTRUN void handle_reset() {
@@ -173,17 +135,16 @@ FASTRUN void handle_reset() {
 #define IMR_INDEX 5
 #define ISR_INDEX 6
 
-uint64_t bus_counter = 0;
-
 FASTRUN void bus_handler() {
   ++bus_counter;
+
   // clear interrupts.  Since we know that we are the only GPIO
   // interrupt running, and we know it's on GPIO7.10, we can
   // clear just that interrupt register.
   volatile uint32_t* drp = &GPIO7_DR;
   uint32_t interrupt_status = drp[ISR_INDEX] & drp[IMR_INDEX];
   drp[ISR_INDEX] = interrupt_status;
- 
+
   // snap the inputs.  Each port read takes 8 cycles, writes take only 1.
   // A certain amount of stabilization time is needed after we toggle the
   // RX_ENABLE lines, before we can read GPIO6_PSR a second time to get the
@@ -230,7 +191,6 @@ FASTRUN void bus_handler() {
   prev_bus_rw = bus_rw;
 
   prev_addr_event = (bus_address << 8) | (bus_rw << 24) | (bus_m2sel << 25) | (bus_m2b0 << 26) | (APPLEIIGS_MODE << 31);
-
 }
 
 // initializing a pin to OUTPUT to a desired initial value
@@ -248,30 +208,17 @@ inline void init_output_pin(uint8_t pin, uint8_t level) {
 }
 
 // handler for card memory slots where we are not configured to respond
-void card_null_handler() {
+void card_null_handler(uint16_t addr, uint8_t data, bool data_phase) {
   return;
 }
 
-void tini_io_event() {}
+void tini_io_event(uint16_t addr, uint8_t data, bool data_phase) {}
 
-void tini_page_event() {}
+void tini_page_event(uint16_t addr, uint8_t data, bool data_phase) {}
 
-void tini_shared_event() {}
+void tini_shared_event(uint16_t addr, uint8_t data, bool data_phase) {}
 
 void setup() {
-
-  // // initialize card handlers
-  // for (int i = 0; i < 8; ++i) {
-  //   handle_card_io_event[i] = &card_null_handler;
-  //   handle_card_page_event[i] = &card_null_handler;
-  //   handle_card_shared_event[i] = &card_null_handler;
-  // }
-  // handle_card_io_event[TINI_SLOT] = &tini_io_event;
-  // handle_card_page_event[TINI_SLOT] = &tini_page_event;
-  // handle_card_shared_event[TINI_SLOT] = &tini_shared_event;
-  
-  // initialize_soft_switch_handlers();
-
 
   for (int i = 0; i < 42; ++i) {
     pinMode(i, INPUT_DISABLE);
@@ -315,10 +262,10 @@ void setup() {
 
   // ADDR_TX_LATCH
   // DATA_TX_LATCH
-  // pins to tell the TX latches to store the current values on their lines.
-  // Always outputs, init high
-  init_output_pin(PIN_ADDR_TX_LATCH, HIGH);
-  init_output_pin(PIN_DATA_TX_LATCH, HIGH);
+  // pins to tell the TX latches to retain their latched values.
+  // Always outputs, init low
+  init_output_pin(PIN_ADDR_TX_LATCH, LOW);
+  init_output_pin(PIN_DATA_TX_LATCH, LOW);
 
   // TEENSY_EMIT_DATA
   // pin to tell Pico that the current bus cycle should emit the latched data byte.
@@ -364,11 +311,9 @@ void setup() {
   // TEENSY_IRQ, the pin we get address-phase interrupts from the Pico.  Always an input.
   pinMode(PIN_TEENSY_IRQ, INPUT);
 
-  // let the lib code in attachInterrupt do its config details
-  attachInterrupt(digitalPinToInterrupt(PIN_TEENSY_IRQ), bus_handler, FALLING);
 
-  // override the vector for GPIO directly to our handler to skip dispatching
-  attachInterruptVector(IRQ_GPIO6789, &bus_handler);
+
+
 
   // start the Ethernet
   qn::Ethernet.begin();
@@ -383,6 +328,17 @@ void setup() {
   // }
 
   // Serial.println("initializing");
+  
+  initialize_memory_page_handlers();
+  initialize_soft_switch_handlers();
+
+  cli();
+  // let the lib code in attachInterrupt do its config details
+  attachInterrupt(digitalPinToInterrupt(PIN_TEENSY_IRQ), bus_handler, FALLING);
+
+  // override the vector for GPIO directly to our handler to skip dispatching
+  attachInterruptVector(IRQ_GPIO6789, &bus_handler);
+  sei();
 
   // demote any top-priority interrupts and set the GPIO interrupt
   // to top priority, so that the bus handler preempts everything else.
@@ -394,13 +350,11 @@ void setup() {
     }
   }
   NVIC_SET_PRIORITY(IRQ_GPIO6789, 0);
-
-
 }
 
 void loop() {
   auto now = millis();
-  if (!host_found && (now > last_host_check + 5000) ) {
+  if (!host_found && (now > last_host_check + 5000)) {
     // Serial.println("looking up host");
     host_found = qn::Ethernet.hostByName("raspberrypi.local", host);
     // if (host_found) {
@@ -427,6 +381,7 @@ void loop() {
   cli();
   uint8_t send_index = event_buf_index;
   uint8_t send_buf;
+  uint32_t last_cycle;
   if (send_index > 200) {
     send_buf = writing_buf;
     writing_buf = !writing_buf;

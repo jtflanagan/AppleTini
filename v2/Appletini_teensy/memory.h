@@ -22,5 +22,9 @@ extern uint32_t last_ramwrite_flag;
 
 void initialize_memory_page_handlers();
 void initialize_soft_switch_handlers();
+void reset_soft_switch_state();
+void update_altzp_lc_paging();
+void update_main_aux_paging();
+void update_card_paging();
 
 #endif
