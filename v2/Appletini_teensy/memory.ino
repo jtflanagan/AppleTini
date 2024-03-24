@@ -186,6 +186,7 @@ FASTRUN void ss_vbl(bool data_phase) {
   if (data_phase && prev_bus_rw) {
     uint8_t val = bus_data & 0x80;
     if (vbl_first_time) {
+      //Serial.println("hit vbl");
       vbl_first_time = 0;
       prev_vbl = val;
       return;
@@ -195,7 +196,8 @@ FASTRUN void ss_vbl(bool data_phase) {
     }
     if (val != prev_vbl) {
       vbl_transitions[vbl_transition_count++] = bus_counter;
-      if (vbl_transition_count == 19) {
+      //Serial.println("vbl transition");
+      if (vbl_transition_count == 26) {
         // for (int i = 1; i < 19; ++i) {
         //   Serial.println(vbl_transitions[i] - vbl_transitions[i-1]);
         // }
@@ -329,23 +331,6 @@ FASTRUN void low_rom_data_func(uint16_t addr, uint8_t data, bool rw) {
 }
 
 FASTRUN void high_rom_addr_func(uint16_t addr, bool rw) {
-  if (HAVE_BOOT_STAGE1) {
-    if (reset_detect_state > 3) {
-      inhibit_bus();
-      if (reset_detect_state == 4) {
-        //Serial.println("injection vector fffc");
-        emit_byte(0x00);  // emit low byte of boot stage1 injection address
-      } else {
-        //Serial.println("injection vector fffd");
-        // reset_detect_state == 5
-        reset_detect_state = 0;
-        emit_byte(0xd0);  // emit high byte of boot stage1 injection address
-        boot_injection_stage = 1;
-      }
-      return;
-    }
-  }
-
   if (brain_transplant_mode) {
     inhibit_bus();
     if (rw) {
@@ -354,32 +339,12 @@ FASTRUN void high_rom_addr_func(uint16_t addr, bool rw) {
     return;
   }
 
-  if (boot_injection_stage == 1) {
-    //Serial.println(addr);
-    inhibit_bus();
-    emit_byte(boot_injection_stage1_image[addr - 0xd000]);
-    //Serial.println(BOOT_IMAGE_STAGE1_END);
-    if (addr == BOOT_IMAGE_STAGE1_END) {
-      //Serial.println("end of boot image");
-      if (HAVE_BOOT_STAGE2) {
-        boot_injection_stage = 2;
-      } else {
-        boot_injection_stage = 0;
-      }
-    }
-    return;
-  }
 }
 
 FASTRUN void high_rom_data_func(uint16_t addr, uint8_t data, bool rw) {
-  // shadow data reads only, and only if not in boot injection stage 1
-  // (we do the initial rom scan for shadowing in injection stage 2,
-  // because we are overriding the memory area while still in stage 1)
   if (rw) {
     uint16_t image_addr = addr - 0xd000;
-    if (boot_injection_stage != 1) {
-      apple_high_rom[image_addr] = data;
-    }
+    apple_high_rom[image_addr] = data;
   }
 }
 
@@ -514,16 +479,6 @@ FASTRUN void card_shared_addr_func(uint16_t addr, bool rw) {
     card_shared_owner = -1;
   }
   if (card_shared_owner < 0) {
-    if (HAVE_BOOT_STAGE2) {
-      if (boot_injection_stage == 2) {
-        // don't need to inhibit, nothing should be asserting ownership
-        // of this range.  Just emit the stage2 image byte
-        emit_byte(boot_injection_stage2_image[addr - 0xc800]);
-        if (addr == BOOT_IMAGE_STAGE2_END) {
-          boot_injection_stage = 0;
-        }
-      }
-    }
     return;
   }
   handle_card_shared_addr[card_shared_owner](addr, rw);
@@ -547,7 +502,59 @@ void empty_slot_data(uint16_t addr, uint8_t data, bool rw) {
   // do nothing
 }
 
+void tini_preboot_card_addr_func(uint16_t addr, bool rw) {
+  if (!rw) {
+    return;
+  }
+  uint32_t image_offset = addr & 0x00ff;
+  emit_byte(preboot_card_image[image_offset]);
+}
 
+void tini_preboot_card_data_func(uint16_t addr, uint8_t data, bool rw) {
+  // nothing to be done here
+}
+
+void tini_preboot_shared_addr_func(uint16_t addr, bool rw) {
+  if (!rw) {
+    return;
+  }
+  uint32_t image_offset = addr & 0x07ff;
+  emit_byte(preboot_shared_image[image_offset]);
+}
+
+void tini_preboot_shared_data_func(uint16_t addr, uint8_t data, bool rw) {
+  if (rw) {
+    return;
+  }
+  if (addr == 0xc800) {
+    // we write the machine type here during preboot:
+    // 00: pre-IIe
+    // 01: unenhanced IIe
+    // 02: enhanced IIe
+    // 03: GS
+    preboot_shared_image[0x7ff] = data;
+    if (data == 0x03) {
+      // set to the value it will eventually get used as in event publish
+      apple_iigs_mode = (1 << 31);
+    } else {
+      apple_iigs_mode = 0;
+    }
+    Serial.print("machine type:");
+    Serial.print(data);
+  }
+}
+
+void fake_vidhd_addr_func(uint16_t addr, bool rw) {
+  if (!rw) {
+    return;
+  }
+  uint32_t image_offset = addr & 0x00ff;
+  emit_byte(fake_vidhd_image[image_offset]);
+}
+
+void fake_vidhd_data_func(uint16_t addr, uint8_t data, bool rw) {
+  // nothing to be done here
+}
 
 void initialize_memory_page_handlers() {
   for (int i = 0x00; i < 0x02; ++i) {
@@ -633,6 +640,17 @@ void initialize_memory_page_handlers() {
   handle_card_page_data[0] = low_rom_data_func;
   handle_card_shared_addr[0] = low_rom_addr_func;
   handle_card_shared_data[0] = low_rom_data_func;
+
+  // put our handlers on slot 7
+  handle_card_page_addr[7] = tini_preboot_card_addr_func;
+  handle_card_page_data[7] = tini_preboot_card_data_func;
+  handle_card_shared_addr[7] = tini_preboot_shared_addr_func;
+  handle_card_shared_data[7] = tini_preboot_shared_data_func;
+
+  // fake a vidhd in slot 2
+  handle_card_page_addr[2] = fake_vidhd_addr_func;
+  handle_card_page_data[2] = fake_vidhd_data_func;
+
   c0_page_addr = c0_page_addr_func;
   c0_page_data = c0_page_data_func;
   card_shared_addr = card_shared_addr_func;

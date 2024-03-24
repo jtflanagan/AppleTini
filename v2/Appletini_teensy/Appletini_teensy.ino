@@ -40,7 +40,7 @@ FASTRUN void inhibit_bus() {
 }
 
 inline void determine_bus_cycle_action() {
-  if (APPLEIIGS_MODE && bus_m2sel) {
+  if (apple_iigs_mode && bus_m2sel) {
     // not a valid IIgs bus cycle, ignore it
     return;
   }
@@ -55,24 +55,12 @@ inline void determine_bus_cycle_action() {
       reset_detect_state = 1;
     }
   } else if ((reset_detect_state == 3) && (bus_address == 0xfffc)) {
-    // if we get this far, a reset is imminent.  Reset the soft switches
-    // now, to ensure that the function handling the initial boot injection
-    // is the high rom handler.
-    reset_soft_switch_state();
     reset_detect_state = 4;
 
-    // if (HAVE_BOOT_STAGE1) {
-    //   inhibit_bus();
-    //   emit_byte(0x00);
-    // }
   } else if ((reset_detect_state == 4) && (bus_address == 0xfffd)) {
     reset_happened = true;
     reset_detect_state = 5;
-    // if (HAVE_BOOT_STAGE1) {
-    //   inhibit_bus();
-    //   emit_byte(0xd0);
-    //   boot_injection_stage = 1;
-    // }
+    reset_soft_switch_state();
 
   } else {
     reset_detect_state = 0;
@@ -167,9 +155,11 @@ FASTRUN void bus_handler() {
 
   bus_data = (data_port6_pins & 0x00ff0000) >> 16;
   bus_address = (addr_port6_pins & 0xffff0000) >> 16;
-  bus_rw = (addr_port6_pins & (1 << 13)) != 0;
-  bus_m2sel = (addr_port6_pins & (1 << 2)) != 0;
-  bus_m2b0 = (addr_port6_pins & (1 << 3)) != 0;
+  // these are set to the offsets they will eventually get used as
+  // for event publish, and used in boolean context otherwise
+  bus_rw = (addr_port6_pins & (1 << 13)) ? (1 << 24) : 0;
+  bus_m2sel = (addr_port6_pins & (1 << 2)) ? (1 << 25) : 0;
+  bus_m2b0 = (addr_port6_pins & (1 << 3)) ? (1 << 26) : 0;
 
   // make whatever decision as to what to do on this bus cycle based on
   // the bus state
@@ -190,7 +180,7 @@ FASTRUN void bus_handler() {
   prev_bus_address = bus_address;
   prev_bus_rw = bus_rw;
 
-  prev_addr_event = (bus_address << 8) | (bus_rw << 24) | (bus_m2sel << 25) | (bus_m2b0 << 26) | (APPLEIIGS_MODE << 31);
+  prev_addr_event = (bus_address << 8) | bus_rw | bus_m2sel | bus_m2b0 | apple_iigs_mode;
 }
 
 // initializing a pin to OUTPUT to a desired initial value
@@ -318,16 +308,16 @@ void setup() {
   // start the Ethernet
   qn::Ethernet.begin();
 
-  // Serial.begin(9600);
-  // while (!Serial) {
-  //   // wait for connect
-  // }
-  // if (CrashReport) {
-  //   Serial.print(CrashReport);
-  //   delay(5000);
-  // }
+  Serial.begin(9600);
+  while (!Serial) {
+    // wait for connect
+  }
+  if (CrashReport) {
+    Serial.print(CrashReport);
+    delay(5000);
+  }
 
-  // Serial.println("initializing");
+  Serial.println("initializing");
   
   initialize_memory_page_handlers();
   initialize_soft_switch_handlers();
@@ -381,7 +371,6 @@ void loop() {
   cli();
   uint8_t send_index = event_buf_index;
   uint8_t send_buf;
-  uint32_t last_cycle;
   if (send_index > 200) {
     send_buf = writing_buf;
     writing_buf = !writing_buf;
