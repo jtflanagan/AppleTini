@@ -647,9 +647,11 @@ void initialize_memory_page_handlers() {
   handle_card_shared_addr[7] = tini_preboot_shared_addr_func;
   handle_card_shared_data[7] = tini_preboot_shared_data_func;
 
-  // fake a vidhd in slot 2
-  handle_card_page_addr[2] = fake_vidhd_addr_func;
-  handle_card_page_data[2] = fake_vidhd_data_func;
+  // fake a vidhd if configured
+  #ifdef FAKE_VIDHD_SLOT
+  handle_card_page_addr[FAKE_VIDHD_SLOT] = fake_vidhd_addr_func;
+  handle_card_page_data[FAKE_VIDHD_SLOT] = fake_vidhd_data_func;
+  #endif
 
   c0_page_addr = c0_page_addr_func;
   c0_page_data = c0_page_data_func;

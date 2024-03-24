@@ -10,6 +10,7 @@ namespace qn = qindesign::network;
 //extern IPAddress gw;
 //extern IPAddress host;
 
+#define FAKE_VIDHD_SLOT 2
 
 extern void inhibit_bus();
 extern void emit_byte(uint8_t emitted_byte);
