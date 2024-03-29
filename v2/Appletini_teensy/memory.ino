@@ -641,11 +641,13 @@ void initialize_memory_page_handlers() {
   handle_card_shared_addr[0] = low_rom_addr_func;
   handle_card_shared_data[0] = low_rom_data_func;
 
+#ifdef PREBOOT_CARD_IMAGE
   // put our handlers on slot 7
   handle_card_page_addr[7] = tini_preboot_card_addr_func;
   handle_card_page_data[7] = tini_preboot_card_data_func;
   handle_card_shared_addr[7] = tini_preboot_shared_addr_func;
   handle_card_shared_data[7] = tini_preboot_shared_data_func;
+#endif
 
   // fake a vidhd if configured
   #ifdef FAKE_VIDHD_SLOT

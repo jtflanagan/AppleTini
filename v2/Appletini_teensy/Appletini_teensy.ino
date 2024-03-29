@@ -45,49 +45,16 @@ inline void determine_bus_cycle_action() {
     return;
   }
 
-  // check for reset sequence
-  // stolen from markadev/AppleII-VGA,
-  // which was stolen from how the IIe IOU chip does reset detect
-  if ((bus_address & 0xff00) == 0x0100) {
-    if (reset_detect_state < 3) {
-      ++reset_detect_state;
-    } else if (reset_detect_state > 3) {
-      reset_detect_state = 1;
-    }
-  } else if ((reset_detect_state == 3) && (bus_address == 0xfffc)) {
-    reset_detect_state = 4;
-
-  } else if ((reset_detect_state == 4) && (bus_address == 0xfffd)) {
-    reset_happened = true;
-    reset_detect_state = 5;
+  if (bus_reset && !prev_bus_reset) {
     reset_soft_switch_state();
-
-  } else {
-    reset_detect_state = 0;
   }
+  prev_bus_reset = bus_reset;
 
   uint32_t pre_memory_page = ((uint32_t)bus_rw << 8) + ((bus_address & 0xff00) >> 8);
   AddrCallback addr_cb = *(memory_page_addr_callbacks[pre_memory_page]);
   addr_cb(bus_address, bus_rw);
 
-  // // hack to do writes to the byte we have selected as the INH override byte
-  // if (!prev_bus_rw && (prev_bus_address == 0x4000)) {
-  //   inh_override_byte = bus_data;
-  // }
 
-  // // hack for byte emits
-  // if (bus_rw && (bus_address >= 0xc090) && (bus_address < 0xc0a0)) {
-  //   emit_byte(slot1_data[bus_address - 0xc090]);
-  // } else if (bus_address >= 0xd000 && bus_address <= 0xd020) {
-  //   inhibit_bus();
-  //   emit_byte(injection_vector[bus_address - 0xd000]);
-  // } else if (bus_address == 0xfffc) {
-  //   inhibit_bus();
-  //   emit_byte(0x00);
-  // } else if (bus_address == 0xfffd) {
-  //   inhibit_bus();
-  //   emit_byte(0xd0);
-  // }
 
   if (bus_inhibited) {
     bus_inhibited = false;
@@ -112,12 +79,12 @@ inline void determine_bus_cycle_action() {
   data_cb(prev_bus_address, bus_data, prev_bus_rw);
 }
 
-FASTRUN void handle_reset() {
-  reset_happened = false;
-  tx_buf[0] = next_tx_seqno++;
-  tx_buf[1] = 2;  // reset is message type 2
-  Udp.send(host, localPort, (const uint8_t*)tx_buf, 8);
-}
+// FASTRUN void handle_reset() {
+//   reset_happened = false;
+//   tx_buf[0] = next_tx_seqno++;
+//   tx_buf[1] = 2;  // reset is message type 2
+//   Udp.send(host, localPort, (const uint8_t*)tx_buf, 8);
+// }
 
 
 #define IMR_INDEX 5
@@ -160,6 +127,7 @@ FASTRUN void bus_handler() {
   bus_rw = (addr_port6_pins & (1 << 13)) ? (1 << 24) : 0;
   bus_m2sel = (addr_port6_pins & (1 << 2)) ? (1 << 25) : 0;
   bus_m2b0 = (addr_port6_pins & (1 << 3)) ? (1 << 26) : 0;
+  bus_reset = (port9_pins & (1 << 31)) ? (1 << 27) : 0;
 
   // make whatever decision as to what to do on this bus cycle based on
   // the bus state
@@ -180,7 +148,7 @@ FASTRUN void bus_handler() {
   prev_bus_address = bus_address;
   prev_bus_rw = bus_rw;
 
-  prev_addr_event = (bus_address << 8) | bus_rw | bus_m2sel | bus_m2b0 | apple_iigs_mode;
+  prev_addr_event = (bus_address << 8) | bus_rw | bus_m2sel | bus_m2b0 | bus_reset | apple_iigs_mode;
 }
 
 // initializing a pin to OUTPUT to a desired initial value
@@ -357,11 +325,11 @@ void loop() {
     return;
   }
 
-  if (reset_happened) {
-    // Serial.println("reset detected");
-    handle_reset();
-    // Serial.println("reset notification sent");
-  }
+  // if (reset_happened) {
+  //   // Serial.println("reset detected");
+  //   handle_reset();
+  //   // Serial.println("reset notification sent");
+  // }
 
   //int packetSize = Udp.parsePacket();
   Udp.parsePacket();

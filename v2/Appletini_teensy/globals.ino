@@ -19,8 +19,13 @@ uint8_t apple_main_memory[128*1024];
 uint8_t apple_low_rom[15*256];
 uint8_t apple_high_rom[12*1024];
 // preboot images could go to RAM2?  Rarely needed, not performant
+#ifdef PREBOOT_CARD_IMAGE
 uint8_t preboot_card_image[256] = PREBOOT_CARD_IMAGE;
 uint8_t preboot_shared_image[2048] = PREBOOT_SHARED_IMAGE;
+#else
+uint8_t preboot_card_image[256];
+uint8_t preboot_shared_image[2048];
+#endif
 uint8_t fake_vidhd_image[256] = FAKE_VIDHD_IMAGE;
 EXTMEM uint8_t expanded_memory[16*1024*1024];
 volatile uint32_t event_buf_index = 2;
@@ -39,7 +44,7 @@ uint32_t bus_address = 0;
 uint32_t prev_bus_address = 0;
 uint32_t bus_data = 0;
 int32_t card_shared_owner = 0;
-uint32_t apple_iigs_mode = 0;
+uint32_t apple_iigs_mode = (1 << 31);
 uint32_t bus_rw = 0;
 uint32_t prev_bus_rw = 0;
 uint32_t brain_transplant_mode = 0;
@@ -47,6 +52,8 @@ uint32_t bus_inhibited = 0;
 uint32_t emitting_byte = 0;
 uint32_t bus_m2sel = 0;
 uint32_t bus_m2b0 = 0;
+uint32_t bus_reset = 0;
+uint32_t prev_bus_reset = 0;
 volatile bool reset_happened = false;
 uint32_t reset_detect_state = 0;
 uint32_t bus_counter = 0;
