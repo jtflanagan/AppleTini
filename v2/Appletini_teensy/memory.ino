@@ -539,8 +539,8 @@ void tini_preboot_shared_data_func(uint16_t addr, uint8_t data, bool rw) {
     } else {
       apple_iigs_mode = 0;
     }
-    Serial.print("machine type:");
-    Serial.print(data);
+    // Serial.print("machine type:");
+    // Serial.print(data);
   }
 }
 

@@ -308,16 +308,16 @@ void setup() {
   // start the Ethernet
   qn::Ethernet.begin();
 
-  Serial.begin(9600);
-  while (!Serial) {
-    // wait for connect
-  }
-  if (CrashReport) {
-    Serial.print(CrashReport);
-    delay(5000);
-  }
+  // Serial.begin(9600);
+  // while (!Serial) {
+  //   // wait for connect
+  // }
+  // if (CrashReport) {
+  //   Serial.print(CrashReport);
+  //   delay(5000);
+  // }
 
-  Serial.println("initializing");
+  // Serial.println("initializing");
   
   initialize_memory_page_handlers();
   initialize_soft_switch_handlers();
