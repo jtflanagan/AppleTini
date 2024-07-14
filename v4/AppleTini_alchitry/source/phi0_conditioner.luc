@@ -1,0 +1,24 @@
+module phi0_conditioner (
+    input clk,  // clock
+    input rst,  // reset
+    input in,
+    output out
+  ) {
+
+  dff pipe[4](.clk(clk), .rst(rst));
+  dff prev_out(.clk(clk), .rst(rst));
+  
+  always {
+    if (pipe.q[3:1] == h7) {
+      out = 1;
+      prev_out.d = 1;
+    } else if (pipe.q[3:1] == 0) {
+      out = 0;
+      prev_out.d = 0;
+    } else {
+      out = prev_out.q;
+    }
+    pipe.d[0] = in;
+    pipe.d[3:1] = pipe.q[2:0];
+  }
+}

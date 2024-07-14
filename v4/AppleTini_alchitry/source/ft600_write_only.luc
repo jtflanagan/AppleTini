@@ -1,0 +1,100 @@
+module ft600_write_only (
+    input clk,
+    input rst,  // reset
+    input ft_clk,
+    input ft_rxf,
+    input ft_txe,
+    output ft_data[16],
+    output ft_be[2],
+    output ft_rd,
+    output ft_wr,
+    output ft_oe,
+    input ui_din[32],
+    input ui_din_valid,
+    output ui_full
+  ) {
+  
+  .clk(ft_clk) {
+    //reset_conditioner ft_rst_cond(.in(rst));
+    dff ctr[7];
+    dff prev_write;
+  }
+  
+  //async_fifo write_fifo(#SIZE(16), #DEPTH(4096), .rclk(ft_clk), .rrst(ft_rst_cond.out), .wclk(clk), .wrst(rst));
+  fifo_generator_0 write_fifo(.rst(rst), .wr_clk(clk), .rd_clk(ft_clk));
+  
+  always {
+    write_fifo.wr_en = ui_din_valid;
+    write_fifo.din = ui_din;
+    ui_full = write_fifo.full;
+  }
+  
+  always {
+    // default values
+    ft_oe = 1;
+    ft_rd = 1;
+    ft_wr = 1;
+    ft_data =  write_fifo.dout;
+    //ft_data[15:8] = c{ctr.q, 1b1};
+    //ft_data[7:0] = c{ctr.q, 1b0};
+    ft_be = 2b11;
+    
+    write_fifo.rd_en = 0;
+    
+    if (ft_txe == 0 && write_fifo.empty == 0) {
+      ft_wr = 0;
+      write_fifo.rd_en = 1;
+      ctr.d = ctr.q + 1;
+      prev_write.d = 1;
+    } else {
+      ft_wr = prev_write.q;
+      prev_write.d = 0;
+    }
+  }
+}
+/*
+module ft600_write_only (
+    input clk,
+    input rst,  // reset
+    input ft_clk,
+    input ft_rxf,
+    input ft_txe,
+    output ft_data[16],
+    output ft_be[2],
+    output ft_rd,
+    output ft_wr,
+    output ft_oe,
+    input ui_din[16],
+    input ui_din_valid,
+    output ui_full
+  ) {
+  
+  .clk(ft_clk) {
+   // reset_conditioner ft_rst_cond(.in(rst));
+  }
+  
+  //async_fifo_fix write_fifo(#SIZE(16), #DEPTH(512), .rclk(ft_clk), .rrst(ft_rst_cond.out), .wclk(clk), .wrst(rst));
+  fifo_generator_0 write_fifo(.rd_clk(ft_clk), .wr_clk(clk), .rst(rst));
+  
+  always {
+    write_fifo.wr_en = ui_din_valid;
+    write_fifo.din = ui_din;
+    ui_full = write_fifo.full;
+  }
+  
+  always {
+    // default values
+    ft_oe = 1;
+    ft_rd = 1;
+    ft_wr = 1;
+    ft_data = write_fifo.dout;
+    ft_be = 2b11;
+    
+    write_fifo.rd_en = 0;
+    
+    if (ft_txe == 0 && write_fifo.empty == 0) {
+      ft_wr = 0;
+      write_fifo.rd_en = 1;
+    } 
+  }
+}*/

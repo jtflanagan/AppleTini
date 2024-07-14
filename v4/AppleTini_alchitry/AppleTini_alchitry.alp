@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AppleTini_alchitry" board="Alchitry Au" language="Lucid" version="3">
+  <files>
+    <component>simple_dual_ram.v</component>
+    <component>async_fifo.luc</component>
+    <src top="true">au_top.luc</src>
+    <component>pipeline.luc</component>
+    <src>phi0_conditioner.luc</src>
+    <src>ft600_write_only.luc</src>
+    <component>reset_conditioner.luc</component>
+    <src>blinker.luc</src>
+    <component>pulse_delay_chain.luc</component>
+    <component>pulse_extender.luc</component>
+    <src>edge_detector.luc</src>
+    <component>button_conditioner.luc</component>
+    <constraint>alchitry.acf</constraint>
+    <constraint lib="true">au.xdc</constraint>
+    <constraint>ft.acf</constraint>
+    <core name="clk_wiz_0">
+      <src>clk_wiz_0.xci</src>
+      <stub>clk_wiz_0_stub.v</stub>
+    </core>
+    <core name="fifo_generator_0">
+      <src>fifo_generator_0.xci</src>
+      <stub>fifo_generator_0_stub.v</stub>
+    </core>
+  </files>
+</project>
