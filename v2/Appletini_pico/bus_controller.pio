@@ -8,11 +8,11 @@
     push noblock;
     wait 0 GPIO, PHI0_GPIO [19] ; P1+16, wait for PHI0 to fall, addr phase begin
     set PINS, 0b110 [1]; P1+176, ADDR_RX_LATCH high to accept address
-    set PINS, 0b000 [3] ; P1+192, TEENSY_IRQ negative edge, ADDR_RX_LATCH low to latch address
+    set PINS, 0b000 [8] ; P1+192, TEENSY_IRQ negative edge, ADDR_RX_LATCH low to latch address
     set PINS, 0b100 ; TEENSY_IRQ resume high
     wait 1 GPIO, PHI0_GPIO [31] ; P0+16, wait for PHI0 to rise, data phase begin
     set PINS, 0b101 [23] ; P0+272, DATA_RX_LATCH high to accept data
-    set PINS, 0b100 ; P0+464, DATA_RX_LATCH low to latch data
+    set PINS, 0b100 [8]; P0+464, DATA_RX_LATCH low to latch data
 .wrap
 
 ;pins are GPIO2) DMA, GPIO1) ADDR_TX_ENABLE
