@@ -1,12 +1,10 @@
 # AppleTini
-Teensy 4.1-based multifunctional Apple II peripheral card
+An FPGA-based multifunctional card
 
-The v1 version of the card works in the Apple IIe.  It should work in a II+ but I have no access to one for testing.  It will not currently work in a IIgs, but IIgs support should be possible, and is expected in a future board version.
+Earlier iterations of the design used microcontrollers (a Pico and a Teensy 4.1), but we have moved to an FPGA-based design.  The v4 version of the board works in an Apple IIe as a read-only bus dump card.  It reads events on the Apple II bus, and forwards them over USB to a remote host which can process them (including operating as HDMI video-out, similar to the VidHD card).
 
-The design uses a non-wireless Pico, flashed with the AppleTini_pico sketch, and a Teensy 4.1 with Ethernet, flashed with the AppleTini_teensy sketch.  The Teensy should be clocked at 812MHz in order to meet timing.  You may need to set that manually in the sketch before flashing the board.
+The v5 board (just ordered!) is intended to provide the full bus feature set.  The ability to read and write data to the bus, as well as perform full DMA and assert all the control lines available (DMA, RES, RDY, INH, IRQ, NMI, and properly implement DMAIN/OUT and INTIN/OUT.
 
-The bus_controller.pio.h file was generated from the bus_controller.pio file using https://wokwi.com/tools/pioasm, but any other pioasm method would work just as well.  The Arduino IDE does not support pioasm itself, but is happy to let you include the generated header file if you provide it.
+The boards are designed to connect to a stack of Alchitry boards as sold by SparkFun.  The boards have headers which will mate with the Alchitry Br breakout board.  The high-speed USB needed to do bus dumping is provided by the Alchitry Ft board, which is capable of up to 1.6Gbits/sec data transmit over USB3.  The FPGA, and 256MB of DDR3 SDRAM is provided by the Alchitry Au board.
 
-It is VERY important to leave the power jumper off of the board if you choose to keep the Teensy USB plugged in during use- unlike the Pico, the Teensy does not have circuitry to safely use the USB at the same time as externally sourced power.  This is not an issue under conventional use- normally you will just have the jumper in, and no USB connected.  You would only put in the USB and pull the jumper if you were doing heavy development on the Teensy code and needing to reflash it frequently.
-
-An implementation of an HDMI-out video renderer can be found at https://github.com/hasseily/SuperDuperDisplay.  It is designed to be multiplatform, it can run on desktops or a Raspberry Pi 4.  It supports all native Apple II/II+/IIe video modes.
+What can this board ultimately do?  Damn near anything.  Shorter term goals are to provide HDMI out, speaker sound, Mockingboard sound, mouse, Ramworks or Slinky style memory expansion, and solid state HDV storage.  Longer term?  CPU Acceleration.  In-circuit Emulator level debugging.  More flexible expanded memory banking techniques.  There's a lot of potential!  The FPGA on the Alchitry Au is an Artix-7 35T, so there's a lot of room for all kinds of stuff.
