@@ -7454,6 +7454,17 @@
 		)
 		(uuid "c733b693-e8d0-4418-b359-d85604420cc3")
 	)
+	(label "GND"
+		(at 246.38 26.67 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c7c548b3-4802-42e5-9347-f33e244664cb")
+	)
 	(label "B46"
 		(at 176.53 54.61 0)
 		(fields_autoplaced yes)
@@ -8396,7 +8407,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 135.89 22.86 0)
+		(at 146.05 45.72 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8405,7 +8416,7 @@
 		(fields_autoplaced yes)
 		(uuid "0a67db49-fb75-460a-bbbe-e1ddad58607b")
 		(property "Reference" "#PWR024"
-			(at 135.89 26.67 0)
+			(at 146.05 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8414,7 +8425,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 135.89 17.78 0)
+			(at 146.05 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8422,7 +8433,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 135.89 22.86 0)
+			(at 146.05 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8431,7 +8442,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 22.86 0)
+			(at 146.05 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8440,7 +8451,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 135.89 22.86 0)
+			(at 146.05 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8590,6 +8601,15 @@
 			)
 		)
 		(property "Description" "Octal BUS Transceivers, 3-State outputs"
+			(at 81.28 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C6082"
 			(at 81.28 116.84 0)
 			(effects
 				(font
@@ -9036,7 +9056,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "114f0465-d713-4ac2-a305-ddb45bb254dc")
-		(property "Reference" "C8"
+		(property "Reference" "C10"
 			(at 109.22 48.2599 0)
 			(effects
 				(font
@@ -9081,7 +9101,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C77177"
 			(at 105.41 49.53 0)
 			(effects
 				(font
@@ -9099,7 +9119,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C8")
+					(reference "C10")
 					(unit 1)
 				)
 			)
@@ -9250,7 +9270,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 73.66 22.86 0)
+		(at 20.32 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9259,7 +9279,7 @@
 		(fields_autoplaced yes)
 		(uuid "169c2864-4b09-4011-a1c4-4d8ecf14f7e1")
 		(property "Reference" "#PWR060"
-			(at 73.66 26.67 0)
+			(at 20.32 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9268,7 +9288,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 73.66 17.78 0)
+			(at 20.32 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9276,7 +9296,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 73.66 22.86 0)
+			(at 20.32 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9285,7 +9305,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 73.66 22.86 0)
+			(at 20.32 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9294,7 +9314,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 73.66 22.86 0)
+			(at 20.32 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9382,7 +9402,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 146.05 22.86 0)
+		(at 74.93 45.72 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9391,7 +9411,7 @@
 		(fields_autoplaced yes)
 		(uuid "181db210-4586-4e3f-87b7-0ca90372d217")
 		(property "Reference" "#PWR062"
-			(at 146.05 26.67 0)
+			(at 74.93 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9400,7 +9420,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 146.05 17.78 0)
+			(at 74.93 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9408,7 +9428,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 22.86 0)
+			(at 74.93 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9417,7 +9437,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 22.86 0)
+			(at 74.93 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9426,7 +9446,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 146.05 22.86 0)
+			(at 74.93 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9580,7 +9600,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 115.57 30.48 0)
+		(at 104.14 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9589,7 +9609,7 @@
 		(fields_autoplaced yes)
 		(uuid "1d377baf-dc21-4397-8641-7a90263bf338")
 		(property "Reference" "#PWR029"
-			(at 115.57 36.83 0)
+			(at 104.14 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9598,7 +9618,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 115.57 35.56 0)
+			(at 104.14 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9606,7 +9626,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 115.57 30.48 0)
+			(at 104.14 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9615,7 +9635,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 115.57 30.48 0)
+			(at 104.14 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9624,7 +9644,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 115.57 30.48 0)
+			(at 104.14 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9646,7 +9666,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 95.25 73.66 0)
+		(at 133.35 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9654,8 +9674,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1d70c6d7-ce2a-470b-8ff4-c95b16ff0aee")
-		(property "Reference" "C14"
-			(at 99.06 72.3899 0)
+		(property "Reference" "C16"
+			(at 137.16 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9664,7 +9684,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 99.06 74.9299 0)
+			(at 137.16 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9673,7 +9693,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 96.2152 77.47 0)
+			(at 134.3152 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9682,7 +9702,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 95.25 73.66 0)
+			(at 133.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9691,7 +9711,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 95.25 73.66 0)
+			(at 133.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9699,8 +9719,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 95.25 73.66 0)
+		(property "LCSC" "C77177"
+			(at 133.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9717,7 +9737,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C14")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -9725,7 +9745,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 135.89 30.48 0)
+		(at 146.05 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9734,7 +9754,7 @@
 		(fields_autoplaced yes)
 		(uuid "2142e106-8542-4a97-a439-5e98d128e400")
 		(property "Reference" "#PWR035"
-			(at 135.89 36.83 0)
+			(at 146.05 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9743,7 +9763,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 135.89 35.56 0)
+			(at 146.05 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9751,7 +9771,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 135.89 30.48 0)
+			(at 146.05 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9760,7 +9780,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 30.48 0)
+			(at 146.05 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9769,7 +9789,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 135.89 30.48 0)
+			(at 146.05 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9857,7 +9877,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 105.41 26.67 0)
+		(at 93.98 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9865,8 +9885,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "27b2b94b-ce0e-4fde-bff3-4c6d016ce434")
-		(property "Reference" "C3"
-			(at 109.22 25.3999 0)
+		(property "Reference" "C5"
+			(at 97.79 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9875,7 +9895,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 109.22 27.9399 0)
+			(at 97.79 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9884,7 +9904,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 106.3752 30.48 0)
+			(at 94.9452 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9893,7 +9913,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 105.41 26.67 0)
+			(at 93.98 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9902,7 +9922,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 105.41 26.67 0)
+			(at 93.98 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9910,8 +9930,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 105.41 26.67 0)
+		(property "LCSC" "C77177"
+			(at 93.98 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9928,7 +9948,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C3")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -10116,7 +10136,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "302345a9-dbeb-4e46-be4d-1e6cf2a3d8dd")
-		(property "Reference" "C7"
+		(property "Reference" "C9"
 			(at 99.06 48.2599 0)
 			(effects
 				(font
@@ -10161,7 +10181,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C77177"
 			(at 95.25 49.53 0)
 			(effects
 				(font
@@ -10179,7 +10199,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C7")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -10187,7 +10207,7 @@
 	)
 	(symbol
 		(lib_id "power:+12V")
-		(at 105.41 22.86 0)
+		(at 93.98 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10196,7 +10216,7 @@
 		(fields_autoplaced yes)
 		(uuid "320c459a-6972-4cbe-89a6-1b7eac72b402")
 		(property "Reference" "#PWR032"
-			(at 105.41 26.67 0)
+			(at 93.98 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10205,7 +10225,7 @@
 			)
 		)
 		(property "Value" "+12V"
-			(at 105.41 17.78 0)
+			(at 93.98 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10213,7 +10233,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 22.86 0)
+			(at 93.98 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10222,7 +10242,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 22.86 0)
+			(at 93.98 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10231,7 +10251,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 105.41 22.86 0)
+			(at 93.98 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10385,7 +10405,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 135.89 26.67 0)
+		(at 146.05 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10393,8 +10413,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3720b935-3f82-481d-af5b-5081027f5ee4")
-		(property "Reference" "C12"
-			(at 139.7 25.3999 0)
+		(property "Reference" "C14"
+			(at 149.86 48.2599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10403,7 +10423,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 139.7 27.9399 0)
+			(at 149.86 50.7999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10412,7 +10432,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 136.8552 30.48 0)
+			(at 147.0152 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10421,7 +10441,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 135.89 26.67 0)
+			(at 146.05 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10430,7 +10450,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 135.89 26.67 0)
+			(at 146.05 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10438,8 +10458,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 135.89 26.67 0)
+		(property "LCSC" "C77177"
+			(at 146.05 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10456,7 +10476,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C12")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -10472,7 +10492,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "396db740-71cf-471f-9e7c-00fc4c799b96")
-		(property "Reference" "C11"
+		(property "Reference" "C13"
 			(at 139.7 48.2599 0)
 			(effects
 				(font
@@ -10517,7 +10537,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C77177"
 			(at 135.89 49.53 0)
 			(effects
 				(font
@@ -10535,7 +10555,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C11")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -10687,7 +10707,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 73.66 26.67 0)
+		(at 20.32 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10695,8 +10715,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "42213007-fb27-4bdb-ab9e-d775700a872d")
-		(property "Reference" "C15"
-			(at 77.47 25.3999 0)
+		(property "Reference" "C1"
+			(at 24.13 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10705,7 +10725,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 77.47 27.9399 0)
+			(at 24.13 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10714,7 +10734,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 74.6252 30.48 0)
+			(at 21.2852 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10723,7 +10743,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 73.66 26.67 0)
+			(at 20.32 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10732,7 +10752,16 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 73.66 26.67 0)
+			(at 20.32 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C440198"
+			(at 20.32 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10749,7 +10778,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C15")
+					(reference "C1")
 					(unit 1)
 				)
 			)
@@ -10757,7 +10786,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 85.09 30.48 0)
+		(at 73.66 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10766,7 +10795,7 @@
 		(fields_autoplaced yes)
 		(uuid "44b05d04-c2c8-4061-a68a-148fd7281c26")
 		(property "Reference" "#PWR026"
-			(at 85.09 36.83 0)
+			(at 73.66 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10775,7 +10804,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 85.09 35.56 0)
+			(at 73.66 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10783,7 +10812,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 85.09 30.48 0)
+			(at 73.66 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10792,7 +10821,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 85.09 30.48 0)
+			(at 73.66 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10801,7 +10830,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 85.09 30.48 0)
+			(at 73.66 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11028,7 +11057,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 85.09 22.86 0)
+		(at 73.66 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11037,7 +11066,7 @@
 		(fields_autoplaced yes)
 		(uuid "5121af97-9c38-41cd-8af3-3a048f44c90d")
 		(property "Reference" "#PWR030"
-			(at 85.09 26.67 0)
+			(at 73.66 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11046,7 +11075,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 85.09 17.78 0)
+			(at 73.66 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11054,7 +11083,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 85.09 22.86 0)
+			(at 73.66 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11063,7 +11092,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 85.09 22.86 0)
+			(at 73.66 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11072,7 +11101,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 85.09 22.86 0)
+			(at 73.66 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11793,7 +11822,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 85.09 73.66 0)
+		(at 123.19 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11801,8 +11830,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "63b070ac-f6e5-4405-9e29-b939175cb742")
-		(property "Reference" "C13"
-			(at 88.9 72.3899 0)
+		(property "Reference" "C15"
+			(at 127 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11811,7 +11840,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 88.9 74.9299 0)
+			(at 127 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11820,7 +11849,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 86.0552 77.47 0)
+			(at 124.1552 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11829,7 +11858,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 85.09 73.66 0)
+			(at 123.19 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11838,7 +11867,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 85.09 73.66 0)
+			(at 123.19 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11846,8 +11875,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 85.09 73.66 0)
+		(property "LCSC" "C77177"
+			(at 123.19 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11864,7 +11893,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C13")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -12295,7 +12324,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7a1a5d60-1867-4438-a2a9-cab873da86cc")
-		(property "Reference" "C10"
+		(property "Reference" "C12"
 			(at 129.54 48.2599 0)
 			(effects
 				(font
@@ -12340,7 +12369,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C77177"
 			(at 125.73 49.53 0)
 			(effects
 				(font
@@ -12358,7 +12387,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C10")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -13000,6 +13029,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C6082"
+			(at 36.83 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "11"
 			(uuid "67880bd6-dd4d-487b-81e5-48b17840d47e")
 		)
@@ -13137,7 +13175,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 125.73 30.48 0)
+		(at 20.32 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13146,7 +13184,7 @@
 		(fields_autoplaced yes)
 		(uuid "8d039b1b-21de-41a1-88b4-4f4c7305610a")
 		(property "Reference" "#PWR057"
-			(at 125.73 36.83 0)
+			(at 20.32 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13155,7 +13193,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 125.73 35.56 0)
+			(at 20.32 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13163,7 +13201,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 125.73 30.48 0)
+			(at 20.32 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13172,7 +13210,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 125.73 30.48 0)
+			(at 20.32 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13181,7 +13219,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 125.73 30.48 0)
+			(at 20.32 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13203,7 +13241,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 105.41 30.48 0)
+		(at 93.98 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13212,7 +13250,7 @@
 		(fields_autoplaced yes)
 		(uuid "915d7ba9-745b-4ac2-8809-f90836277777")
 		(property "Reference" "#PWR028"
-			(at 105.41 36.83 0)
+			(at 93.98 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13221,7 +13259,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 105.41 35.56 0)
+			(at 93.98 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13229,7 +13267,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 30.48 0)
+			(at 93.98 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13238,7 +13276,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 30.48 0)
+			(at 93.98 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13247,7 +13285,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 105.41 30.48 0)
+			(at 93.98 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13269,7 +13307,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 95.25 77.47 0)
+		(at 133.35 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13278,7 +13316,7 @@
 		(fields_autoplaced yes)
 		(uuid "91923593-47d9-4f18-be9f-701eaa656cb3")
 		(property "Reference" "#PWR042"
-			(at 95.25 83.82 0)
+			(at 133.35 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13287,7 +13325,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 95.25 82.55 0)
+			(at 133.35 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13295,7 +13333,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 95.25 77.47 0)
+			(at 133.35 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13304,7 +13342,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 95.25 77.47 0)
+			(at 133.35 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13313,7 +13351,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 95.25 77.47 0)
+			(at 133.35 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13480,7 +13518,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 146.05 26.67 0)
+		(at 74.93 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13488,8 +13526,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "96a7882e-2048-42f1-9f4c-904212859572")
-		(property "Reference" "C16"
-			(at 149.86 25.3999 0)
+		(property "Reference" "C7"
+			(at 78.74 48.2599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13498,7 +13536,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 149.86 27.9399 0)
+			(at 78.74 50.7999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13507,7 +13545,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 147.0152 30.48 0)
+			(at 75.8952 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13516,7 +13554,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 146.05 26.67 0)
+			(at 74.93 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13525,7 +13563,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 146.05 26.67 0)
+			(at 74.93 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13533,8 +13571,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 146.05 26.67 0)
+		(property "LCSC" "C77177"
+			(at 74.93 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13551,7 +13589,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C16")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -13704,7 +13742,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 73.66 30.48 0)
+		(at 20.32 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13713,7 +13751,7 @@
 		(fields_autoplaced yes)
 		(uuid "98fbcd9f-a316-481f-a1b2-71655511f3c3")
 		(property "Reference" "#PWR061"
-			(at 73.66 36.83 0)
+			(at 20.32 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13722,7 +13760,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 73.66 35.56 0)
+			(at 20.32 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13730,7 +13768,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 73.66 30.48 0)
+			(at 20.32 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13739,7 +13777,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 73.66 30.48 0)
+			(at 20.32 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13748,7 +13786,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 73.66 30.48 0)
+			(at 20.32 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14151,7 +14189,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 125.73 22.86 0)
+		(at 20.32 45.72 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14160,7 +14198,7 @@
 		(fields_autoplaced yes)
 		(uuid "a1341268-fc0d-4e93-a9b9-c2069558fa58")
 		(property "Reference" "#PWR056"
-			(at 125.73 26.67 0)
+			(at 20.32 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14169,7 +14207,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 125.73 17.78 0)
+			(at 20.32 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14177,7 +14215,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 125.73 22.86 0)
+			(at 20.32 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14186,7 +14224,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 125.73 22.86 0)
+			(at 20.32 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14195,7 +14233,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 125.73 22.86 0)
+			(at 20.32 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14700,6 +14738,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C6082"
+			(at 81.28 170.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "11"
 			(uuid "5814e61c-1693-4358-9fc3-6971cb687b68")
 		)
@@ -14837,7 +14884,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 95.25 26.67 0)
+		(at 83.82 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14845,8 +14892,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "aaf8c953-c2ab-4cfc-8d67-40dfd78886b8")
-		(property "Reference" "C2"
-			(at 99.06 25.3999 0)
+		(property "Reference" "C4"
+			(at 87.63 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14855,7 +14902,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 99.06 27.9399 0)
+			(at 87.63 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14864,7 +14911,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 96.2152 30.48 0)
+			(at 84.7852 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14873,7 +14920,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 95.25 26.67 0)
+			(at 83.82 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14882,7 +14929,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 95.25 26.67 0)
+			(at 83.82 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14890,8 +14937,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 95.25 26.67 0)
+		(property "LCSC" "C77177"
+			(at 83.82 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14908,7 +14955,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C2")
+					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -15055,7 +15102,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ada61358-7627-4cce-87ea-83ad86bb6720")
-		(property "Reference" "C9"
+		(property "Reference" "C11"
 			(at 119.38 48.2599 0)
 			(effects
 				(font
@@ -15100,7 +15147,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C77177"
 			(at 115.57 49.53 0)
 			(effects
 				(font
@@ -15118,7 +15165,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C9")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -15126,7 +15173,7 @@
 	)
 	(symbol
 		(lib_id "power:-5V")
-		(at 95.25 22.86 0)
+		(at 83.82 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15135,7 +15182,7 @@
 		(fields_autoplaced yes)
 		(uuid "b0049794-0db3-471b-86cf-5dbdd56b2f40")
 		(property "Reference" "#PWR031"
-			(at 95.25 26.67 0)
+			(at 83.82 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15144,7 +15191,7 @@
 			)
 		)
 		(property "Value" "-5V"
-			(at 95.25 17.78 0)
+			(at 83.82 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15152,7 +15199,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 95.25 22.86 0)
+			(at 83.82 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15161,7 +15208,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 95.25 22.86 0)
+			(at 83.82 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15170,7 +15217,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"-5V\""
-			(at 95.25 22.86 0)
+			(at 83.82 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15437,7 +15484,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 146.05 30.48 0)
+		(at 74.93 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15446,7 +15493,7 @@
 		(fields_autoplaced yes)
 		(uuid "bce7d1f5-0e82-48bc-a717-a98a89437bca")
 		(property "Reference" "#PWR063"
-			(at 146.05 36.83 0)
+			(at 74.93 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15455,7 +15502,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 146.05 35.56 0)
+			(at 74.93 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15463,7 +15510,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 30.48 0)
+			(at 74.93 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15472,7 +15519,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 30.48 0)
+			(at 74.93 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15481,7 +15528,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 146.05 30.48 0)
+			(at 74.93 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15549,6 +15596,15 @@
 			)
 		)
 		(property "Description" "Octal BUS Transceivers, 3-State outputs"
+			(at 36.83 170.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C6082"
 			(at 36.83 170.18 0)
 			(effects
 				(font
@@ -15899,7 +15955,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 85.09 69.85 0)
+		(at 123.19 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15908,7 +15964,7 @@
 		(fields_autoplaced yes)
 		(uuid "cab592c3-f35d-492f-986f-e7a2c38b87cc")
 		(property "Reference" "#PWR036"
-			(at 85.09 73.66 0)
+			(at 123.19 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15917,7 +15973,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 85.09 64.77 0)
+			(at 123.19 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15925,7 +15981,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 85.09 69.85 0)
+			(at 123.19 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15934,7 +15990,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 85.09 69.85 0)
+			(at 123.19 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15943,7 +15999,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 85.09 69.85 0)
+			(at 123.19 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16011,6 +16067,15 @@
 			)
 		)
 		(property "Description" "Octal BUS Transceivers, 3-State outputs"
+			(at 143.51 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C6082"
 			(at 143.51 116.84 0)
 			(effects
 				(font
@@ -16090,7 +16155,7 @@
 	)
 	(symbol
 		(lib_id "power:-12V")
-		(at 115.57 22.86 0)
+		(at 104.14 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16099,7 +16164,7 @@
 		(fields_autoplaced yes)
 		(uuid "cefb0e4b-c6d7-49dc-abb2-eaf39abcf5f8")
 		(property "Reference" "#PWR033"
-			(at 115.57 26.67 0)
+			(at 104.14 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16108,7 +16173,7 @@
 			)
 		)
 		(property "Value" "-12V"
-			(at 115.57 17.78 0)
+			(at 104.14 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16116,7 +16181,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 115.57 22.86 0)
+			(at 104.14 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16125,7 +16190,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 115.57 22.86 0)
+			(at 104.14 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16134,7 +16199,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"-12V\""
-			(at 115.57 22.86 0)
+			(at 104.14 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16156,7 +16221,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 85.09 26.67 0)
+		(at 73.66 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16164,8 +16229,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0e4e263-a83b-4f84-924c-bd612d55eb55")
-		(property "Reference" "C1"
-			(at 88.9 25.3999 0)
+		(property "Reference" "C3"
+			(at 77.47 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16174,7 +16239,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 88.9 27.9399 0)
+			(at 77.47 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16183,7 +16248,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 86.0552 30.48 0)
+			(at 74.6252 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16192,7 +16257,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 85.09 26.67 0)
+			(at 73.66 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16201,7 +16266,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 85.09 26.67 0)
+			(at 73.66 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16209,8 +16274,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 85.09 26.67 0)
+		(property "LCSC" "C77177"
+			(at 73.66 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16227,7 +16292,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C1")
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -16235,7 +16300,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 85.09 77.47 0)
+		(at 123.19 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16244,7 +16309,7 @@
 		(fields_autoplaced yes)
 		(uuid "d1fbb3c0-c673-4ebd-8803-a591279e27ad")
 		(property "Reference" "#PWR038"
-			(at 85.09 83.82 0)
+			(at 123.19 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16253,7 +16318,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 85.09 82.55 0)
+			(at 123.19 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16261,7 +16326,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 85.09 77.47 0)
+			(at 123.19 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16270,7 +16335,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 85.09 77.47 0)
+			(at 123.19 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16279,7 +16344,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 85.09 77.47 0)
+			(at 123.19 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16405,7 +16470,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 95.25 69.85 0)
+		(at 133.35 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16414,7 +16479,7 @@
 		(fields_autoplaced yes)
 		(uuid "d864f887-dd54-4683-bb65-39aea50ea908")
 		(property "Reference" "#PWR039"
-			(at 95.25 73.66 0)
+			(at 133.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16423,7 +16488,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 95.25 64.77 0)
+			(at 133.35 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16431,7 +16496,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 95.25 69.85 0)
+			(at 133.35 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16440,7 +16505,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 95.25 69.85 0)
+			(at 133.35 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16449,7 +16514,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 95.25 69.85 0)
+			(at 133.35 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16471,7 +16536,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 95.25 30.48 0)
+		(at 83.82 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16480,7 +16545,7 @@
 		(fields_autoplaced yes)
 		(uuid "dab3b243-e800-44ec-9087-cf8e7acbc892")
 		(property "Reference" "#PWR027"
-			(at 95.25 36.83 0)
+			(at 83.82 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16489,7 +16554,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 95.25 35.56 0)
+			(at 83.82 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16497,7 +16562,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 95.25 30.48 0)
+			(at 83.82 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16506,7 +16571,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 95.25 30.48 0)
+			(at 83.82 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16515,7 +16580,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 95.25 30.48 0)
+			(at 83.82 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16802,6 +16867,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C6082"
+			(at 143.51 170.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "11"
 			(uuid "16f1542e-edca-4a49-8d28-634fa1200633")
 		)
@@ -17026,7 +17100,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ed29512c-d832-422a-9d7c-366159b725a8")
-		(property "Reference" "C6"
+		(property "Reference" "C8"
 			(at 88.9 48.2599 0)
 			(effects
 				(font
@@ -17071,7 +17145,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C77177"
 			(at 85.09 49.53 0)
 			(effects
 				(font
@@ -17089,7 +17163,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C6")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -17097,7 +17171,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 125.73 26.67 0)
+		(at 20.32 49.53 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -17105,8 +17179,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eef59fb9-f8e4-4e5d-bb1e-e9cb39ce6fc6")
-		(property "Reference" "C5"
-			(at 129.54 25.3999 0)
+		(property "Reference" "C2"
+			(at 24.13 48.2599 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17115,7 +17189,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 129.54 27.9399 0)
+			(at 24.13 50.7999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17124,7 +17198,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 126.6952 30.48 0)
+			(at 21.2852 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17133,7 +17207,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 125.73 26.67 0)
+			(at 20.32 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17142,7 +17216,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 125.73 26.67 0)
+			(at 20.32 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17150,8 +17224,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 125.73 26.67 0)
+		(property "LCSC" "C440198"
+			(at 20.32 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17168,7 +17242,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C5")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -17359,7 +17433,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 115.57 26.67 0)
+		(at 104.14 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -17367,8 +17441,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f833da9d-e18a-45e3-90be-9733387c59ac")
-		(property "Reference" "C4"
-			(at 119.38 25.3999 0)
+		(property "Reference" "C6"
+			(at 107.95 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17377,7 +17451,7 @@
 			)
 		)
 		(property "Value" "C"
-			(at 119.38 27.9399 0)
+			(at 107.95 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17386,7 +17460,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 116.5352 30.48 0)
+			(at 105.1052 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17395,7 +17469,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 115.57 26.67 0)
+			(at 104.14 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17404,7 +17478,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 115.57 26.67 0)
+			(at 104.14 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17412,8 +17486,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
-			(at 115.57 26.67 0)
+		(property "LCSC" "C77177"
+			(at 104.14 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17430,7 +17504,7 @@
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C4")
+					(reference "C6")
 					(unit 1)
 				)
 			)
