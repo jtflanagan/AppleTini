@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="v5_1" board="Alchitry Au" language="Lucid" version="3">
+  <files>
+    <src>ft600_write_only.luc</src>
+    <component>pipeline.luc</component>
+    <src>blinker.luc</src>
+    <src top="true">au_top.luc</src>
+    <component>reset_conditioner.luc</component>
+    <src>bus_timing.luc</src>
+    <constraint lib="true">alchitry.acf</constraint>
+    <constraint>ft.acf</constraint>
+    <constraint lib="true">au.xdc</constraint>
+    <constraint>tini.acf</constraint>
+    <core name="fifo_generator_0">
+      <src>fifo_generator_0.xci</src>
+      <stub>fifo_generator_0_stub.v</stub>
+    </core>
+    <core name="fifo_generator_1">
+      <src>fifo_generator_1.xci</src>
+      <stub>fifo_generator_1_stub.v</stub>
+    </core>
+  </files>
+</project>

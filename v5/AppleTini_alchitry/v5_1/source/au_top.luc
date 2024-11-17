@@ -1,0 +1,151 @@
+module au_top (
+    input clk,              // 100MHz clock
+    input rst_n,            // reset button (active low)
+    output led [8],         // 8 user controllable LEDs
+    input usb_rx,           // USB->Serial input
+    output usb_tx,           // USB->Serial output
+    
+    // FT pins
+    input ft_clk,
+    input ft_rxf,
+    input ft_txe,
+    output ft_data[16],
+    output ft_be[2],
+    output ft_rd,
+    output ft_wr,
+    output ft_oe,
+    
+    // Tini pins
+    inout data_pin[8],
+    inout addr_pin[16],
+    inout rw_pin,
+    
+    input phi0_pin,
+    input m2sel_pin,
+    input q3_pin,
+    input p7m_pin,
+    input m2b0_pin,
+
+    inout inh_pin,
+    inout res_pin,
+    inout irq_pin,
+    inout rdy_pin,
+    inout nmi_pin,
+    inout dma_pin,
+
+    output oe_pin,
+    output oe_bar_pin,
+
+    input board_5v_pin,
+
+    output addr_dir_pin,
+    output data_dir_pin    
+  ) {
+  
+  sig rst;                  // reset signal
+  
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+    reset_conditioner reset_cond;
+    
+    ft600_write_only ft600(.rst(rst),.ft_clk(ft_clk));
+    
+    bus_timing bus_timer(.rst(rst));
+    blinker myBlinker(.rst(rst));
+    dff addr_misc_bus[20];
+    
+    // pipelined signals to ensure they are clean
+    pipeline addr_clean[16](#DEPTH(2));
+    pipeline data_clean[8](#DEPTH(2));
+    pipeline misc_clean[12](#DEPTH(2));
+  }
+  
+  always {
+    reset_cond.in = ~rst_n; // input raw inverted reset signal
+    rst = reset_cond.out;   // conditioned reset
+    
+    led = 8h00;             // turn LEDs off
+
+    usb_tx = usb_rx;        // echo the serial data
+    
+    ft600.ft_rxf = ft_rxf;
+    ft600.ft_txe = ft_txe;
+    ft_rd = ft600.ft_rd;
+    ft_wr = ft600.ft_wr;
+    ft_oe = ft600.ft_oe;
+    ft_be = ft600.ft_be;
+    ft_data = ft600.ft_data;
+    ft600.ui_din = bx;
+    ft600.ui_din_valid = 0;
+    
+    addr_dir_pin = 0;
+    data_dir_pin = 0;
+    addr_pin.write = 16b0;
+    addr_pin.enable = 16b0;
+    data_pin.write = 8b0;
+    data_pin.enable = 8b0;
+    rw_pin.write = 0;
+    rw_pin.enable = 0;
+    
+    inh_pin.write = 0;
+    inh_pin.enable = 0;
+    res_pin.write = 0;
+    res_pin.enable = 0;
+    irq_pin.write = 0;
+    irq_pin.enable = 0;
+    rdy_pin.write = 0;
+    rdy_pin.enable = 0;
+    nmi_pin.write = 0;
+    nmi_pin.enable = 0;
+    dma_pin.write = 0;
+    dma_pin.enable = 0;
+    
+    addr_clean.in = addr_pin.read;
+    data_clean.in = data_pin.read;
+    misc_clean.in[0] = rw_pin.read;
+    misc_clean.in[1] = res_pin.read;
+    misc_clean.in[2] = m2sel_pin;
+    misc_clean.in[3] = m2b0_pin;
+    misc_clean.in[4] = irq_pin.read;
+    misc_clean.in[5] = p7m_pin;
+    misc_clean.in[6] = q3_pin;
+    misc_clean.in[7] = dma_pin.read;
+    misc_clean.in[8] = rdy_pin.read;
+    misc_clean.in[9] = nmi_pin.read;
+    misc_clean.in[10] = inh_pin.read;
+    misc_clean.in[11] = phi0_pin;
+    
+    // board_5v_pin is active-low
+    if (board_5v_pin) {
+      // disable tranceivers
+      oe_pin = 0;
+      oe_bar_pin = 1;
+    } else {
+      // enable transceivers
+      oe_pin = 1;
+      oe_bar_pin = 0;
+    }
+    
+    bus_timer.phi0_clean = misc_clean.out[11];
+    
+    led = 8x{1};
+    myBlinker.counted_event = bus_timer.addr_phase_begin;
+    led = 8x{myBlinker.blink};
+    
+    if (bus_timer.addr_phase_snap_bus) {
+      addr_misc_bus.d[15:0] = addr_clean.out[15:0];
+      // first 4 misc signals are the ones we export
+      addr_misc_bus.d[19:16] = misc_clean.out[3:0];
+    }
+    
+    if (bus_timer.data_phase_snap_bus) {
+      if (!ft600.ui_full) {
+        ft600.ui_din[19:0] = addr_misc_bus.q[19:0];
+        ft600.ui_din[27:20] = data_clean.out[7:0];
+        ft600.ui_din[31:28] = 4x{1};
+        ft600.ui_din_valid = 1;
+      }
+    }
+  }
+}

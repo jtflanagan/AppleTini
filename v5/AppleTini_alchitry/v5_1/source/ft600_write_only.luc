@@ -1,0 +1,75 @@
+module ft600_write_only (
+    input clk,
+    input rst,  // reset
+    input ft_clk,
+    input ft_rxf,
+    input ft_txe,
+    output ft_data[16],
+    output ft_be[2],
+    output ft_rd,
+    output ft_wr,
+    output ft_oe,
+    input ui_din[32],
+    input ui_din_valid,
+    output ui_full
+  ) {
+  
+  .clk(ft_clk) {
+    dff tx_empty;
+    dff packet_counter[9];
+    fsm usb_state = {IDLE, WRITING_BUS_HEADER, WRITING_BUS_DATA, PRE_IDLE};
+  }
+  
+  fifo_generator_0 write_fifo(.rst(rst), .wr_clk(clk), .rd_clk(ft_clk));
+  
+  always {
+    write_fifo.wr_en = ui_din_valid;
+    write_fifo.din = ui_din;
+    ui_full = write_fifo.full; 
+  }
+  
+  always {
+    // default values
+    ft_oe = 1;
+    ft_rd = 1;
+    ft_wr = 1;
+    ft_data = write_fifo.dout;
+    ft_be = 2b11;
+    
+    write_fifo.rd_en = 0;
+    
+    tx_empty.d = ft_txe;
+    
+//    if (tx_empty.q == 0 && write_fifo.empty == 0) {
+//      ft_wr = 0;
+//      write_fifo.rd_en = ft_txe == 0;
+//    }
+    // space available to write
+    if (tx_empty.q == 0) {
+      case (usb_state.q) {
+        usb_state.IDLE:
+          if (write_fifo.prog_empty == 0) {
+            usb_state.d = usb_state.WRITING_BUS_HEADER;
+            ft_data = 1024; // packet len
+            ft_wr = 0;
+          }
+        usb_state.WRITING_BUS_HEADER:
+          usb_state.d = usb_state.WRITING_BUS_DATA;
+          ft_data = 16h0101; // version 1, message type 1 (bus events)
+          ft_wr = 0;
+          packet_counter.d = 0;
+        usb_state.WRITING_BUS_DATA:
+          if (packet_counter.q == 510) {
+            usb_state.d = usb_state.PRE_IDLE;
+          } else {
+            packet_counter.d = packet_counter.q + 1;
+            // ft_data defaults to the write_fifo output
+            write_fifo.rd_en = 1;
+            ft_wr = 0;
+          }
+        usb_state.PRE_IDLE:
+          usb_state.d = usb_state.IDLE;
+      }
+    } 
+  }
+}

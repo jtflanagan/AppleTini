@@ -159,434 +159,6 @@
 				)
 			)
 		)
-		(symbol "74xx:74LCX07"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "U"
-				(at 0 1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "74LCX07"
-				(at 0 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_locked" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "CMOS hex buffer"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SOIC*3.9x8.7mm*P1.27mm* TSSOP*4.4x5mm*P0.65mm* DIP*W7.62mm*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "74LCX07_1_0"
-				(polyline
-					(pts
-						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin open_collector line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_2_0"
-				(polyline
-					(pts
-						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin open_collector line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_3_0"
-				(polyline
-					(pts
-						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin open_collector line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_4_0"
-				(polyline
-					(pts
-						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin open_collector line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_5_0"
-				(polyline
-					(pts
-						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin open_collector line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_6_0"
-				(polyline
-					(pts
-						(xy -3.81 3.81) (xy -3.81 -3.81) (xy 3.81 0) (xy -3.81 3.81)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin open_collector line
-					(at 7.62 0 180)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -7.62 0 0)
-					(length 3.81)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "13"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_7_0"
-				(pin power_in line
-					(at 0 12.7 270)
-					(length 5.08)
-					(name "VCC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "14"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 0 -12.7 90)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "74LCX07_7_1"
-				(rectangle
-					(start -5.08 7.62)
-					(end 5.08 -7.62)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-			)
-		)
 		(symbol "74xx:74LS245"
 			(pin_names
 				(offset 1.016)
@@ -4309,6 +3881,448 @@
 				)
 			)
 		)
+		(symbol "Logic_LevelTranslator:TXS0108EPW"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -6.35 16.51 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TXS0108EPW"
+				(at 3.81 16.51 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm"
+				(at 0 -19.05 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "www.ti.com/lit/ds/symlink/txs0108e.pdf"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Bidirectional  level-shifting voltage translator, TSSOP-20"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "8-bit"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SSOP*4.4x6.5mm*P0.65mm*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TXS0108EPW_0_1"
+				(rectangle
+					(start -7.62 15.24)
+					(end 7.62 -15.24)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "TXS0108EPW_1_1"
+				(pin bidirectional line
+					(at -10.16 7.62 0)
+					(length 2.54)
+					(name "A1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 10.16 0)
+					(length 2.54)
+					(name "OE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -17.78 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 -10.16 180)
+					(length 2.54)
+					(name "B8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 -7.62 180)
+					(length 2.54)
+					(name "B7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 -5.08 180)
+					(length 2.54)
+					(name "B6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 -2.54 180)
+					(length 2.54)
+					(name "B5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 0 180)
+					(length 2.54)
+					(name "B4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 2.54 180)
+					(length 2.54)
+					(name "B3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 5.08 180)
+					(length 2.54)
+					(name "B2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 2.54 17.78 270)
+					(length 2.54)
+					(name "VCCB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -2.54 17.78 270)
+					(length 2.54)
+					(name "VCCA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 7.62 180)
+					(length 2.54)
+					(name "B1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 5.08 0)
+					(length 2.54)
+					(name "A2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 2.54 0)
+					(length 2.54)
+					(name "A3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 0 0)
+					(length 2.54)
+					(name "A4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 -2.54 0)
+					(length 2.54)
+					(name "A5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 -5.08 0)
+					(length 2.54)
+					(name "A6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 -7.62 0)
+					(length 2.54)
+					(name "A7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -10.16 -10.16 0)
+					(length 2.54)
+					(name "A8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "power:+12V"
 			(power)
 			(pin_numbers hide)
@@ -4959,64 +4973,22 @@
 		)
 	)
 	(junction
-		(at 134.62 78.74)
+		(at 158.75 81.28)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "0a3792db-4832-463f-8b76-069e75d00493")
+		(uuid "59b8618f-1b8e-46fe-bfa2-b684779ea67a")
 	)
 	(junction
-		(at 234.95 130.81)
+		(at 158.75 87.63)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "7e175fdf-322b-4eec-8179-2e4890360143")
+		(uuid "88d76a3d-85c6-4341-97e4-97bdd62cd5fc")
 	)
 	(junction
-		(at 190.5 146.05)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8ab1ab93-e60e-4ddb-bb7d-6e216256efae")
-	)
-	(junction
-		(at 179.07 78.74)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b436cc95-56cc-4215-9cb2-3e6c713b7702")
-	)
-	(junction
-		(at 234.95 161.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b5f87487-6b3c-42e6-8021-1298664a454a")
-	)
-	(junction
-		(at 243.84 69.85)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b9d2dea2-4a63-4f0a-8302-245babb601f4")
-	)
-	(junction
-		(at 190.5 161.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c814ecfb-b08d-4d4f-9209-e6cb5951d390")
-	)
-	(junction
-		(at 234.95 146.05)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d6ae9853-32c1-472a-8bf9-c402e9546667")
-	)
-	(junction
-		(at 236.22 101.6)
+		(at 120.65 171.45)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f49e60c8-0d59-4e45-8044-3f35d844a6b4")
-	)
-	(junction
-		(at 190.5 130.81)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fb4f5831-a050-4c94-8b0d-976fbe983462")
 	)
 	(no_connect
 		(at 191.77 41.91)
@@ -5035,12 +5007,36 @@
 		(uuid "337438a1-22d6-448d-b916-f6616b5ed32f")
 	)
 	(no_connect
+		(at 180.34 110.49)
+		(uuid "40636109-c081-4b8c-b9a6-79b2340a9ae4")
+	)
+	(no_connect
+		(at 139.7 106.68)
+		(uuid "49332027-d43e-45dc-bc59-6cf25471f013")
+	)
+	(no_connect
+		(at 200.66 107.95)
+		(uuid "50c2748d-c7c1-4751-b618-563bea7fba20")
+	)
+	(no_connect
 		(at 54.61 39.37)
 		(uuid "518cd4b5-7b58-4d4b-b109-dbd08bdb5a8b")
 	)
 	(no_connect
+		(at 200.66 110.49)
+		(uuid "61c673b0-e4e4-4e7e-92e7-cb4a6613b880")
+	)
+	(no_connect
 		(at 54.61 41.91)
 		(uuid "7185c6f6-e5f7-4ad9-9486-c2240b7741ff")
+	)
+	(no_connect
+		(at 180.34 107.95)
+		(uuid "7d014798-84fb-4357-81cf-3a6cb9c0b900")
+	)
+	(no_connect
+		(at 139.7 104.14)
+		(uuid "820579f1-4e34-4eca-a9d1-61b0fb2b43f1")
 	)
 	(no_connect
 		(at 163.83 46.99)
@@ -5071,12 +5067,12 @@
 		(uuid "c0d7c9e1-a448-4122-9203-a846ab8df3a3")
 	)
 	(no_connect
-		(at 163.83 44.45)
-		(uuid "dc372c88-5f1c-4156-9912-105930aa9ceb")
+		(at 139.7 109.22)
+		(uuid "d7697046-ab6e-4b0f-8e4d-fc35d61f69c7")
 	)
 	(no_connect
-		(at 278.13 69.85)
-		(uuid "e3d530f0-00e4-4cc4-8fef-0d09526c335f")
+		(at 163.83 44.45)
+		(uuid "dc372c88-5f1c-4156-9912-105930aa9ceb")
 	)
 	(no_connect
 		(at 54.61 87.63)
@@ -5092,103 +5088,13 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 161.29) (xy 190.5 161.29)
+			(xy 154.94 81.28) (xy 158.75 81.28)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "07094da8-8c35-4e7d-90fd-7f9a480d7416")
-	)
-	(wire
-		(pts
-			(xy 199.39 130.81) (xy 190.5 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "09bc5ac4-590b-4cbe-a39e-1e1c59d1e5d2")
-	)
-	(wire
-		(pts
-			(xy 198.12 146.05) (xy 190.5 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "20305ed8-83b1-4c1e-bd08-72356e0ad016")
-	)
-	(wire
-		(pts
-			(xy 134.62 78.74) (xy 132.08 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "211bd287-746d-45c1-965d-22ecc10ae3da")
-	)
-	(wire
-		(pts
-			(xy 245.11 161.29) (xy 234.95 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2cea6b3a-e1db-47cd-876a-f6c9369fa3f5")
-	)
-	(wire
-		(pts
-			(xy 186.69 78.74) (xy 179.07 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "385aaa86-3522-4d31-9f8b-8c1fef380afe")
-	)
-	(wire
-		(pts
-			(xy 190.5 130.81) (xy 189.23 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4305eeaf-bd6f-4315-87c8-ed94cdb0983b")
-	)
-	(wire
-		(pts
-			(xy 243.84 69.85) (xy 240.03 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "54a975f9-9d62-4779-848e-bfeaae797470")
-	)
-	(wire
-		(pts
-			(xy 245.11 130.81) (xy 234.95 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "60eebf8b-221a-44d4-bd9c-3d328ace52c5")
-	)
-	(wire
-		(pts
-			(xy 134.62 92.71) (xy 134.62 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "65ac47de-73f9-4676-bc40-60b7af00d870")
+		(uuid "52d75d5c-80af-45b2-9073-922e1abacc35")
 	)
 	(wire
 		(pts
@@ -5202,17 +5108,17 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 146.05) (xy 189.23 146.05)
+			(xy 158.75 81.28) (xy 167.64 81.28)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "763aef34-b043-40a5-b3b6-88de9dea0551")
+		(uuid "6f284327-c937-492a-bccf-98b18d9d3756")
 	)
 	(wire
 		(pts
-			(xy 227.33 101.6) (xy 236.22 101.6)
+			(xy 111.76 171.45) (xy 120.65 171.45)
 		)
 		(stroke
 			(width 0)
@@ -5222,23 +5128,23 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 69.85) (xy 243.84 69.85)
+			(xy 158.75 87.63) (xy 167.64 87.63)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "79a86499-9467-48bc-afb7-1d9e62ae0095")
+		(uuid "79ca729c-83b9-4b0c-a8fe-d90fba10eb33")
 	)
 	(wire
 		(pts
-			(xy 142.24 78.74) (xy 134.62 78.74)
+			(xy 154.94 87.63) (xy 158.75 87.63)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8fc918bd-a9f1-45d6-9a4e-3f859e4c6e45")
+		(uuid "840ca57a-673e-4a9b-9812-103df5b835ff")
 	)
 	(wire
 		(pts
@@ -5252,73 +5158,13 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 92.71) (xy 179.07 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a288c754-d0a6-4f45-a653-70a3b04c3f0a")
-	)
-	(wire
-		(pts
-			(xy 236.22 101.6) (xy 242.57 101.6)
+			(xy 120.65 171.45) (xy 127 171.45)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "aa2e38d9-9eea-45f1-bd28-3e16508fd894")
-	)
-	(wire
-		(pts
-			(xy 245.11 146.05) (xy 234.95 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b8241707-8731-491f-be21-3995ac502959")
-	)
-	(wire
-		(pts
-			(xy 175.26 92.71) (xy 179.07 92.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c2346da4-8d0d-4dff-bc2c-e9d0ddbb8ec6")
-	)
-	(wire
-		(pts
-			(xy 132.08 92.71) (xy 134.62 92.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d5153a47-777b-48f2-9232-82647c1f47ef")
-	)
-	(wire
-		(pts
-			(xy 179.07 78.74) (xy 175.26 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e6e12f2b-d2ab-4ff2-8cab-fcd5bbd422d9")
-	)
-	(wire
-		(pts
-			(xy 190.5 161.29) (xy 189.23 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ff6706ef-a10a-4625-96c9-368b32bc551e")
 	)
 	(label "BUS_A8"
 		(at 24.13 121.92 180)
@@ -5342,16 +5188,16 @@
 		)
 		(uuid "03a86bb0-c4be-4aee-821f-67d46a2ef5a1")
 	)
-	(label "BUS_~{DMAIN}"
-		(at 116.84 92.71 180)
+	(label "A24"
+		(at 200.66 115.57 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "04221e23-39ee-4716-89d7-35aa68936999")
+		(uuid "03cc0b2f-6f1a-42b3-8d45-138f565c1f49")
 	)
 	(label "GND"
 		(at 204.47 49.53 0)
@@ -5419,17 +5265,6 @@
 		)
 		(uuid "0d4441e9-0083-4c97-be2e-65f27fbde810")
 	)
-	(label "GND"
-		(at 156.21 157.48 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "0f66b396-ba37-4da9-a82d-4bd5600d58d5")
-	)
 	(label "C39"
 		(at 231.14 36.83 0)
 		(fields_autoplaced yes)
@@ -5451,17 +5286,6 @@
 			(justify right bottom)
 		)
 		(uuid "10b12b6f-a450-4ad9-9a16-68fd0cf76f6c")
-	)
-	(label "GND"
-		(at 156.21 127 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "11c47043-a591-41a1-8242-c6182569847d")
 	)
 	(label "GND"
 		(at 93.98 160.02 0)
@@ -5507,17 +5331,6 @@
 		)
 		(uuid "18b6023a-a7fd-4c55-995a-7d971a514843")
 	)
-	(label "BUS_~{INH}"
-		(at 130.81 109.22 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "18f28b6e-b8f6-4278-8fe4-bb85153cbe4b")
-	)
 	(label "A39"
 		(at 49.53 116.84 0)
 		(fields_autoplaced yes)
@@ -5540,17 +5353,6 @@
 		)
 		(uuid "1ab6e38c-318c-41d4-a9ec-013f4545ca8f")
 	)
-	(label "B45"
-		(at 156.21 116.84 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1b505217-a435-448d-8218-5068fbb0d43d")
-	)
 	(label "A11"
 		(at 204.47 36.83 0)
 		(fields_autoplaced yes)
@@ -5562,7 +5364,7 @@
 		)
 		(uuid "1b95a1ee-c9e1-4ab4-b167-bfce65d42a6d")
 	)
-	(label "BUS_~{DMAIN}"
+	(label "BUS_~{DMAINOUT}"
 		(at 41.91 29.21 180)
 		(fields_autoplaced yes)
 		(effects
@@ -5583,17 +5385,6 @@
 			(justify left bottom)
 		)
 		(uuid "1de003e5-d1b0-42c0-b6e4-f632fd997895")
-	)
-	(label "BUS_M2B0"
-		(at 130.81 111.76 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "1fab9f02-b9c7-46de-b4ea-f6e55ac4ffab")
 	)
 	(label "BUS_A10"
 		(at 24.13 116.84 180)
@@ -5616,17 +5407,6 @@
 			(justify left bottom)
 		)
 		(uuid "24a83c16-b186-4ab9-93db-090a6fc720c4")
-	)
-	(label "BUS_~{INTOUT}"
-		(at 54.61 31.75 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "250db52c-b106-41d1-aec6-e9d8f2e4f743")
 	)
 	(label "BUS_D5"
 		(at 68.58 109.22 180)
@@ -5716,17 +5496,6 @@
 		)
 		(uuid "2828239c-9a75-4855-86c5-38627ea13186")
 	)
-	(label "B40"
-		(at 156.21 104.14 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "285dc16a-b181-47cd-b947-3d433f7740f0")
-	)
 	(label "BUS_A4"
 		(at 54.61 74.93 0)
 		(fields_autoplaced yes)
@@ -5737,39 +5506,6 @@
 			(justify left bottom)
 		)
 		(uuid "29516dc6-f344-440c-95e0-c035e1eb756f")
-	)
-	(label "BUS_~{INTOUT}"
-		(at 186.69 78.74 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "295b22aa-461c-47b5-b6c2-207958c33fc5")
-	)
-	(label "~{OE}"
-		(at 252.73 69.85 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "29ce0f69-88d8-45e8-98ac-2e791f8d7b74")
-	)
-	(label "B39"
-		(at 156.21 106.68 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "29fc20fd-658a-437b-9812-0ff5fa791f3e")
 	)
 	(label "BUS_A7"
 		(at 24.13 157.48 180)
@@ -5804,28 +5540,6 @@
 		)
 		(uuid "2ce3bd18-c7a9-4a68-8df3-1e172dc45114")
 	)
-	(label "BUS_~{NMI}"
-		(at 245.11 146.05 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2f516edf-bc7a-42f3-ab7e-798830cc9732")
-	)
-	(label "B2"
-		(at 173.99 130.81 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "308a4eae-e2d6-4d51-88b6-7bf9c5a164a5")
-	)
 	(label "BUS_R~{W}"
 		(at 68.58 175.26 180)
 		(fields_autoplaced yes)
@@ -5848,16 +5562,16 @@
 		)
 		(uuid "32471bc1-845a-4f6e-9e92-87eb197c1f30")
 	)
-	(label "BUS_~{INTIN}"
-		(at 41.91 31.75 180)
+	(label "A23"
+		(at 200.66 118.11 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "32cb14ad-ea19-45fe-a4be-7d477afa4b41")
+		(uuid "32a41dfa-fd96-405b-9efc-8eeaa8a6f4bf")
 	)
 	(label "BUS_~{INH}"
 		(at 41.91 41.91 180)
@@ -5869,6 +5583,17 @@
 			(justify right bottom)
 		)
 		(uuid "36a453a4-5da0-4d0f-8aaa-d25414d9e6eb")
+	)
+	(label "B46"
+		(at 139.7 114.3 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "37074d97-8762-4df4-b5d5-b86a93d86fcd")
 	)
 	(label "BUS_~{RDY}"
 		(at 54.61 36.83 0)
@@ -5936,17 +5661,6 @@
 		)
 		(uuid "3c9c5831-ccac-4cff-bd70-74a68498ffca")
 	)
-	(label "GND"
-		(at 130.81 160.02 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "3cab325c-8833-4c2a-b53d-aa8833d7ec47")
-	)
 	(label "BUS_A1"
 		(at 24.13 172.72 180)
 		(fields_autoplaced yes)
@@ -5991,6 +5705,17 @@
 		)
 		(uuid "3f9c6f8b-8521-4ac2-8157-27f8664e9fba")
 	)
+	(label "OE"
+		(at 167.64 87.63 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4097d018-469f-4ac1-af91-619a1f5aaa5b")
+	)
 	(label "A2"
 		(at 93.98 104.14 0)
 		(fields_autoplaced yes)
@@ -6012,6 +5737,17 @@
 			(justify right bottom)
 		)
 		(uuid "426b07b6-0b95-4a14-858e-571846200515")
+	)
+	(label "BUS_M2SEL"
+		(at 114.3 119.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "42d6491b-f6c7-4232-823e-6087be82be8c")
 	)
 	(label "C2"
 		(at 93.98 180.34 0)
@@ -6046,6 +5782,28 @@
 		)
 		(uuid "478676c4-8fc4-40c1-8b58-ff47c44b19ed")
 	)
+	(label "BUS_~{DMAINOUT}"
+		(at 54.61 29.21 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "47d175a3-934e-4329-9693-7ff7736e968c")
+	)
+	(label "GND"
+		(at 114.3 109.22 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4890cd9d-fd9a-4c52-a165-aed0b89c0cbc")
+	)
 	(label "A14"
 		(at 204.47 39.37 0)
 		(fields_autoplaced yes)
@@ -6056,72 +5814,6 @@
 			(justify left bottom)
 		)
 		(uuid "48b59659-5142-4fcc-98c5-7d8f07f8a905")
-	)
-	(label "A14"
-		(at 219.71 161.29 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4b139e49-6b89-44bf-8104-58e073a13ff5")
-	)
-	(label "A24"
-		(at 219.71 130.81 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4b6c0877-59af-4a1a-abf0-b58def748bac")
-	)
-	(label "BUS_~{RDY}"
-		(at 245.11 161.29 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4c0c805f-7bea-4835-980f-0e58360cd2e7")
-	)
-	(label "~{OE}"
-		(at 156.21 182.88 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4c1fa69e-095b-43d7-9341-374ca76d011a")
-	)
-	(label "B3"
-		(at 173.99 146.05 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4c45329a-498c-40fd-8e86-d1942c1c0be0")
-	)
-	(label "B9"
-		(at 156.21 172.72 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4c543a4f-eb6d-4759-8a19-fd9fe7faafaf")
 	)
 	(label "-12V"
 		(at 41.91 44.45 180)
@@ -6145,17 +5837,6 @@
 		)
 		(uuid "4dd00728-3755-456c-882c-0cf087bf40f1")
 	)
-	(label "BUS_PHI0"
-		(at 130.81 121.92 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4dfc4b83-3a36-4a90-812c-df9305c802c2")
-	)
 	(label "A39"
 		(at 163.83 36.83 180)
 		(fields_autoplaced yes)
@@ -6178,8 +5859,8 @@
 		)
 		(uuid "5108548c-4cf5-4ce5-bbc2-825a5be1153f")
 	)
-	(label "BUS_~{IRQ}"
-		(at 199.39 161.29 0)
+	(label "B42"
+		(at 139.7 111.76 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6187,18 +5868,18 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "52d1ad39-78ef-4bfb-8556-8e7090975ba9")
+		(uuid "535bcdb2-21fe-4bf1-91c3-6f021a1a1269")
 	)
-	(label "GND"
-		(at 156.21 160.02 0)
+	(label "BUS_PHI0"
+		(at 114.3 121.92 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
-		(uuid "53931175-fe07-479b-be69-f373141ae740")
+		(uuid "537505db-e0a9-42ad-b3a1-aabfd03d4bfc")
 	)
 	(label "A2"
 		(at 204.47 29.21 0)
@@ -6232,17 +5913,6 @@
 			(justify right bottom)
 		)
 		(uuid "574b24ac-cc15-4060-a5ed-65c29593a5f9")
-	)
-	(label "GND"
-		(at 156.21 180.34 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "59663940-b947-47d4-9d4b-daeb3332b767")
 	)
 	(label "GND"
 		(at 93.98 157.48 0)
@@ -6287,17 +5957,6 @@
 			(justify left bottom)
 		)
 		(uuid "5d2b4752-bb73-4020-b33d-997d93b0f5aa")
-	)
-	(label "BUS_7M"
-		(at 130.81 114.3 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "5da36235-df24-449b-a54b-fc248b52edb9")
 	)
 	(label "A21"
 		(at 191.77 44.45 180)
@@ -6354,6 +6013,17 @@
 		)
 		(uuid "604cf3c9-a80e-44ca-8f13-90a747ac1f01")
 	)
+	(label "B5"
+		(at 200.66 125.73 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "60b44aaa-4e4a-4fcc-9bf5-bc86b99ea3b5")
+	)
 	(label "A23"
 		(at 204.47 46.99 0)
 		(fields_autoplaced yes)
@@ -6398,17 +6068,6 @@
 		)
 		(uuid "65de1b88-a43c-43e4-af58-ca4faf9b5192")
 	)
-	(label "GND"
-		(at 156.21 162.56 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "687bf279-74fc-4faa-bc15-228b5dec0f0e")
-	)
 	(label "BUS_A15"
 		(at 54.61 46.99 0)
 		(fields_autoplaced yes)
@@ -6419,6 +6078,28 @@
 			(justify left bottom)
 		)
 		(uuid "692b171b-edf2-4ac2-bc01-ae40ba4243d6")
+	)
+	(label "OE"
+		(at 200.66 105.41 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6b314e9e-4d95-48c8-8e3f-667f8f42eab6")
+	)
+	(label "B3"
+		(at 200.66 120.65 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6bbe0835-a520-490e-86c1-f131e3c4d6bc")
 	)
 	(label "A11"
 		(at 93.98 111.76 0)
@@ -6475,6 +6156,17 @@
 		)
 		(uuid "71ed92c0-e71f-4a35-8dc5-d9bc0493dfa6")
 	)
+	(label "B48"
+		(at 139.7 121.92 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "724e290d-40c4-4380-b104-23fb7f7994d9")
+	)
 	(label "A42"
 		(at 49.53 121.92 0)
 		(fields_autoplaced yes)
@@ -6497,17 +6189,6 @@
 		)
 		(uuid "72e42558-c4af-47f7-a27a-538c68baec2f")
 	)
-	(label "BUS_~{INTIN}"
-		(at 130.81 167.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "73384467-d165-4035-9de0-4513d9839607")
-	)
 	(label "A12"
 		(at 49.53 167.64 0)
 		(fields_autoplaced yes)
@@ -6518,17 +6199,6 @@
 			(justify left bottom)
 		)
 		(uuid "74300cda-8528-4c10-9a87-9802073a4c6c")
-	)
-	(label "B43"
-		(at 156.21 109.22 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "74ac2c89-524e-440d-b228-444267f25a13")
 	)
 	(label "BUS_D3"
 		(at 41.91 77.47 180)
@@ -6563,8 +6233,8 @@
 		)
 		(uuid "775aead0-338e-46a3-a531-a467621dc47d")
 	)
-	(label "B49"
-		(at 156.21 119.38 0)
+	(label "B45"
+		(at 139.7 116.84 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6572,18 +6242,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "7a8c93fe-732d-49f6-920d-9aaf6d3c012c")
-	)
-	(label "B8"
-		(at 156.21 165.1 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "7addcd5f-2ede-44e7-a148-6fb7073272d6")
+		(uuid "77f79dba-0ebb-4483-81e1-5a6d5da1bbbe")
 	)
 	(label "A8"
 		(at 204.47 34.29 0)
@@ -6651,6 +6310,28 @@
 		)
 		(uuid "80839e22-0f66-40a4-ad33-34bbaa2ec8f8")
 	)
+	(label "B2"
+		(at 200.66 123.19 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "80bc92cc-6d47-438e-98b9-e63d3bb7d050")
+	)
+	(label "B49"
+		(at 139.7 119.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "812a556e-156e-465b-b472-1e147bf58ba7")
+	)
 	(label "A37"
 		(at 49.53 109.22 0)
 		(fields_autoplaced yes)
@@ -6672,6 +6353,17 @@
 			(justify right bottom)
 		)
 		(uuid "82b1133f-6036-4363-8bc2-4a206557c4b3")
+	)
+	(label "BUS_Q3"
+		(at 114.3 116.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "82b2fbe9-192e-47c0-acd5-21ef06270b36")
 	)
 	(label "GND"
 		(at 68.58 170.18 180)
@@ -6706,27 +6398,16 @@
 		)
 		(uuid "851e6338-4fd7-4146-8464-abbad0182b2b")
 	)
-	(label "BUS_~{NMI}"
-		(at 130.81 175.26 180)
+	(label "BUS_~{INTINOUT}"
+		(at 54.61 31.75 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "85a9ac83-3d2f-48ac-b076-35ff3618acb0")
-	)
-	(label "BUS_~{DMA}"
-		(at 130.81 170.18 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "88310921-75ee-40e5-bdca-6d09755907f0")
+		(uuid "87145666-d3c1-4e79-98f7-ee892ed1a7d2")
 	)
 	(label "A34"
 		(at 49.53 104.14 0)
@@ -6749,17 +6430,6 @@
 			(justify left bottom)
 		)
 		(uuid "8ae29f6b-1830-499d-ae9a-e0f87f1291f1")
-	)
-	(label "GND"
-		(at 130.81 162.56 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8afb559a-1f3f-4f26-b39f-313d95b81c76")
 	)
 	(label "C48"
 		(at 231.14 29.21 0)
@@ -6871,6 +6541,17 @@
 		)
 		(uuid "981ea958-0f7e-4b8f-b48c-61cb398929c9")
 	)
+	(label "GND"
+		(at 139.7 127 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "994e2909-8f9f-4723-9551-31204105fcae")
+	)
 	(label "BUS_A6"
 		(at 24.13 160.02 180)
 		(fields_autoplaced yes)
@@ -6881,17 +6562,6 @@
 			(justify right bottom)
 		)
 		(uuid "9a2e60a4-a307-46f5-851c-218e49811099")
-	)
-	(label "B11"
-		(at 156.21 167.64 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9a7b00c7-9174-49e6-9c7a-5bfa53bbbfa8")
 	)
 	(label "A27"
 		(at 163.83 46.99 180)
@@ -6959,17 +6629,6 @@
 		)
 		(uuid "9d6c3094-a54a-4f22-aa54-ba857cf4b8c3")
 	)
-	(label "BUS_~{DMAIN}"
-		(at 130.81 165.1 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9f508d56-ee1c-405f-aa0f-90761a30ced1")
-	)
 	(label "A8"
 		(at 93.98 109.22 0)
 		(fields_autoplaced yes)
@@ -7025,17 +6684,6 @@
 		)
 		(uuid "a22919eb-7c72-4b8a-a065-5c5f9b8936e2")
 	)
-	(label "GND"
-		(at 130.81 157.48 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a22c85e9-ed7a-4b24-8acc-e408bad09659")
-	)
 	(label "A46"
 		(at 49.53 157.48 0)
 		(fields_autoplaced yes)
@@ -7046,6 +6694,17 @@
 			(justify left bottom)
 		)
 		(uuid "a2c5a21b-8335-4bb7-840a-8e4cb31f54de")
+	)
+	(label "BUS_~{INH}"
+		(at 180.34 125.73 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a35f225d-4ca1-4d2d-ac19-6f10da666aa6")
 	)
 	(label "~{OE}"
 		(at 49.53 129.54 0)
@@ -7058,8 +6717,8 @@
 		)
 		(uuid "a40f639b-dbdc-47b5-b557-78c2487370af")
 	)
-	(label "BUS_~{DMAOUT}"
-		(at 54.61 29.21 0)
+	(label "~{OE}"
+		(at 167.64 81.28 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7067,10 +6726,10 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "a5349894-4b54-470b-a193-d23670646699")
+		(uuid "a47effaf-f3b6-4a58-85f5-8c169de30fb0")
 	)
 	(label "C8"
-		(at 270.51 101.6 0)
+		(at 154.94 171.45 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7079,17 +6738,6 @@
 			(justify left bottom)
 		)
 		(uuid "a79a882e-ebf9-4c0a-b4c7-2f9ce1868bba")
-	)
-	(label "C12"
-		(at 224.79 69.85 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a80e083e-ef4f-467c-aab4-e9decfc11881")
 	)
 	(label "C49"
 		(at 218.44 29.21 180)
@@ -7113,28 +6761,6 @@
 		)
 		(uuid "a83f203e-280b-4fe3-a3a4-09f03cf76938")
 	)
-	(label "B12"
-		(at 156.21 170.18 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a8e3819e-33aa-4913-82ec-1844a908713e")
-	)
-	(label "B46"
-		(at 156.21 114.3 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a967517f-1d2f-4d09-bc44-7ec20a7ea771")
-	)
 	(label "BUS_A5"
 		(at 54.61 72.39 0)
 		(fields_autoplaced yes)
@@ -7146,17 +6772,6 @@
 		)
 		(uuid "ab8bb955-d979-4455-9d61-d63fd58bcb77")
 	)
-	(label "B42"
-		(at 156.21 111.76 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ac7831ef-8572-4349-ad2a-705121db5c74")
-	)
 	(label "BUS_D6"
 		(at 68.58 106.68 180)
 		(fields_autoplaced yes)
@@ -7167,6 +6782,17 @@
 			(justify right bottom)
 		)
 		(uuid "ad6dfae3-494a-48ad-8b1b-625b5d1683b2")
+	)
+	(label "BUS_~{INTINOUT}"
+		(at 41.91 31.75 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ae5570fe-e228-4007-b048-f1a0bf909133")
 	)
 	(label "B5"
 		(at 204.47 54.61 0)
@@ -7212,6 +6838,17 @@
 		)
 		(uuid "af7af53a-f43a-4be6-b7ad-76d606a22f68")
 	)
+	(label "C11"
+		(at 154.94 81.28 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b028a964-5858-4c48-a4fc-bd925ed7d92b")
+	)
 	(label "B39"
 		(at 163.83 59.69 180)
 		(fields_autoplaced yes)
@@ -7245,17 +6882,6 @@
 		)
 		(uuid "b376b038-f261-4543-933b-5bb2a0c46975")
 	)
-	(label "BUS_~{INH}"
-		(at 199.39 130.81 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b43b501a-d3a5-4375-9fb5-0055191fb906")
-	)
 	(label "A42"
 		(at 163.83 34.29 180)
 		(fields_autoplaced yes)
@@ -7266,6 +6892,28 @@
 			(justify right bottom)
 		)
 		(uuid "b57e10dc-69e0-4a96-a8fd-9a9d6c2968b3")
+	)
+	(label "BUS_~{NMI}"
+		(at 180.34 115.57 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b6de24c8-3af4-4308-b33b-fc8845969335")
+	)
+	(label "BUS_~{RDY}"
+		(at 180.34 118.11 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b913be30-7af5-4981-af92-77b994669e7d")
 	)
 	(label "GND"
 		(at 93.98 162.56 0)
@@ -7321,17 +6969,6 @@
 			(justify left bottom)
 		)
 		(uuid "bd6f3857-5f1e-47f8-a51d-b721f63214ed")
-	)
-	(label "BUS_M2SEL"
-		(at 130.81 119.38 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "be45480e-831c-40f6-bada-1ec19b92a1f5")
 	)
 	(label "A37"
 		(at 176.53 39.37 0)
@@ -7399,8 +7036,8 @@
 		)
 		(uuid "c2fbe29f-2037-41a0-9934-02dc99dc20a9")
 	)
-	(label "BUS_~{RDY}"
-		(at 130.81 172.72 180)
+	(label "C12"
+		(at 154.94 87.63 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7408,7 +7045,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "c47b1d61-a1a2-449a-b31f-b7ccee148cd6")
+		(uuid "c3a8bd3f-0202-47ec-8472-a8fbb8d3c85d")
 	)
 	(label "BUS_~{DMA}"
 		(at 54.61 34.29 0)
@@ -7420,6 +7057,17 @@
 			(justify left bottom)
 		)
 		(uuid "c48b07bb-cd8b-42dc-9128-766b72b6f922")
+	)
+	(label "GND"
+		(at 114.3 104.14 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c49c0d71-d035-45d9-9246-a5a61c9aa100")
 	)
 	(label "BUS_D0"
 		(at 68.58 121.92 180)
@@ -7442,17 +7090,6 @@
 			(justify left bottom)
 		)
 		(uuid "c67f35db-bcb2-4554-8904-07b0f9243499")
-	)
-	(label "BUS_~{DMA}"
-		(at 245.11 130.81 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c733b693-e8d0-4418-b359-d85604420cc3")
 	)
 	(label "GND"
 		(at 246.38 26.67 180)
@@ -7497,17 +7134,6 @@
 			(justify right bottom)
 		)
 		(uuid "c9763513-b235-46a2-9df1-ba0c17bd156f")
-	)
-	(label "C11"
-		(at 160.02 78.74 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c9a87db4-3b41-4a9c-a892-31d1c46f6c98")
 	)
 	(label "GND"
 		(at 68.58 160.02 180)
@@ -7575,17 +7201,6 @@
 		)
 		(uuid "d438b61f-e0a3-4a2b-8769-001e9b8d24fd")
 	)
-	(label "BUS_~{RES}"
-		(at 198.12 146.05 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "d50e038a-44f6-431e-8678-34e8704ff04c")
-	)
 	(label "BUS_A7"
 		(at 54.61 67.31 0)
 		(fields_autoplaced yes)
@@ -7596,6 +7211,17 @@
 			(justify left bottom)
 		)
 		(uuid "d6248de7-e54a-47a7-9adc-0ee157703ae3")
+	)
+	(label "GND"
+		(at 114.3 106.68 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d69a4588-8302-4dd4-ba0c-c079db7be0c0")
 	)
 	(label "-5V"
 		(at 41.91 46.99 180)
@@ -7619,19 +7245,8 @@
 		)
 		(uuid "d8cfca47-d044-4b87-85e1-9e0f330f5000")
 	)
-	(label "A23"
-		(at 219.71 146.05 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d8e0bb8f-75e5-437c-850e-302612cf982c")
-	)
-	(label "BUS_~{DMAOUT}"
-		(at 142.24 78.74 0)
+	(label "A14"
+		(at 200.66 113.03 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7639,7 +7254,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "d94a5e3f-abd8-4480-88f6-a14cbc2c36ac")
+		(uuid "d92e5f44-29ac-41a6-a834-e28053593c20")
 	)
 	(label "B6"
 		(at 191.77 54.61 180)
@@ -7662,17 +7277,6 @@
 			(justify left bottom)
 		)
 		(uuid "daf992a3-5b0f-4da6-b709-d49e6bf2fff5")
-	)
-	(label "B6"
-		(at 156.21 175.26 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ddb32dbf-e367-499e-9c21-4263a7010888")
 	)
 	(label "B40"
 		(at 176.53 59.69 0)
@@ -7729,6 +7333,17 @@
 		)
 		(uuid "e396a8c2-5530-4c83-9f88-fe2cd1b1b5fc")
 	)
+	(label "~{OE}"
+		(at 139.7 129.54 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e4400277-305f-4864-8dc4-b680bf5b6730")
+	)
 	(label "BUS_A1"
 		(at 54.61 82.55 0)
 		(fields_autoplaced yes)
@@ -7740,6 +7355,17 @@
 		)
 		(uuid "e45ce5ef-15c7-4756-8014-9caec9c48183")
 	)
+	(label "BUS_7M"
+		(at 114.3 114.3 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e4888bf4-1112-4bf4-b7d2-0c0d211c6411")
+	)
 	(label "A33"
 		(at 49.53 106.68 0)
 		(fields_autoplaced yes)
@@ -7750,17 +7376,6 @@
 			(justify left bottom)
 		)
 		(uuid "e48a7ba1-6ffd-40ad-bbd6-baf4f7271d89")
-	)
-	(label "~{OE}"
-		(at 156.21 129.54 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e5ca4e9a-1460-4811-9743-720d3c728e13")
 	)
 	(label "A9"
 		(at 191.77 34.29 180)
@@ -7783,17 +7398,6 @@
 			(justify left bottom)
 		)
 		(uuid "e652aba3-41ae-435f-a390-f35f4d32051d")
-	)
-	(label "C39"
-		(at 116.84 78.74 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "e6f1cf60-35c8-4a44-bbd9-a4bb1f37d098")
 	)
 	(label "BUS_D1"
 		(at 41.91 82.55 180)
@@ -7839,19 +7443,8 @@
 		)
 		(uuid "eab52457-870b-4b8b-b17f-fcbd9e87ddce")
 	)
-	(label "B48"
-		(at 156.21 121.92 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "eaf468e9-e52b-4d15-905a-7dd54eec811f")
-	)
-	(label "B5"
-		(at 173.99 161.29 180)
+	(label "BUS_~{DMA}"
+		(at 180.34 113.03 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7859,29 +7452,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "ec096f06-06fd-41c3-a8de-59bb91ad60e4")
-	)
-	(label "BUS_~{INTIN}"
-		(at 160.02 92.71 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f0c2b673-5319-4997-9d57-336887f10bb7")
-	)
-	(label "BUS_~{RES}"
-		(at 130.81 106.68 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f381da93-54e7-412c-a10d-0d8b4ba58da8")
+		(uuid "f163e7de-7973-47b2-a543-fb0e928d1c8e")
 	)
 	(label "GND"
 		(at 93.98 167.64 0)
@@ -7893,6 +7464,17 @@
 			(justify left bottom)
 		)
 		(uuid "f5d25c5a-fd26-43fc-b2bc-9c6bb2ff8da9")
+	)
+	(label "BUS_~{IRQ}"
+		(at 180.34 120.65 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f65da8f5-26cf-44c5-b87e-61eef77f9491")
 	)
 	(label "A6"
 		(at 49.53 172.72 0)
@@ -7927,6 +7509,17 @@
 		)
 		(uuid "f8d4e6c1-2664-4603-8e21-33a34e1035bc")
 	)
+	(label "BUS_M2B0"
+		(at 114.3 111.76 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f91fa30e-df7f-4514-8b99-f855998c8aae")
+	)
 	(label "BUS_D1"
 		(at 68.58 119.38 180)
 		(fields_autoplaced yes)
@@ -7949,6 +7542,17 @@
 		)
 		(uuid "fab34795-f35d-4e3e-b1a1-ee84e2f9cfb5")
 	)
+	(label "BUS_~{RES}"
+		(at 180.34 123.19 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fae02816-cb1b-4c36-bf01-83c9f5416194")
+	)
 	(label "C42"
 		(at 231.14 34.29 0)
 		(fields_autoplaced yes)
@@ -7959,17 +7563,6 @@
 			(justify left bottom)
 		)
 		(uuid "fb2fd9c0-5053-4d90-b630-d992dc5002a3")
-	)
-	(label "BUS_~{IRQ}"
-		(at 130.81 104.14 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fb386aa9-9050-4566-ae38-4ab5b99a6ba9")
 	)
 	(label "BUS_A3"
 		(at 54.61 77.47 0)
@@ -8004,28 +7597,6 @@
 		)
 		(uuid "fda065d9-b2a9-4c20-86d6-297b61f86323")
 	)
-	(label "BUS_Q3"
-		(at 130.81 116.84 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fe61bf3a-c2e1-4abb-8c7f-6521eb5b6650")
-	)
-	(label "GND"
-		(at 262.89 69.85 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fe8e6aea-452f-4d54-bcec-ec6a62d573d2")
-	)
 	(label "BUS_7M"
 		(at 41.91 52.07 180)
 		(fields_autoplaced yes)
@@ -8036,176 +7607,6 @@
 			(justify right bottom)
 		)
 		(uuid "fffaec59-11d3-4350-ac2a-bce4ddd2cfba")
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 143.51 149.86 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "00fbe0e9-65e4-405e-b0b6-db64096facbe")
-		(property "Reference" "#PWR051"
-			(at 143.51 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 143.51 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 143.51 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 143.51 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 143.51 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "01d181f8-77bf-4454-b648-31e56b62bec5")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR051")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 167.64 78.74 0)
-		(unit 5)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "03a233e3-8f74-4faf-a839-ce4beae18148")
-		(property "Reference" "U4"
-			(at 167.64 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 167.64 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 167.64 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 167.64 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 167.64 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "581d8778-6b0f-4394-a550-0689715ac863")
-		)
-		(pin "8"
-			(uuid "6e5796ae-d5c4-43c5-9e9e-1c750459b03b")
-		)
-		(pin "2"
-			(uuid "b3d1123b-78ca-48a8-80ac-be0dcf83375e")
-		)
-		(pin "12"
-			(uuid "a4bc1a79-e4b2-41b5-b5d8-ee93edd0bf6d")
-		)
-		(pin "4"
-			(uuid "fa6a0aee-aa59-4a7a-ab4d-adbd7c78a3ad")
-		)
-		(pin "13"
-			(uuid "5aa555e6-1803-4c73-9a94-6e1556984c4d")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46df")
-		)
-		(pin "3"
-			(uuid "84b67370-f02f-4520-bbc6-c08d7af73f93")
-		)
-		(pin "1"
-			(uuid "7a394ae6-326b-4b85-ac90-d55cadb54837")
-		)
-		(pin "11"
-			(uuid "d3c057aa-03c6-4589-84b4-bcb333310e5f")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c750")
-		)
-		(pin "10"
-			(uuid "629434c3-f6a1-49af-b8f7-59299f7bb30b")
-		)
-		(pin "6"
-			(uuid "e080922d-43c3-409a-84ea-6423eb2367f7")
-		)
-		(pin "9"
-			(uuid "9afa14ae-a55e-43f8-ac19-1c3862fcb39b")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 5)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -8473,7 +7874,7 @@
 	)
 	(symbol
 		(lib_id "74xGxx:74LVC1G04")
-		(at 257.81 101.6 0)
+		(at 142.24 171.45 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8482,15 +7883,15 @@
 		(fields_autoplaced yes)
 		(uuid "0c36ca73-f138-49ab-bee8-dfe083fc773b")
 		(property "Reference" "U8"
-			(at 269.24 95.2814 0)
+			(at 153.67 165.1314 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "74LVC1G04"
-			(at 269.24 97.8214 0)
+		(property "Value" "74LVC1G04DBVRG"
+			(at 153.67 167.6714 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8498,7 +7899,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-			(at 257.81 101.6 0)
+			(at 142.24 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8507,7 +7908,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g04.pdf"
-			(at 257.81 101.6 0)
+			(at 142.24 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8516,7 +7917,7 @@
 			)
 		)
 		(property "Description" "Single NOT Gate, Low-Voltage CMOS"
-			(at 257.81 101.6 0)
+			(at 142.24 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8525,7 +7926,7 @@
 			)
 		)
 		(property "JCSC" "C7827"
-			(at 257.81 101.6 0)
+			(at 142.24 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8683,233 +8084,6 @@
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "U1")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 266.7 143.51 0)
-		(unit 7)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0da8cc95-e4a0-4d52-80eb-55ec7a39d27d")
-		(property "Reference" "U7"
-			(at 273.05 142.2399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 273.05 144.7799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 266.7 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 266.7 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 266.7 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 266.7 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103ea")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9d6")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9f7")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a3")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0cb")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86340")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36df")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180cf")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c0")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-90042453323b")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc315068f")
-		)
-		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d57")
-		)
-		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018250")
-		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f530780138")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 7)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 181.61 161.29 0)
-		(unit 3)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0dd54a7e-af77-42cd-bebe-95f1a133eae1")
-		(property "Reference" "U7"
-			(at 181.61 152.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 181.61 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 181.61 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 181.61 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 181.61 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 181.61 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103eb")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9d7")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9f8")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a4")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0cc")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86341")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36e0")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180d0")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c1")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-90042453323c")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc3150690")
-		)
-		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d58")
-		)
-		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018251")
-		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f530780139")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 3)
 				)
 			)
 		)
@@ -9101,7 +8275,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 105.41 49.53 0)
 			(effects
 				(font
@@ -9197,72 +8371,6 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "D1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 234.95 153.67 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "135888a6-7d90-4e50-b8e2-35fe38e12225")
-		(property "Reference" "#PWR049"
-			(at 234.95 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 234.95 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 234.95 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 234.95 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 234.95 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "34835e87-511c-418f-8668-087acb556453")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -9534,72 +8642,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 143.51 137.16 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1b3164f7-f3be-47b9-b6ab-c69ea5081841")
-		(property "Reference" "#PWR052"
-			(at 143.51 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 143.51 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 143.51 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 143.51 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 143.51 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "831b1e1b-378f-432d-bda6-0411c5e9ea37")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR052")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 104.14 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -9659,85 +8701,6 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "#PWR029")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 133.35 26.67 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1d70c6d7-ce2a-470b-8ff4-c95b16ff0aee")
-		(property "Reference" "C16"
-			(at 137.16 25.3999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "C"
-			(at 137.16 27.9399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 134.3152 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 133.35 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 133.35 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C77177"
-			(at 133.35 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "6c1d2907-3a62-48a4-9318-873bcdbf5637")
-		)
-		(pin "2"
-			(uuid "54b2789d-e00d-4e76-87ed-2ad2ba8f16ff")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -9876,6 +8839,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 193.04 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2550d9ac-72d0-4716-891a-aaa4daab4d02")
+		(property "Reference" "#PWR023"
+			(at 193.04 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 193.04 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 193.04 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 193.04 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 193.04 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "12659733-e458-4011-ad7a-19f92a0df95e")
+		)
+		(instances
+			(project "AppleTini_board"
+				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
+					(reference "#PWR023")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 93.98 26.67 0)
 		(unit 1)
@@ -9930,7 +8959,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 93.98 26.67 0)
 			(effects
 				(font
@@ -10021,112 +9050,6 @@
 		)
 	)
 	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 205.74 93.98 0)
-		(unit 7)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2baa7bc3-886e-415c-a7f5-b216caa42ebc")
-		(property "Reference" "U4"
-			(at 212.09 92.7099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 212.09 95.2499 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 205.74 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 205.74 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 205.74 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "581d8778-6b0f-4394-a550-0689715ac864")
-		)
-		(pin "8"
-			(uuid "6e5796ae-d5c4-43c5-9e9e-1c750459b03c")
-		)
-		(pin "2"
-			(uuid "b3d1123b-78ca-48a8-80ac-be0dcf83375f")
-		)
-		(pin "12"
-			(uuid "a4bc1a79-e4b2-41b5-b5d8-ee93edd0bf6e")
-		)
-		(pin "4"
-			(uuid "fa6a0aee-aa59-4a7a-ab4d-adbd7c78a3ae")
-		)
-		(pin "13"
-			(uuid "5aa555e6-1803-4c73-9a94-6e1556984c4e")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46e0")
-		)
-		(pin "3"
-			(uuid "84b67370-f02f-4520-bbc6-c08d7af73f94")
-		)
-		(pin "1"
-			(uuid "7a394ae6-326b-4b85-ac90-d55cadb54838")
-		)
-		(pin "11"
-			(uuid "4e7eb5c2-b4f8-41e8-a4c4-e961bd708248")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c751")
-		)
-		(pin "10"
-			(uuid "4ed8e74f-11ac-485b-931c-107550b815a5")
-		)
-		(pin "6"
-			(uuid "e080922d-43c3-409a-84ea-6423eb2367f8")
-		)
-		(pin "9"
-			(uuid "9afa14ae-a55e-43f8-ac19-1c3862fcb39c")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 7)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 95.25 49.53 0)
 		(unit 1)
@@ -10181,7 +9104,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 95.25 49.53 0)
 			(effects
 				(font
@@ -10458,7 +9381,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 146.05 49.53 0)
 			(effects
 				(font
@@ -10537,7 +9460,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 135.89 49.53 0)
 			(effects
 				(font
@@ -10563,15 +9486,16 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 236.22 109.22 0)
+		(at 127 137.16 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3d97a10b-62bd-46a2-a7fa-c578fcf4a7d1")
-		(property "Reference" "#PWR013"
-			(at 236.22 115.57 0)
+		(fields_autoplaced yes)
+		(uuid "3a257778-7f08-43a7-9dd1-103ef1256380")
+		(property "Reference" "#PWR02"
+			(at 127 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10580,7 +9504,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 236.22 114.3 0)
+			(at 127 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10588,7 +9512,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 236.22 109.22 0)
+			(at 127 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10597,7 +9521,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 236.22 109.22 0)
+			(at 127 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10606,7 +9530,72 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 236.22 109.22 0)
+			(at 127 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e0c6960a-1b43-4338-b384-ac8d2461e7d2")
+		)
+		(instances
+			(project "AppleTini_board"
+				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
+					(reference "#PWR02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 120.65 179.07 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3d97a10b-62bd-46a2-a7fa-c578fcf4a7d1")
+		(property "Reference" "#PWR013"
+			(at 120.65 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 120.65 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 120.65 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 120.65 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 120.65 179.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10628,7 +9617,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 236.22 105.41 0)
+		(at 120.65 175.26 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10637,7 +9626,7 @@
 		(fields_autoplaced yes)
 		(uuid "3ee23091-25f1-4a62-92b1-fb2552c0034f")
 		(property "Reference" "R8"
-			(at 238.76 104.1399 0)
+			(at 123.19 173.9899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10646,7 +9635,7 @@
 			)
 		)
 		(property "Value" "R_US"
-			(at 238.76 106.6799 0)
+			(at 123.19 176.5299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10655,7 +9644,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 237.236 105.664 90)
+			(at 121.666 175.514 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10664,7 +9653,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 236.22 105.41 0)
+			(at 120.65 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10673,7 +9662,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 236.22 105.41 0)
+			(at 120.65 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10682,7 +9671,7 @@
 			)
 		)
 		(property "LCSC" "C2991755"
-			(at 236.22 105.41 0)
+			(at 120.65 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10846,119 +9835,6 @@
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "#PWR026")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 181.61 146.05 0)
-		(unit 2)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "49743f68-3325-4aa4-b646-e04326138ed3")
-		(property "Reference" "U7"
-			(at 181.61 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 181.61 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 181.61 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 181.61 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 181.61 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 181.61 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103ec")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9d8")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9f9")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a5")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0cd")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86342")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36e1")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180d1")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c2")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-90042453323d")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc3150691")
-		)
-		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d59")
-		)
-		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018252")
-		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f53078013a")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 2)
 				)
 			)
 		)
@@ -11320,74 +10196,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 234.95 138.43 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "58ca49d2-693d-4e78-9405-08ecb4615c45")
-		(property "Reference" "#PWR046"
-			(at 234.95 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 234.95 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 234.95 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 234.95 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 234.95 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "94922f1b-14e5-4f7e-ac68-48ec35ad9523")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR046")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
-		(at 236.22 97.79 0)
+		(at 120.65 167.64 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11396,7 +10206,7 @@
 		(fields_autoplaced yes)
 		(uuid "594c8182-f794-4adc-bb5f-fc5573521a1a")
 		(property "Reference" "R9"
-			(at 238.76 96.5199 0)
+			(at 123.19 166.3699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11405,7 +10215,7 @@
 			)
 		)
 		(property "Value" "R_US"
-			(at 238.76 99.0599 0)
+			(at 123.19 168.9099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11414,7 +10224,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 237.236 98.044 90)
+			(at 121.666 167.894 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11423,7 +10233,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 236.22 97.79 0)
+			(at 120.65 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11432,7 +10242,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 236.22 97.79 0)
+			(at 120.65 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11441,7 +10251,7 @@
 			)
 		)
 		(property "LCSC" "C2991755"
-			(at 236.22 97.79 0)
+			(at 120.65 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11558,7 +10368,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 227.33 93.98 0)
+		(at 111.76 163.83 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11567,7 +10377,7 @@
 		(fields_autoplaced yes)
 		(uuid "5d0d066b-02ce-4fd1-ad02-50e6a44eb774")
 		(property "Reference" "#PWR011"
-			(at 227.33 97.79 0)
+			(at 111.76 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11576,7 +10386,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 227.33 88.9 0)
+			(at 111.76 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11584,7 +10394,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 227.33 93.98 0)
+			(at 111.76 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11593,7 +10403,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 227.33 93.98 0)
+			(at 111.76 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11602,7 +10412,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 227.33 93.98 0)
+			(at 111.76 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11617,138 +10427,6 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "#PWR011")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 266.7 156.21 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5edf1f22-6314-4b96-ac64-f73118ec0b98")
-		(property "Reference" "#PWR02"
-			(at 266.7 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 266.7 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 266.7 156.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 266.7 156.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 266.7 156.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "ba2d0aaa-ca00-4f40-aa65-b2953feb3de5")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR02")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 205.74 81.28 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5fdaab35-29b9-4617-8bc6-bb6e52509409")
-		(property "Reference" "#PWR021"
-			(at 205.74 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 205.74 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 205.74 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 205.74 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 205.74 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9d4be475-3d79-4e2a-9e16-8e6d8ff29de0")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -11875,7 +10553,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 123.19 26.67 0)
 			(effects
 				(font
@@ -11900,17 +10578,17 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 234.95 123.19 0)
+		(lib_id "power:+3V3")
+		(at 158.75 73.66 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "669bd459-02e3-48de-9856-865c71ba1f7f")
-		(property "Reference" "#PWR044"
-			(at 234.95 127 0)
+		(uuid "656bbe59-08bf-4977-8941-49b3147a2ca4")
+		(property "Reference" "#PWR025"
+			(at 158.75 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11918,8 +10596,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
-			(at 234.95 118.11 0)
+		(property "Value" "+3V3"
+			(at 158.75 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11927,7 +10605,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 234.95 123.19 0)
+			(at 158.75 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11936,7 +10614,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 234.95 123.19 0)
+			(at 158.75 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11944,291 +10622,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 234.95 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f7971887-0f31-4cf3-a355-be2453be1a91")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR044")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 227.33 130.81 0)
-		(unit 4)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "717425c1-cf0a-41b4-9204-1f4b72f93d48")
-		(property "Reference" "U7"
-			(at 227.33 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 227.33 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 227.33 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 227.33 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 227.33 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 227.33 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103ed")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9d9")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9fa")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a6")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0ce")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86343")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36e2")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180d2")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c3")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-90042453323e")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc3150692")
-		)
-		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d5a")
-		)
-		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018253")
-		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f53078013b")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 4)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 124.46 78.74 0)
-		(unit 4)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "72f3ab36-9308-4943-9261-96763813f296")
-		(property "Reference" "U4"
-			(at 124.46 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 124.46 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 124.46 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 124.46 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 124.46 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "581d8778-6b0f-4394-a550-0689715ac867")
-		)
-		(pin "8"
-			(uuid "6e437856-177b-458b-992d-52cbf751aaac")
-		)
-		(pin "2"
-			(uuid "b3d1123b-78ca-48a8-80ac-be0dcf833762")
-		)
-		(pin "12"
-			(uuid "a4bc1a79-e4b2-41b5-b5d8-ee93edd0bf71")
-		)
-		(pin "4"
-			(uuid "fa6a0aee-aa59-4a7a-ab4d-adbd7c78a3b1")
-		)
-		(pin "13"
-			(uuid "5aa555e6-1803-4c73-9a94-6e1556984c51")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46e3")
-		)
-		(pin "3"
-			(uuid "84b67370-f02f-4520-bbc6-c08d7af73f97")
-		)
-		(pin "1"
-			(uuid "7a394ae6-326b-4b85-ac90-d55cadb5483b")
-		)
-		(pin "11"
-			(uuid "4e7eb5c2-b4f8-41e8-a4c4-e961bd70824b")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c754")
-		)
-		(pin "10"
-			(uuid "4ed8e74f-11ac-485b-931c-107550b815a8")
-		)
-		(pin "6"
-			(uuid "e080922d-43c3-409a-84ea-6423eb2367fb")
-		)
-		(pin "9"
-			(uuid "5cb6dd24-ef14-4400-9efe-66fb45c986bc")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 4)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 266.7 130.81 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "737d2c14-c8da-4996-add2-1099e7a1b62d")
-		(property "Reference" "#PWR01"
-			(at 266.7 134.62 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 266.7 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 266.7 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 266.7 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 266.7 130.81 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 158.75 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12237,78 +10632,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "dd6ccf12-1e8c-4569-ab1e-5faaa02d3965")
+			(uuid "4a96f5e3-d2ec-49f6-872b-5b5a32b4ded0")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR01")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 179.07 71.12 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "79f13525-3d2e-4354-be39-3ea6639c5abd")
-		(property "Reference" "#PWR034"
-			(at 179.07 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 179.07 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 179.07 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 179.07 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 179.07 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c91662a9-a286-4991-8f95-4dc1b7856b71")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR034")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -12369,7 +10698,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 125.73 49.53 0)
 			(effects
 				(font
@@ -12395,7 +10724,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 252.73 91.44 0)
+		(at 137.16 161.29 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -12404,7 +10733,7 @@
 		(fields_autoplaced yes)
 		(uuid "7ac3280e-2cb5-46ac-9073-f79f2c8a5fca")
 		(property "Reference" "#PWR010"
-			(at 252.73 95.25 0)
+			(at 137.16 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12413,7 +10742,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 252.73 86.36 0)
+			(at 137.16 156.21 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12421,7 +10750,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 252.73 91.44 0)
+			(at 137.16 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12430,7 +10759,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 252.73 91.44 0)
+			(at 137.16 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12439,7 +10768,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 252.73 91.44 0)
+			(at 137.16 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12600,85 +10929,6 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "J2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 234.95 157.48 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "80a1e9ed-0b59-47be-af3c-a741585c9ac8")
-		(property "Reference" "R18"
-			(at 237.49 156.2099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 237.49 158.7499 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 235.966 157.734 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 234.95 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 234.95 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 234.95 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "60eaa42c-5a95-46db-a47c-2dc949b479f5")
-		)
-		(pin "1"
-			(uuid "cb6de5c6-8c8a-4b1d-801b-b81535aa4f55")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -12897,7 +11147,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 227.33 97.79 0)
+		(at 111.76 167.64 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -12906,7 +11156,7 @@
 		(fields_autoplaced yes)
 		(uuid "86f1003f-cfed-4370-9247-3bc1fdf4268c")
 		(property "Reference" "R7"
-			(at 229.87 96.5199 0)
+			(at 114.3 166.3699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12915,7 +11165,7 @@
 			)
 		)
 		(property "Value" "R_US"
-			(at 229.87 99.0599 0)
+			(at 114.3 168.9099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12924,7 +11174,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 228.346 98.044 90)
+			(at 112.776 167.894 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12933,7 +11183,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 227.33 97.79 0)
+			(at 111.76 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12942,7 +11192,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 227.33 97.79 0)
+			(at 111.76 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12951,7 +11201,7 @@
 			)
 		)
 		(property "LCSC" "C2991755"
-			(at 227.33 97.79 0)
+			(at 111.76 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13108,17 +11358,35 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 190.5 123.19 0)
+		(lib_id "Device:R_US")
+		(at 158.75 77.47 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "8c9f71b1-29e7-4560-b51b-501934a80339")
-		(property "Reference" "#PWR037"
-			(at 190.5 127 0)
+		(uuid "8c540a72-5483-402b-bdd1-c15baba42341")
+		(property "Reference" "R1"
+			(at 161.29 76.1999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "R_US"
+			(at 161.29 78.7399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 159.766 77.724 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13126,16 +11394,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
-			(at 190.5 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 190.5 123.19 0)
+		(property "Datasheet" "~"
+			(at 158.75 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13143,8 +11403,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 190.5 123.19 0)
+		(property "Description" "Resistor, US symbol"
+			(at 158.75 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13152,22 +11412,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 190.5 123.19 0)
+		(property "LCSC" "C2991755"
+			(at 158.75 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "2"
+			(uuid "eb4636eb-3b7a-48ac-8829-446d5e82310c")
 		)
 		(pin "1"
-			(uuid "b1f80a3c-f44e-4102-a378-8d40323db4b7")
+			(uuid "8c988c5f-1cbb-434e-9e2e-3afd7a8f7a4e")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR037")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -13307,16 +11570,16 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 133.35 30.48 0)
+		(at 158.75 95.25 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "91923593-47d9-4f18-be9f-701eaa656cb3")
-		(property "Reference" "#PWR042"
-			(at 133.35 36.83 0)
+		(uuid "92703d82-1f43-4a1f-ab43-1f35689958ba")
+		(property "Reference" "#PWR034"
+			(at 158.75 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13325,7 +11588,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 133.35 35.56 0)
+			(at 158.75 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13333,7 +11596,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 133.35 30.48 0)
+			(at 158.75 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13342,7 +11605,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 133.35 30.48 0)
+			(at 158.75 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13351,7 +11614,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 133.35 30.48 0)
+			(at 158.75 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13360,29 +11623,47 @@
 			)
 		)
 		(pin "1"
-			(uuid "e791f965-ba55-43ed-a662-b3736a10004e")
+			(uuid "c855ea01-e0f2-4e7a-bc28-0c55b47cd2d2")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR042")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 190.5 153.67 0)
+		(lib_id "Logic_LevelTranslator:TXS0108EPW")
+		(at 190.5 115.57 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "91a0fc7c-d439-423e-9c25-9d887a4a27e5")
-		(property "Reference" "#PWR041"
-			(at 190.5 157.48 0)
+		(uuid "95a4c108-a4ac-40e1-8d7e-f2d3db77f89f")
+		(property "Reference" "U4"
+			(at 188.3059 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TXS0108EPWR"
+			(at 188.3059 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm"
+			(at 190.5 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13390,16 +11671,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
-			(at 190.5 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 190.5 153.67 0)
+		(property "Datasheet" "www.ti.com/lit/ds/symlink/txs0108e.pdf"
+			(at 190.5 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13407,8 +11680,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 190.5 153.67 0)
+		(property "Description" "Bidirectional  level-shifting voltage translator, TSSOP-20"
+			(at 190.5 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13416,8 +11689,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 190.5 153.67 0)
+		(property "LCSC" "C17206"
+			(at 190.5 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13426,91 +11699,69 @@
 			)
 		)
 		(pin "1"
-			(uuid "4f214a7e-9688-4657-81e0-3711c702f40f")
+			(uuid "e8402514-6cfb-4192-8493-09bcda76826d")
 		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR041")
-					(unit 1)
-				)
-			)
+		(pin "11"
+			(uuid "9ebce6f6-e374-4d89-8e23-40aba70b091f")
 		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 190.5 142.24 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "939965b7-0d19-492a-9f00-4d6e609cb168")
-		(property "Reference" "R14"
-			(at 193.04 140.9699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+		(pin "16"
+			(uuid "1b4fadd4-b064-447b-9543-0bfebc865c3a")
 		)
-		(property "Value" "R_US"
-			(at 193.04 143.5099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+		(pin "3"
+			(uuid "f0917d5f-d5a1-4a87-b863-20858a98667c")
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 191.516 142.494 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "17"
+			(uuid "c8e117e9-e43c-4c0b-af51-61a6c263577d")
 		)
-		(property "Datasheet" "~"
-			(at 190.5 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "9"
+			(uuid "efb27202-0df5-48ae-9b80-5e9ed7a85945")
 		)
-		(property "Description" "Resistor, US symbol"
-			(at 190.5 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "10"
+			(uuid "24e4cc4d-a43c-4202-b617-d674e4d81e3c")
 		)
-		(property "LCSC" "C2991755"
-			(at 190.5 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "13"
+			(uuid "4312b75f-771a-4b9d-9192-3a7f565de075")
+		)
+		(pin "15"
+			(uuid "c68d7441-975e-4986-94e8-3ca398619f7f")
 		)
 		(pin "2"
-			(uuid "a5da6a82-b53d-4a22-8a9c-4e6d9db496d0")
+			(uuid "cf106e11-c44a-4778-a123-d346fb75177c")
 		)
-		(pin "1"
-			(uuid "d8566ae8-0a22-4143-b3ca-82b4fb43b720")
+		(pin "20"
+			(uuid "a071bc00-b75a-4b34-ae0d-123731b9841f")
+		)
+		(pin "5"
+			(uuid "748110c8-7106-4dc2-8513-fe39e70128b2")
+		)
+		(pin "6"
+			(uuid "82989286-d0ab-44d6-8f59-cdedd5a869f0")
+		)
+		(pin "4"
+			(uuid "1afb24f3-dab0-4bfe-8cea-f26101ce9938")
+		)
+		(pin "18"
+			(uuid "8231fdd0-d615-44ad-b30b-1d762a93094b")
+		)
+		(pin "12"
+			(uuid "93615241-e165-41c5-9c6f-0aea740c3c3c")
+		)
+		(pin "7"
+			(uuid "87958e4c-a2c4-4484-9067-be781c47d92c")
+		)
+		(pin "19"
+			(uuid "159b31eb-3acb-4287-98be-c472b8f37c55")
+		)
+		(pin "8"
+			(uuid "5babf218-8095-4f20-86ab-bf6ebb6f755a")
+		)
+		(pin "14"
+			(uuid "9c8cd0ee-02ba-4e89-8955-8713ea873d28")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R14")
+					(reference "U4")
 					(unit 1)
 				)
 			)
@@ -13571,7 +11822,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 74.93 49.53 0)
 			(effects
 				(font
@@ -13662,85 +11913,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 190.5 127 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "98f51308-cbb2-4f17-ae13-bb75261e58ae")
-		(property "Reference" "R13"
-			(at 193.04 125.7299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 193.04 128.2699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 191.516 127.254 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 190.5 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 190.5 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 190.5 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "b9d5e47a-f69e-4b40-a83a-5ccb3d678aaf")
-		)
-		(pin "1"
-			(uuid "2ebb4a84-a51c-4add-bc8d-8317d4e4b523")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R13")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 20.32 30.48 0)
 		(unit 1)
@@ -13801,387 +11973,6 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "#PWR061")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 167.64 92.71 0)
-		(unit 2)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9a1e7815-07fa-4883-81a6-7518794ce65c")
-		(property "Reference" "U4"
-			(at 167.64 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 167.64 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 167.64 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 167.64 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 167.64 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "581d8778-6b0f-4394-a550-0689715ac869")
-		)
-		(pin "8"
-			(uuid "6e5796ae-d5c4-43c5-9e9e-1c750459b041")
-		)
-		(pin "2"
-			(uuid "b3d1123b-78ca-48a8-80ac-be0dcf833764")
-		)
-		(pin "12"
-			(uuid "a4bc1a79-e4b2-41b5-b5d8-ee93edd0bf73")
-		)
-		(pin "4"
-			(uuid "45d1261c-6b50-4026-b515-6122dacd7165")
-		)
-		(pin "13"
-			(uuid "5aa555e6-1803-4c73-9a94-6e1556984c53")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46e5")
-		)
-		(pin "3"
-			(uuid "3358ce87-02c5-4e81-af7c-73bd109dffb3")
-		)
-		(pin "1"
-			(uuid "7a394ae6-326b-4b85-ac90-d55cadb5483d")
-		)
-		(pin "11"
-			(uuid "4e7eb5c2-b4f8-41e8-a4c4-e961bd70824d")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c756")
-		)
-		(pin "10"
-			(uuid "4ed8e74f-11ac-485b-931c-107550b815aa")
-		)
-		(pin "6"
-			(uuid "e080922d-43c3-409a-84ea-6423eb2367fd")
-		)
-		(pin "9"
-			(uuid "9afa14ae-a55e-43f8-ac19-1c3862fcb3a1")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 2)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 243.84 62.23 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9a58fb69-89c1-4761-bd59-fc0fbe550835")
-		(property "Reference" "#PWR03"
-			(at 243.84 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 243.84 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 243.84 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 243.84 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 243.84 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "318c5b25-8c9b-4eee-b7b1-98ed3d7beb2b")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR03")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 143.51 190.5 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9a7e2c81-2039-482b-a8f6-6fded7cb01ea")
-		(property "Reference" "#PWR059"
-			(at 143.51 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 143.51 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 143.51 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 143.51 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 143.51 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0370131e-350a-4939-aa03-1c9acc94900b")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR059")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 190.5 157.48 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9d25bd8d-1acd-4a2c-9e9b-9353239f8a05")
-		(property "Reference" "R15"
-			(at 193.04 156.2099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 193.04 158.7499 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 191.516 157.734 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 190.5 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 190.5 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 190.5 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4e0ea0ce-da70-41fc-a85e-5d21021b6912")
-		)
-		(pin "1"
-			(uuid "9e5e2dee-2198-4149-8304-61cc43543ab3")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R15")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 190.5 138.43 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9dff5023-919d-4b5c-b494-5996d50dd7f5")
-		(property "Reference" "#PWR040"
-			(at 190.5 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 190.5 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 190.5 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 190.5 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 190.5 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d5387d3c-996c-492e-8f04-ab6030d14fa8")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -14254,130 +12045,17 @@
 		)
 	)
 	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 227.33 146.05 0)
-		(unit 5)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a2970242-e910-4425-9f6e-4ec901c0d54d")
-		(property "Reference" "U7"
-			(at 227.33 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 227.33 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 227.33 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 227.33 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 227.33 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 227.33 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103ee")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9da")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9fb")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a7")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0cf")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86344")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36e3")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180d3")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c4")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-90042453323f")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc3150693")
-		)
-		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d5b")
-		)
-		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018254")
-		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f53078013c")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 5)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5V")
-		(at 134.62 71.12 0)
+		(at 187.96 97.79 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "a34a0d8c-0ced-4973-8c1b-2f28f30839bc")
-		(property "Reference" "#PWR025"
-			(at 134.62 74.93 0)
+		(uuid "a30b3026-3c7e-44b4-bec8-2904c0a3fe2b")
+		(property "Reference" "#PWR021"
+			(at 187.96 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14386,7 +12064,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 134.62 66.04 0)
+			(at 187.96 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14394,7 +12072,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 134.62 71.12 0)
+			(at 187.96 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14403,7 +12081,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 134.62 71.12 0)
+			(at 187.96 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14412,7 +12090,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 134.62 71.12 0)
+			(at 187.96 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14421,117 +12099,13 @@
 			)
 		)
 		(pin "1"
-			(uuid "ae6c8880-4903-4ce6-9297-75ebe8d97e2c")
+			(uuid "4d30eefe-c9b3-46ad-a486-1995b662591b")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR025")
+					(reference "#PWR021")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 124.46 92.71 0)
-		(unit 3)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a55f0327-d971-465c-ae96-0e9631428f7c")
-		(property "Reference" "U4"
-			(at 124.46 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 124.46 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 124.46 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 124.46 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 124.46 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "c53b6375-0df1-40ee-9e0a-978468a35df0")
-		)
-		(pin "8"
-			(uuid "6e5796ae-d5c4-43c5-9e9e-1c750459b03d")
-		)
-		(pin "2"
-			(uuid "b3d1123b-78ca-48a8-80ac-be0dcf833760")
-		)
-		(pin "12"
-			(uuid "a4bc1a79-e4b2-41b5-b5d8-ee93edd0bf6f")
-		)
-		(pin "4"
-			(uuid "fa6a0aee-aa59-4a7a-ab4d-adbd7c78a3af")
-		)
-		(pin "13"
-			(uuid "5aa555e6-1803-4c73-9a94-6e1556984c4f")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46e1")
-		)
-		(pin "3"
-			(uuid "84b67370-f02f-4520-bbc6-c08d7af73f95")
-		)
-		(pin "1"
-			(uuid "7a394ae6-326b-4b85-ac90-d55cadb54839")
-		)
-		(pin "11"
-			(uuid "4e7eb5c2-b4f8-41e8-a4c4-e961bd708249")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c752")
-		)
-		(pin "10"
-			(uuid "4ed8e74f-11ac-485b-931c-107550b815a6")
-		)
-		(pin "6"
-			(uuid "cec50b52-c6ce-4eca-905a-b4734744532b")
-		)
-		(pin "9"
-			(uuid "9afa14ae-a55e-43f8-ac19-1c3862fcb39d")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 3)
 				)
 			)
 		)
@@ -14883,6 +12457,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 127 96.52 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "aa3a5c84-4eeb-43a4-bcf5-d254fac94e34")
+		(property "Reference" "#PWR01"
+			(at 127 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 127 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 127 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fc5e8774-063b-400e-9b37-dc0e4c18718b")
+		)
+		(instances
+			(project "AppleTini_board"
+				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
+					(reference "#PWR01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 83.82 26.67 0)
 		(unit 1)
@@ -14937,7 +12577,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 83.82 26.67 0)
 			(effects
 				(font
@@ -14963,7 +12603,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 252.73 111.76 0)
+		(at 137.16 181.61 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14971,7 +12611,7 @@
 		(dnp no)
 		(uuid "aba997e0-679b-4208-a085-931fa8b50597")
 		(property "Reference" "#PWR09"
-			(at 252.73 118.11 0)
+			(at 137.16 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14980,7 +12620,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 252.73 116.84 0)
+			(at 137.16 186.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14988,7 +12628,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 252.73 111.76 0)
+			(at 137.16 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14997,7 +12637,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 252.73 111.76 0)
+			(at 137.16 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15006,7 +12646,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 252.73 111.76 0)
+			(at 137.16 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15028,7 +12668,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 236.22 93.98 0)
+		(at 120.65 163.83 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15037,7 +12677,7 @@
 		(fields_autoplaced yes)
 		(uuid "acf252c1-d2b9-4100-966b-f3ecd422ec07")
 		(property "Reference" "#PWR012"
-			(at 236.22 97.79 0)
+			(at 120.65 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15046,7 +12686,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 236.22 88.9 0)
+			(at 120.65 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15054,7 +12694,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 236.22 93.98 0)
+			(at 120.65 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15063,7 +12703,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 236.22 93.98 0)
+			(at 120.65 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15072,7 +12712,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 236.22 93.98 0)
+			(at 120.65 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15147,7 +12787,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 115.57 49.53 0)
 			(effects
 				(font
@@ -15238,17 +12878,35 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 143.51 96.52 0)
+		(lib_id "74xx:74LS245")
+		(at 127 116.84 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b4958636-499d-4933-abe2-e8016ee9d12e")
-		(property "Reference" "#PWR047"
-			(at 143.51 100.33 0)
+		(uuid "bcb65f8a-9f8f-404d-bc29-2d651b70a5e1")
+		(property "Reference" "U3"
+			(at 124.8059 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "74LS245"
+			(at 124.8059 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm"
+			(at 127 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15256,16 +12914,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3V3"
-			(at 143.51 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 143.51 96.52 0)
+		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS245"
+			(at 127 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15273,8 +12923,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 143.51 96.52 0)
+		(property "Description" "Octal BUS Transceivers, 3-State outputs"
+			(at 127 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15282,201 +12932,79 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 143.51 96.52 0)
+		(property "LCSC" "C6082"
+			(at 127 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
-		)
-		(pin "1"
-			(uuid "7b88339e-2b60-489c-8007-be2502476fcb")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR047")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 227.33 161.29 0)
-		(unit 6)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b783dd5a-adc4-45fd-ab46-fa60366c5f92")
-		(property "Reference" "U7"
-			(at 227.33 152.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 227.33 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 227.33 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 227.33 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 227.33 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 227.33 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103ef")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9db")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9fc")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a8")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0d0")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86345")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36e4")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180d4")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c5")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-900424533240")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc3150694")
 		)
 		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d5c")
+			(uuid "bbbe2a05-78dd-4dd4-b4ea-227c773b3d88")
+		)
+		(pin "6"
+			(uuid "c9be85b6-9790-424b-8818-4c710d98ed14")
+		)
+		(pin "16"
+			(uuid "a0d8c7a3-7c34-4d70-a208-e1480584e0a6")
+		)
+		(pin "2"
+			(uuid "8c2f5740-0f2e-4a67-be71-d53fcaf08f32")
+		)
+		(pin "10"
+			(uuid "ddd7e2f2-c7f8-4258-9232-6ae9261ae026")
+		)
+		(pin "4"
+			(uuid "4f1b046f-d003-4eb7-a97f-9be2e7bb30ae")
+		)
+		(pin "15"
+			(uuid "7719c3d8-6c20-4b37-bc35-9a73deb7ad59")
 		)
 		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018255")
+			(uuid "8110d549-faba-408e-b349-5587d862b9fe")
 		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f53078013d")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 6)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 205.74 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bc7e2a06-c6e1-4718-b2ae-dd66ecacb127")
-		(property "Reference" "#PWR023"
-			(at 205.74 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 205.74 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 205.74 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 205.74 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 205.74 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
+		(pin "12"
+			(uuid "9a2a3e55-99a0-48be-a58e-68cb33377f13")
 		)
 		(pin "1"
-			(uuid "26e67946-f07a-4680-a924-a7dfec4cc67e")
+			(uuid "861d5afb-79c8-4659-a13c-6a8356ac01f8")
+		)
+		(pin "9"
+			(uuid "c05caaca-80ff-4514-8b69-5dc1fe14ba79")
+		)
+		(pin "8"
+			(uuid "e6969f19-9475-4497-a5e5-6001914ad5fc")
+		)
+		(pin "18"
+			(uuid "b1d3f03d-8d65-4427-884c-f22d874f9cec")
+		)
+		(pin "3"
+			(uuid "1f049d65-b606-4c0d-b240-5f4a612292bf")
+		)
+		(pin "19"
+			(uuid "a62db351-9561-4e64-8365-862f240653f1")
+		)
+		(pin "13"
+			(uuid "cf8c6189-8432-4592-8def-d463ee0f2159")
+		)
+		(pin "5"
+			(uuid "75e62630-4d8d-4a2f-966f-ad0c1b31e3fb")
+		)
+		(pin "20"
+			(uuid "16442798-479e-4357-af8c-f0700a2e5d16")
+		)
+		(pin "17"
+			(uuid "69f2718f-7877-4c8d-86a4-1caeb12a44d7")
+		)
+		(pin "14"
+			(uuid "03dfe274-4bc2-4757-a35a-6c0c2e18f950")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR023")
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -15683,277 +13211,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 179.07 74.93 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c31f70ca-0a43-4d43-b44f-124a64a6da7c")
-		(property "Reference" "R12"
-			(at 181.61 73.6599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 181.61 76.1999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 180.086 75.184 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 179.07 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 179.07 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 179.07 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "8511babb-dad6-46e8-bc9c-292f4e45312a")
-		)
-		(pin "1"
-			(uuid "6add3a22-5806-48a5-9374-5ded85f4df82")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 181.61 130.81 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c628e542-c2b3-4aef-b72d-73264165d519")
-		(property "Reference" "U7"
-			(at 181.61 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 181.61 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 181.61 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 181.61 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 181.61 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2676034"
-			(at 181.61 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "a5daaed6-528b-4db5-a147-d3db140103f0")
-		)
-		(pin "6"
-			(uuid "b272bc6f-c29b-45a1-a94b-fbfbacb6b9dc")
-		)
-		(pin "5"
-			(uuid "422dd9f6-efea-419f-90e1-0c72677de9fd")
-		)
-		(pin "1"
-			(uuid "1e02b1af-d7d1-43a2-818c-24cd574976a9")
-		)
-		(pin "2"
-			(uuid "7e789bbc-c861-42f0-a19d-816165b9e0d1")
-		)
-		(pin "12"
-			(uuid "9450573e-8a6c-4596-b5d0-fab0e6c86346")
-		)
-		(pin "10"
-			(uuid "f64951f0-3d72-4fb0-a391-5986930f36e5")
-		)
-		(pin "4"
-			(uuid "96ad1d17-d93f-4d1e-8db3-65402e0180d5")
-		)
-		(pin "13"
-			(uuid "0d5170df-fc32-4f02-a375-df27821699c6")
-		)
-		(pin "14"
-			(uuid "7f973d62-f4e2-48ca-83ed-900424533241")
-		)
-		(pin "8"
-			(uuid "ee08f4d7-96e1-4873-9f3f-8b3fc3150695")
-		)
-		(pin "11"
-			(uuid "2485ec72-da8f-4a63-a7c6-3b782a471d5d")
-		)
-		(pin "7"
-			(uuid "ccceafca-747e-4341-8ea5-5ca874018256")
-		)
-		(pin "9"
-			(uuid "f7eb54c6-69dc-4312-ace0-13f53078013e")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 134.62 74.93 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ca6a1a15-bf63-46cb-a3dc-871ebe075fb9")
-		(property "Reference" "R11"
-			(at 137.16 73.6599 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 137.16 76.1999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 135.636 75.184 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 134.62 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 134.62 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 134.62 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "1bc956d9-3f09-4327-b3fa-261b4922fe18")
-		)
-		(pin "1"
-			(uuid "8bec929e-3797-48bb-a508-76af5b5f2911")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5V")
 		(at 123.19 22.86 0)
 		(unit 1)
@@ -16014,140 +13271,6 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "#PWR036")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LS245")
-		(at 143.51 116.84 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "cad4b32c-eb54-400a-92e6-339e6a9fa958")
-		(property "Reference" "U3"
-			(at 141.3159 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "74LS245"
-			(at 141.3159 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm"
-			(at 143.51 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS245"
-			(at 143.51 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Octal BUS Transceivers, 3-State outputs"
-			(at 143.51 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C6082"
-			(at 143.51 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "11"
-			(uuid "db725c8b-2c7a-4a6d-9a55-2fcb088ba3a1")
-		)
-		(pin "6"
-			(uuid "9a70e023-5131-49d9-934b-81c6d9b8f80e")
-		)
-		(pin "16"
-			(uuid "3d9577f2-cc6e-4d7e-8298-ed35112fb356")
-		)
-		(pin "2"
-			(uuid "21bad328-4339-4f60-94c2-7c51b1ff17e4")
-		)
-		(pin "10"
-			(uuid "9b9b718c-698e-4370-89fa-8dd2158ac8d3")
-		)
-		(pin "4"
-			(uuid "a26dffbf-ac54-4941-83f2-c479838a9ae7")
-		)
-		(pin "15"
-			(uuid "d36c77fb-fa47-4f40-bff6-a50a6df9a7d5")
-		)
-		(pin "7"
-			(uuid "e459cc4e-2932-4533-affc-f1bb699450b7")
-		)
-		(pin "12"
-			(uuid "70b47348-38a7-49b9-8de8-5d83f88b812a")
-		)
-		(pin "1"
-			(uuid "300df9b8-8133-4269-8c6e-aeeb860896cb")
-		)
-		(pin "9"
-			(uuid "b1594d11-b484-49bb-847b-ea22dc7858e6")
-		)
-		(pin "8"
-			(uuid "a9a0b161-3f88-4224-b4f8-a4e9cdf04006")
-		)
-		(pin "18"
-			(uuid "40af0bbe-7dea-4e13-a54b-f54e0be992c9")
-		)
-		(pin "3"
-			(uuid "ca1c2ee8-e2f4-4faf-a747-cedd3e52a77a")
-		)
-		(pin "19"
-			(uuid "8c2ac65f-c834-4cbd-a32c-4ca438e8a70c")
-		)
-		(pin "13"
-			(uuid "fe341b0e-9fe5-4b07-8880-9c6a119ee866")
-		)
-		(pin "5"
-			(uuid "eeb2a027-c9aa-45fb-8f4d-4014a76e707d")
-		)
-		(pin "20"
-			(uuid "720644a6-345d-4f9f-81a1-d9dd60954d33")
-		)
-		(pin "17"
-			(uuid "ec5f7371-79d7-49eb-a151-d099fd6b1dc0")
-		)
-		(pin "14"
-			(uuid "9099ffdb-a2e7-4b84-883b-11ebf7424e9f")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -16274,7 +13397,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 73.66 26.67 0)
 			(effects
 				(font
@@ -16365,176 +13488,6 @@
 		)
 	)
 	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 232.41 69.85 0)
-		(unit 6)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d1fee2b1-b1a9-42a8-a58f-f200bff8379b")
-		(property "Reference" "U4"
-			(at 232.41 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 232.41 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 232.41 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 232.41 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 232.41 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "581d8778-6b0f-4394-a550-0689715ac868")
-		)
-		(pin "8"
-			(uuid "6e5796ae-d5c4-43c5-9e9e-1c750459b040")
-		)
-		(pin "2"
-			(uuid "b3d1123b-78ca-48a8-80ac-be0dcf833763")
-		)
-		(pin "12"
-			(uuid "d0c6892c-70cb-4560-937b-bc179b40962e")
-		)
-		(pin "4"
-			(uuid "fa6a0aee-aa59-4a7a-ab4d-adbd7c78a3b2")
-		)
-		(pin "13"
-			(uuid "e344e5c1-0974-4444-9203-f6e25376c809")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46e4")
-		)
-		(pin "3"
-			(uuid "84b67370-f02f-4520-bbc6-c08d7af73f98")
-		)
-		(pin "1"
-			(uuid "7a394ae6-326b-4b85-ac90-d55cadb5483c")
-		)
-		(pin "11"
-			(uuid "4e7eb5c2-b4f8-41e8-a4c4-e961bd70824c")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c755")
-		)
-		(pin "10"
-			(uuid "4ed8e74f-11ac-485b-931c-107550b815a9")
-		)
-		(pin "6"
-			(uuid "e080922d-43c3-409a-84ea-6423eb2367fc")
-		)
-		(pin "9"
-			(uuid "9afa14ae-a55e-43f8-ac19-1c3862fcb3a0")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 6)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 133.35 22.86 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d864f887-dd54-4683-bb65-39aea50ea908")
-		(property "Reference" "#PWR039"
-			(at 133.35 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 133.35 17.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 133.35 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 133.35 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 133.35 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "105516b5-8192-4614-9236-71f7ee78ae6f")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "#PWR039")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 83.82 30.48 0)
 		(unit 1)
@@ -16595,6 +13548,85 @@
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
 					(reference "#PWR027")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 158.75 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ddea63be-85e4-4d9b-a496-a5d63adb0403")
+		(property "Reference" "R2"
+			(at 161.29 90.1699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "R_US"
+			(at 161.29 92.7099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 159.766 91.694 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 158.75 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 158.75 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2991755"
+			(at 158.75 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "fa1408d2-e21a-4a8d-994a-3b405e635261")
+		)
+		(pin "1"
+			(uuid "99672894-4aed-4226-8e08-dde2df423d55")
+		)
+		(instances
+			(project "AppleTini_board"
+				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -16667,85 +13699,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 234.95 127 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e4e13823-4ae0-478f-81cc-d3a8119cbfdc")
-		(property "Reference" "R16"
-			(at 237.49 125.7299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 237.49 128.2699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 235.966 127.254 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 234.95 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 234.95 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 234.95 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "646712de-6787-4140-8d32-8ac1e9ce1f1c")
-		)
-		(pin "1"
-			(uuid "f3bf3a69-5562-45b2-af4b-ad656c3e49da")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 115.57 53.34 0)
 		(unit 1)
@@ -16812,36 +13765,17 @@
 		)
 	)
 	(symbol
-		(lib_id "74xx:74LS245")
-		(at 143.51 170.18 0)
-		(mirror y)
+		(lib_id "power:GND")
+		(at 190.5 133.35 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "e959ef72-4edc-4a28-8d49-7d102095f30d")
-		(property "Reference" "U9"
-			(at 141.3159 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "74LS245"
-			(at 141.3159 152.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm"
-			(at 143.51 170.18 0)
+		(uuid "e8c31cd8-d526-423b-a8e6-9f412898246a")
+		(property "Reference" "#PWR03"
+			(at 190.5 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16849,8 +13783,16 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS245"
-			(at 143.51 170.18 0)
+		(property "Value" "GND"
+			(at 190.5 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16858,8 +13800,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Octal BUS Transceivers, 3-State outputs"
-			(at 143.51 170.18 0)
+		(property "Datasheet" ""
+			(at 190.5 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16867,79 +13809,22 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C6082"
-			(at 143.51 170.18 0)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 190.5 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
-		)
-		(pin "11"
-			(uuid "16f1542e-edca-4a49-8d28-634fa1200633")
-		)
-		(pin "6"
-			(uuid "01d6daf7-791c-4e40-9cc7-9c764b7f54a2")
-		)
-		(pin "16"
-			(uuid "9addeb6b-ef70-4ce7-9abc-89f7bdf88f48")
-		)
-		(pin "2"
-			(uuid "a6a7006a-f1c5-429e-9f74-ac7cd5b2449a")
-		)
-		(pin "10"
-			(uuid "36413498-751e-497b-bbd9-7b70259f1e4f")
-		)
-		(pin "4"
-			(uuid "3f33e46e-830f-470b-ada1-a91dd0e86a94")
-		)
-		(pin "15"
-			(uuid "ca1e0208-1a8c-44d8-b246-b19f5869ec63")
-		)
-		(pin "7"
-			(uuid "7653dd92-05dc-4c2f-84e8-4a6599eb9d26")
-		)
-		(pin "12"
-			(uuid "41749dfc-4e30-4724-9a0d-1666771f9930")
 		)
 		(pin "1"
-			(uuid "53f13d3c-9790-4b31-b790-bac00f9a69c4")
-		)
-		(pin "9"
-			(uuid "ae51b405-f882-4f5e-9aa6-5ffd54f907e9")
-		)
-		(pin "8"
-			(uuid "4087ff1f-ed1a-45a9-bbbe-a503774a9d33")
-		)
-		(pin "18"
-			(uuid "aaab1975-4a52-4523-aa6f-3bf8e1976052")
-		)
-		(pin "3"
-			(uuid "962a7ba8-afd6-4a46-9266-00535b1e7a82")
-		)
-		(pin "19"
-			(uuid "520c966d-03f1-43fc-8b9b-e25cf41ac1d5")
-		)
-		(pin "13"
-			(uuid "cdfab831-0ebb-4bae-b0bb-d714f0ddb9a9")
-		)
-		(pin "5"
-			(uuid "aaeb3718-af94-483b-aae8-a7af5aeb6c5e")
-		)
-		(pin "20"
-			(uuid "59e9f7d4-611b-49a2-aa3f-50a0da570b3e")
-		)
-		(pin "17"
-			(uuid "e2ba6321-bb39-4c0f-9906-1511fc003a7c")
-		)
-		(pin "14"
-			(uuid "e9f8ac4c-b314-42f0-91b8-97ce4cb81df0")
+			(uuid "d175fe4f-51d1-42df-97c5-a37a68282846")
 		)
 		(instances
 			(project "AppleTini_board"
 				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U9")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -17012,85 +13897,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 243.84 66.04 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ecdd0f0d-3237-425c-bf50-585019128ce8")
-		(property "Reference" "R1"
-			(at 246.38 64.7699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 246.38 67.3099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 244.856 66.294 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 243.84 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 243.84 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 243.84 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "6e3ffe05-9f7c-4cc1-937d-6505aed1f2de")
-		)
-		(pin "1"
-			(uuid "36be50b6-068c-4235-b89e-e47ecd1ce1c4")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 85.09 49.53 0)
 		(unit 1)
@@ -17145,7 +13951,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 85.09 49.53 0)
 			(effects
 				(font
@@ -17249,189 +14055,6 @@
 		)
 	)
 	(symbol
-		(lib_id "74xx:74LCX07")
-		(at 270.51 69.85 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f0d74ac0-7495-4994-ac22-fd6375a18c14")
-		(property "Reference" "U4"
-			(at 270.51 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LCX07"
-			(at 270.51 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
-			(at 270.51 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "www.st.com/resource/en/datasheet/74lcx07.pdf"
-			(at 270.51 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CMOS hex buffer (open drain) with 5V tolerant inputs"
-			(at 270.51 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "581d8778-6b0f-4394-a550-0689715ac866")
-		)
-		(pin "8"
-			(uuid "6e5796ae-d5c4-43c5-9e9e-1c750459b03e")
-		)
-		(pin "2"
-			(uuid "d83de227-a022-4048-96c9-775bf140980b")
-		)
-		(pin "12"
-			(uuid "a4bc1a79-e4b2-41b5-b5d8-ee93edd0bf70")
-		)
-		(pin "4"
-			(uuid "fa6a0aee-aa59-4a7a-ab4d-adbd7c78a3b0")
-		)
-		(pin "13"
-			(uuid "5aa555e6-1803-4c73-9a94-6e1556984c50")
-		)
-		(pin "7"
-			(uuid "7949a61d-ef23-4959-ace1-cb58a5bc46e2")
-		)
-		(pin "3"
-			(uuid "84b67370-f02f-4520-bbc6-c08d7af73f96")
-		)
-		(pin "1"
-			(uuid "9ea74ef7-8596-4221-9ad7-e8903e179411")
-		)
-		(pin "11"
-			(uuid "4e7eb5c2-b4f8-41e8-a4c4-e961bd70824a")
-		)
-		(pin "14"
-			(uuid "933978f2-91ce-4157-8cbf-96700a09c753")
-		)
-		(pin "10"
-			(uuid "4ed8e74f-11ac-485b-931c-107550b815a7")
-		)
-		(pin "6"
-			(uuid "e080922d-43c3-409a-84ea-6423eb2367fa")
-		)
-		(pin "9"
-			(uuid "9afa14ae-a55e-43f8-ac19-1c3862fcb39e")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "U4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 234.95 142.24 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f5b57554-b935-48c7-a418-d617af8cd8e9")
-		(property "Reference" "R17"
-			(at 237.49 140.9699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "R_US"
-			(at 237.49 143.5099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 235.966 142.494 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 234.95 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 234.95 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2991755"
-			(at 234.95 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "06dab167-7f61-46ec-ad62-fb06b1c22d30")
-		)
-		(pin "1"
-			(uuid "92a97b50-7116-4ddb-afbf-0ad4286da919")
-		)
-		(instances
-			(project "AppleTini_board"
-				(path "/2a0d40a7-524c-4093-b42b-2b0c11421443"
-					(reference "R17")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 104.14 26.67 0)
 		(unit 1)
@@ -17486,7 +14109,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77177"
+		(property "LCSC" "C77020"
 			(at 104.14 26.67 0)
 			(effects
 				(font
