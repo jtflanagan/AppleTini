@@ -49,16 +49,28 @@ module au_top (
     // clock. This ensures the entire FPGA comes out of reset at the same time.
     reset_conditioner reset_cond;
     
-    ft600_write_only ft600(.rst(rst),.ft_clk(ft_clk));
-    
-    bus_timing bus_timer(.rst(rst));
+    // simple blinker
     blinker myBlinker(.rst(rst));
-    dff addr_misc_bus[20];
+    
+    ft600_write_only ft600(.rst(rst),.ft_clk(ft_clk));
     
     // pipelined signals to ensure they are clean
     pipeline addr_clean[16](#DEPTH(2));
     pipeline data_clean[8](#DEPTH(2));
     pipeline misc_clean[12](#DEPTH(2));
+    
+    // storage for the address phase signals to have them available
+    // for data phase
+    dff addr_misc_bus[20];
+    
+    // generates bus signal timng
+    bus_timing bus_timer(.rst(rst));
+    fsm bus_emit_state = {IDLE, EMIT_PHASE};
+    dff inhibit_assert(.rst(rst));
+    
+    // manages data accesses
+    data_manager data_mgr(.rst(rst));
+    
   }
   
   always {
@@ -89,11 +101,11 @@ module au_top (
     rw_pin.enable = 0;
     
     inh_pin.write = 0;
-    inh_pin.enable = 0;
+    inh_pin.enable = inhibit_assert.q;
     res_pin.write = 0;
     res_pin.enable = 0;
     irq_pin.write = 0;
-    irq_pin.enable = 0;
+    irq_pin.enable = data_mgr.irq_assert;
     rdy_pin.write = 0;
     rdy_pin.enable = 0;
     nmi_pin.write = 0;
@@ -116,6 +128,14 @@ module au_top (
     misc_clean.in[10] = inh_pin.read;
     misc_clean.in[11] = phi0_pin;
     
+    data_mgr.addr_in = addr_clean.out;
+    data_mgr.addr_in_en = 0;
+    data_mgr.rw = misc_clean.out[0];
+    data_mgr.data_in = data_clean.out;
+    data_mgr.data_in_en = 0;
+    data_mgr.reset_pin_in = misc_clean.out[1];
+    data_mgr.phi0_in = misc_clean.out[11];
+    
     // board_5v_pin is active-low
     if (board_5v_pin) {
       // disable tranceivers
@@ -133,10 +153,31 @@ module au_top (
     myBlinker.counted_event = bus_timer.addr_phase_begin;
     led = 8x{myBlinker.blink};
     
+    case (bus_emit_state.q) {
+      bus_emit_state.EMIT_PHASE:
+        data_dir_pin = data_mgr.data_out_en;
+        data_pin.enable = 8x{data_mgr.data_out_en};
+        data_pin.write = data_mgr.data_out;
+      default:
+        data_dir_pin = 0;
+        data_pin.enable = 8x{0};
+    }
+    
+    if (bus_timer.addr_phase_begin) {
+      bus_emit_state.d = bus_emit_state.IDLE;
+      inhibit_assert.d = 0;
+    }
+    
     if (bus_timer.addr_phase_snap_bus) {
-      addr_misc_bus.d[15:0] = addr_clean.out[15:0];
+      addr_misc_bus.d[15:0] = addr_clean.out;
       // first 4 misc signals are the ones we export
       addr_misc_bus.d[19:16] = misc_clean.out[3:0];
+      data_mgr.addr_in_en = 1;
+      inhibit_assert.d = data_mgr.inhibit_assert;
+    }
+    
+    if (bus_timer.data_phase_emit) {
+      bus_emit_state.d = bus_emit_state.EMIT_PHASE;
     }
     
     if (bus_timer.data_phase_snap_bus) {
@@ -146,6 +187,7 @@ module au_top (
         ft600.ui_din[31:28] = 4x{1};
         ft600.ui_din_valid = 1;
       }
+      data_mgr.data_in_en = 1;
     }
   }
 }
