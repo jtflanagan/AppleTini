@@ -1,0 +1,140 @@
+module data_manager (
+    input clk,  // clock
+    input rst,  // reset
+    input addr_in[16],
+    input addr_in_en,
+    input rw,
+    input data_in[8],
+    input data_in_en,
+    input reset_pin_in,
+    input phi0_in,
+    output data_out[8],
+    output data_out_en,
+    output inhibit_assert,
+    output irq_assert
+  ) {
+  
+  .clk(clk) {
+    dff addr_latch_in[16](.rst(rst));
+    dff rw_latch_in(.rst(rst));
+    dff data_latch_in[8](.rst(rst));
+    dff data_latch_out[8](.rst(rst));
+    dff data_latch_out_en(.rst(rst));
+    simple_ram ioport(#SIZE(8), #DEPTH(16));
+    fsm mgr_state = {IDLE, ADDR_LATCHED, DATA_LATCHED};
+    fsm emit_state = {IDLE, IOPORT, MOCKINGBOARD0, MOCKINGBOARD1};
+    via6522 via0;
+    via6522 via1;
+  }
+
+  always {
+    data_out = data_latch_out.q;
+    data_out_en = data_latch_out_en.q;
+    ioport.address = addr_latch_in.q[3:0];
+    ioport.write_data = data_latch_in.q;
+    ioport.write_en = 0;
+    inhibit_assert = 0;
+    irq_assert = via0.irq | via1.irq;
+    via0.reset = rst | !reset_pin_in;
+    via0.we = ~rw;
+    via0.porta_in = 8bx;
+    via0.portb_in = 8bx;
+    via0.ca1_in = 1bx;
+    via0.ca2_in = 1bx;
+    via0.cb1_in = 1bx;
+    via0.cb2_in = 1bx;
+    via0.strobe = 0;
+    via0.slow_clock = 0;
+    via0.addr = addr_latch_in.q[3:0];
+    via0.data_in = data_latch_in.q;
+    via1.reset = rst | !reset_pin_in;
+    via1.we = !rw;
+    via1.porta_in = 8bx;
+    via1.portb_in = 8bx;
+    via1.ca1_in = 1bx;
+    via1.ca2_in = 1bx;
+    via1.cb1_in = 1bx;
+    via1.cb2_in = 1bx;
+    via1.strobe = 0;
+    via1.slow_clock = 0;
+    via1.addr = addr_latch_in.q[3:0];
+    via1.data_in = data_latch_in.q;
+    
+    case (mgr_state.q) {
+      mgr_state.IDLE:
+        if (addr_in_en) {
+          addr_latch_in.d = addr_in;
+          rw_latch_in.d = rw;
+          data_latch_out_en.d = 0;
+          mgr_state.d = mgr_state.ADDR_LATCHED;
+        }
+        if (data_in_en) {
+          data_latch_in.d = data_in;
+          mgr_state.d = mgr_state.DATA_LATCHED;
+        }
+      mgr_state.ADDR_LATCHED:
+        mgr_state.d = mgr_state.IDLE;
+        // addr phase, check if we emit this byte
+        if (addr_latch_in.q[15:4] == 12hc0b) {
+          // slot 2 ioport range
+          if (rw_latch_in.q == 1) {
+            // indicate this is a byte we are emitting
+            data_latch_out_en.d = 1;
+            // flag for next cycle to latch the emit byte
+            emit_state.d = emit_state.IOPORT;
+          }
+        }
+        if (addr_latch_in.q[15:8] == 8hc4) {
+          if (rw == 1) {
+            data_latch_out_en.d = 1;
+            if (addr_latch_in.q[7] == 0) {
+              emit_state.d = emit_state.MOCKINGBOARD0;
+            } else {
+              emit_state.d = emit_state.MOCKINGBOARD1;
+            }
+          }
+        }
+      //if (addr_in[15:4] == 12hfff & rw == 1) {
+      //  if (addr_in[3:0] == 4hc) {
+      //    data_out_en = 1;
+      //    inhibit_active = 1;
+      //    emitted_data.d = 8hbb;
+      //  }
+      //  if (addr_in[3:0] == 4hd) {
+      //    data_out_en = 1;
+      //    inhibit_active = 1;
+      //    emitted_data.d = 8haa;
+      //  }
+      //}
+      mgr_state.DATA_LATCHED:
+        mgr_state.d = mgr_state.IDLE;
+        emit_state.d = emit_state.IDLE;
+        via0.slow_clock = 1;
+        via1.slow_clock = 1;
+        if (addr_latch_in.q[15:4] == 12hc0b) {
+          // slot 2 ioport range
+          if (rw_latch_in.q == 0) {
+            // enable the write to ioport ram
+            ioport.write_en = 1;
+          }
+        } else if (addr_latch_in.q[15:8] == 8hc4) {
+          // slot 4 ROM range
+          if (addr_latch_in.q[7] == 0) {
+            via0.strobe = 1;
+          } else {
+            via1.strobe = 1;
+          }
+        }
+    }
+    
+
+    case (emit_state.q) {
+      emit_state.IOPORT:
+        data_latch_out.d = ioport.read_data;
+      emit_state.MOCKINGBOARD0:
+        data_latch_out.d = via0.data_out;
+      emit_state.MOCKINGBOARD1:
+        data_latch_out.d = via1.data_out;
+    }
+  }
+}
