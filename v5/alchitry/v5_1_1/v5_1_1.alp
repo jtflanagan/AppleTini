@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="v5_1_1" board="Alchitry Au" language="Lucid" version="3">
+  <files>
+    <src top="true">au_top.luc</src>
+    <src>mem_ss_manager.luc</src>
+    <src>blinker.luc</src>
+    <src>via6522.v</src>
+    <component>pipeline.luc</component>
+    <component>mig_wrapper.luc</component>
+    <src>bus_timing.luc</src>
+    <src>data_manager.luc</src>
+    <src>ft600_module.luc</src>
+    <component>reset_conditioner.luc</component>
+    <constraint>ft.acf</constraint>
+    <constraint lib="true">alchitry.acf</constraint>
+    <constraint>tini.acf</constraint>
+    <constraint lib="true">au.xdc</constraint>
+    <core name="fifo_generator_0">
+      <src>fifo_generator_0.xci</src>
+      <stub>fifo_generator_0_stub.v</stub>
+    </core>
+    <core name="fifo_generator_3">
+      <src>fifo_generator_3.xci</src>
+      <stub>fifo_generator_3_stub.v</stub>
+    </core>
+    <core name="mig_7series_0">
+      <src>mig_7series_0.xci</src>
+      <stub>mig_7series_0_stub.v</stub>
+    </core>
+    <core name="fifo_generator_2">
+      <src>fifo_generator_2.xci</src>
+      <stub>fifo_generator_2_stub.v</stub>
+    </core>
+    <core name="clk_wiz_0">
+      <src>clk_wiz_0.xci</src>
+      <stub>clk_wiz_0_stub.v</stub>
+    </core>
+    <core name="fifo_generator_1">
+      <src>fifo_generator_1.xci</src>
+      <stub>fifo_generator_1_stub.v</stub>
+    </core>
+  </files>
+</project>
