@@ -1,0 +1,298 @@
+module au_top (
+    input clk,              // 100MHz clock
+    input rst_n,            // reset button (active low)
+    output led [8],         // 8 user controllable LEDs
+    input usb_rx,           // USB->Serial input
+    output usb_tx,           // USB->Serial output
+    
+    /* DDR3 Connections */
+    inout ddr3_dq[16],
+    inout ddr3_dqs_n[2],
+    inout ddr3_dqs_p[2],
+    output ddr3_addr[14],
+    output ddr3_ba[3],
+    output ddr3_ras_n,
+    output ddr3_cas_n,
+    output ddr3_we_n,
+    output ddr3_reset_n,
+    output ddr3_ck_p,
+    output ddr3_ck_n,
+    output ddr3_cke,
+    output ddr3_cs_n,
+    output ddr3_dm[2],
+    output ddr3_odt,
+    
+    // FT pins
+    input ft_clk,
+    input ft_rxf,
+    input ft_txe,
+    inout ft_data[16],
+    inout ft_be[2],
+    output ft_rd,
+    output ft_wr,
+    output ft_oe,
+    
+    // Tini pins
+    inout data_pin[8],
+    inout addr_pin[16],
+    inout rw_pin,
+    
+    input phi0_pin,
+    input m2sel_pin,
+    input q3_pin,
+    input p7m_pin,
+    input m2b0_pin,
+
+    inout inh_pin,
+    inout res_pin,
+    inout irq_pin,
+    inout rdy_pin,
+    inout nmi_pin,
+    inout dma_pin,
+
+    output oe_pin,
+    output oe_bar_pin,
+
+    input board_5v_pin,
+
+    output addr_dir_pin,
+    output data_dir_pin    
+  ) {
+  
+  clk_wiz_0 clk_wiz;
+ 
+  sig rst;
+  
+  always {
+    clk_wiz.clk_in1 = clk;
+    clk_wiz.reset = !rst_n;
+ }
+  
+  data_manager data_mgr(.clk1(clk_wiz.clk_out1), .clk2(clk_wiz.clk_out2), .clk_locked(clk_wiz.locked), .ddr3_dq(ddr3_dq), .ddr3_dqs_n(ddr3_dqs_n), .ddr3_dqs_p(ddr3_dqs_p));
+  
+  always {
+    rst = data_mgr.rst;
+    /* DDR3 Connections */
+    ddr3_addr = data_mgr.ddr3_addr;
+    ddr3_ba = data_mgr.ddr3_ba;
+    ddr3_ras_n = data_mgr.ddr3_ras_n;
+    ddr3_cas_n = data_mgr.ddr3_cas_n;
+    ddr3_we_n = data_mgr.ddr3_we_n;
+    ddr3_reset_n = data_mgr.ddr3_reset_n;
+    ddr3_ck_p = data_mgr.ddr3_ck_p;
+    ddr3_ck_n = data_mgr.ddr3_ck_n;
+    ddr3_cke = data_mgr.ddr3_cke;
+    ddr3_cs_n = data_mgr.ddr3_cs_n;
+    ddr3_dm = data_mgr.ddr3_dm;
+    ddr3_odt = data_mgr.ddr3_odt;
+  }
+  
+  .clk(data_mgr.ui_clk) {
+
+    fifo_generator_2 bus_event_fifo(.srst(rst));
+    ft600_module ft600(.rst(rst),.ft_clk(ft_clk), .ft_data(ft_data), .ft_be(ft_be));
+    .rst(rst) {
+      blinker myBlinker;
+      dff addr_misc_bus[20];
+      bus_timing bus_timer;
+      fsm bus_emit_state = {IDLE, EMIT_PHASE};
+      fsm bus_event_flush_state = {IDLE, BUS_HEADER, BUS_DATA};
+      dff bus_event_flush_counter[8];
+      dff led_val[8];
+      fsm host_cmd_state = {IDLE, LED_SET, UNKNOWN};
+      dff host_cmd_counter[8];
+    }
+    
+    // pipelined signals to ensure they are clean
+    pipeline addr_clean[16](#DEPTH(2));
+    pipeline data_clean[8](#DEPTH(2));
+    pipeline misc_clean[12](#DEPTH(2));
+    
+  }
+  
+  always {
+    led = 8h00;             // turn LEDs off
+
+    usb_tx = usb_rx;        // echo the serial data
+    
+    ft600.ft_rxf = ft_rxf;
+    ft600.ft_txe = ft_txe;
+    ft_rd = ft600.ft_rd;
+    ft_wr = ft600.ft_wr;
+    ft_oe = ft600.ft_oe;
+    ft600.tx_in[0].din_write_req = 0;
+    ft600.tx_in[0].din = 32bx;
+    ft600.tx_in[0].din_write = 0;
+    ft600.tx_in[1].din_write_req = 0;
+    ft600.tx_in[1].din = 32bx;
+    ft600.tx_in[1].din_write = 0;
+    ft600.ui_dout_len_read = 0;
+    ft600.ui_dout_read = 0;
+    
+    bus_event_fifo.din = bx;
+    bus_event_fifo.wr_en = 0;
+    bus_event_fifo.rd_en = 0;
+    //ft_be.write = ft600.ft_be.read;
+    //ft_data.write = ft600.ft_data;
+    case (bus_event_flush_state.q) {
+      bus_event_flush_state.IDLE:
+        if (bus_event_fifo.prog_full) {
+          ft600.tx_in[0].din_write_req = 1;
+          bus_event_flush_state.d = bus_event_flush_state.BUS_HEADER;
+        }
+      bus_event_flush_state.BUS_HEADER:
+        ft600.tx_in[0].din_write_req = 1;
+        if (ft600.tx_out[0].din_write_active &&
+            !ft600.tx_out[0].din_write_full) {
+          ft600.tx_in[0].din = 32h000001ff;
+          ft600.tx_in[0].din_write = 1;
+          bus_event_flush_counter.d = 8hff;
+          bus_event_flush_state.d = bus_event_flush_state.BUS_DATA;
+        }
+      bus_event_flush_state.BUS_DATA:
+        ft600.tx_in[0].din_write_req = 1;
+        if (bus_event_flush_counter.q == 0) {
+          ft600.tx_in[0].din_write_req = 0;
+          ft600.tx_in[0].din_write = 0;
+          bus_event_flush_state.d = bus_event_flush_state.IDLE;
+        }
+        if (ft600.tx_out[0].din_write_active &&
+            !ft600.tx_out[0].din_write_full) {
+          bus_event_flush_counter.d = bus_event_flush_counter.q - 1;
+          ft600.tx_in[0].din = bus_event_fifo.dout;
+          bus_event_fifo.rd_en = 1;
+          ft600.tx_in[0].din_write = 1;
+        }
+    }
+    
+    case (host_cmd_state.q) {
+      host_cmd_state.IDLE:
+        if (!ft600.ui_dout_len_empty) {
+          ft600.ui_dout_read = 1;
+          //led_val.d = 8h0f;
+          host_cmd_counter.d = ft600.ui_dout[7:0];
+          if (ft600.ui_dout[15:8] == 8h02) {
+            // LED set command
+            host_cmd_state.d = host_cmd_state.LED_SET;
+          } else {
+            host_cmd_state.d = host_cmd_state.UNKNOWN;
+          }
+        }
+      host_cmd_state.LED_SET:
+        if (host_cmd_counter.q == 8h01) {
+          led_val.d = ft600.ui_dout[7:0];
+        }
+    }
+    // after finishing reading the current message,
+    // pull the entry from ui_dout_len and go IDLE
+    if (host_cmd_state.q != host_cmd_state.IDLE) {
+      ft600.ui_dout_read = 1;
+      host_cmd_counter.d = host_cmd_counter.q - 1;
+      if (host_cmd_counter.q == 0) {
+        ft600.ui_dout_len_read = 1;
+        host_cmd_state.d = host_cmd_state.IDLE;
+      }
+    }
+         
+    addr_dir_pin = 0;
+    data_dir_pin = 0;
+    addr_pin.write = 16b0;
+    addr_pin.enable = 16b0;
+    data_pin.write = 8b0;
+    data_pin.enable = 8b0;
+    rw_pin.write = 0;
+    rw_pin.enable = 0;
+    
+    inh_pin.write = 0;
+    inh_pin.enable = data_mgr.inhibit_assert;
+    res_pin.write = 0;
+    res_pin.enable = 0;
+    irq_pin.write = 0;
+    irq_pin.enable = data_mgr.irq_assert;
+    rdy_pin.write = 0;
+    rdy_pin.enable = 0;
+    nmi_pin.write = 0;
+    nmi_pin.enable = 0;
+    dma_pin.write = 0;
+    dma_pin.enable = 0;
+    
+    addr_clean.in = addr_pin.read;
+    data_clean.in = data_pin.read;
+    misc_clean.in[0] = rw_pin.read;
+    misc_clean.in[1] = res_pin.read;
+    misc_clean.in[2] = m2sel_pin;
+    misc_clean.in[3] = m2b0_pin;
+    misc_clean.in[4] = irq_pin.read;
+    misc_clean.in[5] = p7m_pin;
+    misc_clean.in[6] = q3_pin;
+    misc_clean.in[7] = dma_pin.read;
+    misc_clean.in[8] = rdy_pin.read;
+    misc_clean.in[9] = nmi_pin.read;
+    misc_clean.in[10] = inh_pin.read;
+    misc_clean.in[11] = phi0_pin;
+    
+    data_mgr.addr_in = addr_clean.out;
+    data_mgr.addr_in_en = 0;
+    data_mgr.rw = misc_clean.out[0];
+    data_mgr.data_in = data_clean.out;
+    data_mgr.data_in_en = 0;
+    data_mgr.reset_pin_in = misc_clean.out[1];
+    data_mgr.data_begin_in = bus_timer.addr_phase_begin;
+    
+    // board_5v_pin is active-low
+    if (board_5v_pin) {
+      // disable tranceivers
+      oe_pin = 0;
+      oe_bar_pin = 1;
+    } else {
+      // enable transceivers
+      oe_pin = 1;
+      oe_bar_pin = 0;
+    }
+    
+    bus_timer.phi0_clean = misc_clean.out[11];
+    
+    led = led_val.q;
+    myBlinker.counted_event = bus_timer.addr_phase_begin;
+    if (myBlinker.blink) {
+      led = led_val.q;
+    } else {
+      led = led_val.q ^ 8hff;
+    }
+    
+    case (bus_emit_state.q) {
+      bus_emit_state.EMIT_PHASE:
+        data_dir_pin = data_mgr.data_out_en;
+        data_pin.enable = 8x{data_mgr.data_out_en};
+        data_pin.write = data_mgr.data_out;
+      default:
+        data_dir_pin = 0;
+        data_pin.enable = 8x{0};
+    }
+    
+    if (bus_timer.addr_phase_begin) {
+      bus_emit_state.d = bus_emit_state.IDLE;
+    }
+    
+    if (bus_timer.addr_phase_snap_bus) {
+      addr_misc_bus.d[15:0] = addr_clean.out;
+      // first 4 misc signals are the ones we export
+      addr_misc_bus.d[19:16] = misc_clean.out[3:0];
+      data_mgr.addr_in_en = 1;
+    }
+    
+    if (bus_timer.data_phase_emit) {
+      bus_emit_state.d = bus_emit_state.EMIT_PHASE;
+    }
+    
+    if (bus_timer.data_phase_snap_bus) {
+      if (!bus_event_fifo.full) {
+        bus_event_fifo.din[19:0] = addr_misc_bus.q[19:0];
+        bus_event_fifo.din[27:20] = data_clean.out[7:0];
+        bus_event_fifo.din[31:28] = 4x{1};
+        bus_event_fifo.wr_en = 1;
+      }
+      data_mgr.data_in_en = 1;
+    }
+  }
+}

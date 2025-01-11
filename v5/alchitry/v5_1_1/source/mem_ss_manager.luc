@@ -1,0 +1,157 @@
+module mem_ss_manager (
+  input clk,
+  input addr_in[16],
+  input addr_in_valid,
+  input rw,
+  input bus_reset,
+  output addr_out[17],            // full 128k ram address
+  output valid_ram_access,        // whether this is a valid RAM address
+  output slot_access,             // if the current access goes to a card slot
+  output c8_owner[3]              // current owner of the c8xx region
+) {
+  const SS80STORE = 7b0000000;
+  const AUXREAD   = 7b0000001;
+  const AUXWRITE  = 7b0000010;
+  const INTCXROM  = 7b0000011;
+  const ALTZP     = 7b0000100;
+  const SLOTC3ROM = 7b0000101;
+  const PAGE2     = 7b0101010;
+  const HIRES     = 7b0101011;
+  
+  .clk(clk) {
+    dff addr_in_reg[16];
+    dff rw_reg;
+    // the sense of these are all chosen so that a reset should set them to 0
+    dff ss_80store;
+    dff ss_auxread;
+    dff ss_auxwrite;
+    dff ss_intcxrom;
+    dff ss_altzp;
+    dff ss_slotc3rom;
+    dff ss_page2;
+    dff ss_hires;
+    dff ss_lcram_bank1; // 0 == bank2 (d000), 1 == bank1(c000)
+    dff ss_lcram_writeinh; // 0 == lcram writable, 1 == lcram write inhibited
+    dff ss_lcram_read; // 0 == ROM readable, 1 == lcram readable
+    dff ss_lcram_writeinh_last;  // 1 == prev access was a lcram write enabler, 0 == it wasn't 
+    dff c8_select[3];
+    dff ss_slot_access;
+  }
+
+  always {
+    // only update soft switches once per cycle, when the address update hits
+    if (addr_in_valid) {
+      addr_in_reg.d = addr_in;
+      rw_reg.d = rw;
+      // handle memory mapping soft switches
+      if (!rw && addr_in[15:8] == 8hc0) {
+        case (addr_in[7:1]) {
+          SS80STORE: ss_80store.d = addr_in[0];
+          AUXREAD: ss_auxread.d = addr_in[0];
+          AUXWRITE: ss_auxwrite.d = addr_in[0];
+          INTCXROM: ss_intcxrom.d = addr_in[0];
+          ALTZP: ss_intcxrom.d = addr_in[0];
+          SLOTC3ROM: ss_slotc3rom.d = addr_in[0];
+          PAGE2: ss_page2.d = addr_in[0];
+          HIRES: ss_hires.d = addr_in[0];
+        }
+      }
+    
+      // handle language card soft switches
+      if (addr_in[15:4] == 12hc08) {
+        ss_lcram_writeinh_last.d = addr_in[0] & rw;
+        ss_lcram_bank1.d = addr_in[3];
+        ss_lcram_read.d = (addr_in[1] == addr_in[0]);
+        // if the last access would enable lcram writes, and this access would as well,
+        // then we CLEAR the writeinh state (make writable).  Otherwise we set the
+        // writeinh state.  This gyration is to keep the default sense (allow writes)
+        // to be the 0 value in the register.
+        ss_lcram_writeinh.d = !(ss_lcram_writeinh_last.q & addr_in[0] & rw); 
+      }
+    
+      // handle c8_select
+      ss_slot_access.d = 0;
+      if (addr_in[11:8] != 1h0) {
+        if (addr_in[11] == 0) {
+          // c0xx-c7xx access
+          if (!ss_intcxrom.q) {
+            c8_select.d = addr_in[10:8];
+            ss_slot_access.d = 1;
+          }
+          if (addr_in[11:8] == 4h3) {
+            // for slot 3, unless slotc3rom is set,
+            // the access goes back to motherboard rom
+            if (!ss_slotc3rom.q) {
+              c8_select.d = 3b0;
+              ss_slot_access.d = 0;
+            }
+          }
+        }
+      }
+      
+      // handle CFFF release of c8_select
+      if (addr_in == 12hfff) {
+        c8_select.d = 3b0;
+      }
+      
+      // handle clearing all soft switches on reset
+      if (!bus_reset) {
+        ss_80store.d = 0;
+        ss_auxread.d = 0;
+        ss_auxwrite.d = 0;
+        ss_intcxrom.d = 0;
+        ss_altzp.d = 0;
+        ss_slotc3rom.d = 0;
+        ss_page2.d = 0;
+        ss_hires.d = 0;
+        ss_lcram_bank1.d = 0;
+        ss_lcram_writeinh.d = 0;
+        ss_lcram_read.d = 0;
+        ss_lcram_writeinh_last.d = 0;
+        c8_select.d = 3b0;
+      }
+    }
+  
+    // use switch state to determine 128k ram location
+    slot_access = ss_slot_access.q;
+    c8_owner = c8_select.q;
+    valid_ram_access = 1;  // default to valid ram, rom or nonwritable ram will set to 0
+    addr_out[15:0] = addr_in_reg.q[15:0];
+    addr_out[16] = 0;
+    if (addr_in_reg.q[15:12] == 4hc) {
+      // nothing is regular ram in CXXXX
+      valid_ram_access = 0;
+    } else if (addr_in_reg.q[15:9] == 7b0000000) {
+      // page 0 and 1 only affected by altzp
+      addr_out[16] = ss_altzp.q;
+    } else if (addr_in_reg.q[15:14] == 2b11) {
+      // since CXXX is already excluded, this gets lc mem
+      addr_out[16] = ss_altzp.q;
+      if (ss_lcram_bank1.q && (addr_in_reg.q[14:13] == 2b01)) {
+        // bank 1 access, convert D->C
+        addr_out[13] = 1b0;
+      }
+      if (rw_reg.q && !ss_lcram_read.q) {
+        valid_ram_access = 0; // read set to ROM
+      }
+      if (!rw_reg.q && ss_lcram_writeinh.q) {
+        valid_ram_access = 0; // ram write inhibited
+      }
+    } else {
+      if (rw_reg.q) {
+        addr_out[16] = ss_auxread.q;
+      } else {
+        addr_out[16] = ss_auxwrite.q;
+      }
+      if (ss_80store.q) {
+        if (addr_in_reg.q[15:11] == 5b00001) {
+          // 0x0400-0x07ff
+          addr_out[16] = ss_page2.q;
+        } else if (ss_hires.q && addr_in_reg.q[15:13] == 3b001) {
+          // 0x2000-0x3fff
+          addr_out[16] = ss_page2.q;
+        }
+      }
+    }
+  }
+}

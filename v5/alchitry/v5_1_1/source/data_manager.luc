@@ -1,0 +1,223 @@
+module data_manager (
+    input clk1,
+    input clk2,
+    input clk_locked,
+    
+    // DDR3 interface
+    inout ddr3_dq[16],
+    inout ddr3_dqs_n[2],
+    inout ddr3_dqs_p[2],
+    output rst,
+    output ui_clk /* synthesis syn_isclock = 1 */,
+    output ddr3_addr[14],
+    output ddr3_ba[3],
+    output ddr3_ras_n,
+    output ddr3_cas_n,
+    output ddr3_we_n,
+    output ddr3_reset_n,
+    output ddr3_ck_p,
+    output ddr3_ck_n,
+    output ddr3_cke,
+    output ddr3_cs_n,
+    output ddr3_dm[2],
+    output ddr3_odt,
+    
+    input addr_in[16],
+    input addr_in_en,
+    input rw,
+    input data_in[8],
+    input data_in_en,
+    input reset_pin_in,
+    input data_begin_in,
+    output data_out[8],
+    output data_out_en,
+    output inhibit_assert,
+    output irq_assert
+  ) {
+
+    
+
+
+  mig_wrapper mig(.ddr3_dq(ddr3_dq), .ddr3_dqs_n(ddr3_dqs_n), .ddr3_dqs_p(ddr3_dqs_p));
+  
+  always {
+
+    mig.sys_clk = clk1;
+    mig.clk_ref = clk2;
+    mig.sys_rst = !clk_locked;
+    rst = mig.sync_rst;
+    ui_clk = mig.ui_clk;
+    
+    /* DDR3 Connections */
+    ddr3_addr = mig.ddr3_addr;
+    ddr3_ba = mig.ddr3_ba;
+    ddr3_ras_n = mig.ddr3_ras_n;
+    ddr3_cas_n = mig.ddr3_cas_n;
+    ddr3_we_n = mig.ddr3_we_n;
+    ddr3_reset_n = mig.ddr3_reset_n;
+    ddr3_ck_p = mig.ddr3_ck_p;
+    ddr3_ck_n = mig.ddr3_ck_n;
+    ddr3_cke = mig.ddr3_cke;
+    ddr3_cs_n = mig.ddr3_cs_n;
+    ddr3_dm = mig.ddr3_dm;
+    ddr3_odt = mig.ddr3_odt;
+  }
+  
+  
+  .clk(mig.ui_clk) {
+    mem_ss_manager ssm(.rw(rw), .addr_in(addr_in), .bus_reset(reset_pin_in));
+    .rst(mig.sync_rst) {
+      dff addr_reg_in[16];
+      dff rw_reg_in;
+      dff data_reg_in[8];
+      dff data_reg_out[8];
+      dff data_reg_out_en;
+      dff inhibit_assert_en;
+      fsm mgr_state = {IDLE, ADDR_RECEIVED, DATA_RECEIVED};
+      fsm emit_state = {IDLE, SDRAM_WAIT_READ, SDRAM_WAIT_WRITE, SDRAM_WRITE_CMD, MOCKINGBOARD0, MOCKINGBOARD1};
+    }
+    via6522 via0;
+    via6522 via1;
+  }
+
+  always {
+    mig.mem_in.en = 0;
+    mig.mem_in.cmd = 3bx;
+    mig.mem_in.addr = 0;
+    //mig.mem_in.addr = c{9b000000000, addr_reg_in.q, 3b000}; 
+    mig.mem_in.wr_data = 128bx;
+    mig.mem_in.wr_mask = 0;
+    mig.mem_in.wr_en = 0;
+    data_out = data_reg_out.q;
+    data_out_en = data_reg_out_en.q;
+    inhibit_assert = inhibit_assert_en.q;
+    irq_assert = via0.irq | via1.irq;
+    via0.reset = mig.sync_rst | !reset_pin_in;
+    via0.we = ~rw;
+    via0.porta_in = 8bx;
+    via0.portb_in = 8bx;
+    via0.ca1_in = 1bx;
+    via0.ca2_in = 1bx;
+    via0.cb1_in = 1bx;
+    via0.cb2_in = 1bx;
+    via0.strobe = 0;
+    via0.slow_clock = 0;
+    via0.addr = addr_reg_in.q[3:0];
+    via0.data_in = data_reg_in.q;
+    via1.reset = mig.sync_rst | !reset_pin_in;
+    via1.we = !rw;
+    via1.porta_in = 8bx;
+    via1.portb_in = 8bx;
+    via1.ca1_in = 1bx;
+    via1.ca2_in = 1bx;
+    via1.cb1_in = 1bx;
+    via1.cb2_in = 1bx;
+    via1.strobe = 0;
+    via1.slow_clock = 0;
+    via1.addr = addr_reg_in.q[3:0];
+    via1.data_in = data_reg_in.q;
+    
+    ssm.addr_in_valid = 0;
+    
+    if (data_begin_in) {
+      inhibit_assert_en.d = 0;
+    }
+    
+    case (mgr_state.q) {
+      mgr_state.IDLE:
+        if (addr_in_en) {
+          addr_reg_in.d = addr_in;
+          ssm.addr_in_valid = 1;
+          rw_reg_in.d = rw;
+          data_reg_out_en.d = 0;
+          mgr_state.d = mgr_state.ADDR_RECEIVED;
+        }
+        if (data_in_en) {
+          data_reg_in.d = data_in;
+          mgr_state.d = mgr_state.DATA_RECEIVED;
+        }
+      mgr_state.ADDR_RECEIVED:
+        mgr_state.d = mgr_state.IDLE;
+        // addr phase, check if we emit this byte
+        if (rw_reg_in.q == 1) {
+          if (ssm.valid_ram_access) {
+            data_reg_out_en.d = 1;
+            mig.mem_in.en = 1;
+            mig.mem_in.cmd = 1; // 1 = read;
+            mig.mem_in.addr = c{8b000000000, ssm.addr_out, 3b000};
+            emit_state.d = emit_state.SDRAM_WAIT_READ;
+          }
+        }
+        if (addr_reg_in.q[15:8] == 8hc4) {
+          if (rw_reg_in.q == 1) {
+            data_reg_out_en.d = 1;
+            if (addr_reg_in.q[7] == 0) {
+              emit_state.d = emit_state.MOCKINGBOARD0;
+            } else {
+              emit_state.d = emit_state.MOCKINGBOARD1;
+            }
+          }
+        }
+      //if (addr_in[15:4] == 12hfff & rw == 1) {
+      //  if (addr_in[3:0] == 4hc) {
+      //    data_out_en = 1;
+      //    inhibit_active = 1;
+      //    emitted_data.d = 8hbb;
+      //  }
+      //  if (addr_in[3:0] == 4hd) {
+      //    data_out_en = 1;
+      //    inhibit_active = 1;
+      //    emitted_data.d = 8haa;
+      //  }
+      //}
+      mgr_state.DATA_RECEIVED:
+        mgr_state.d = mgr_state.IDLE;
+        emit_state.d = emit_state.IDLE;
+        via0.slow_clock = 1;
+        via1.slow_clock = 1;
+        if (ssm.valid_ram_access) {
+          if (rw_reg_in.q == 0) {
+            mig.mem_in.wr_en = 1;
+            mig.mem_in.wr_data = data_reg_in.q;
+            mig.mem_in.addr = c{8b000000000, ssm.addr_out, 3b000};
+            if (mig.mem_out.wr_rdy) {
+              emit_state.d = emit_state.SDRAM_WAIT_WRITE;
+            } else {
+              emit_state.d = emit_state.SDRAM_WRITE_CMD;
+            }
+          }
+        }
+        if (addr_reg_in.q[15:8] == 8hc4) {
+          // slot 4 ROM range
+          if (addr_reg_in.q[7] == 0) {
+            via0.strobe = 1;
+          } else {
+            via1.strobe = 1;
+          }
+        }
+    }
+    
+
+    case (emit_state.q) {
+      emit_state.SDRAM_WAIT_READ:
+        if (mig.mem_out.rd_valid) {
+          data_reg_out.d = mig.mem_out.rd_data[7:0];
+          emit_state.d = emit_state.IDLE;
+        }
+      emit_state.SDRAM_WAIT_WRITE:
+        if (mig.mem_out.wr_rdy) {
+          emit_state.d = emit_state.SDRAM_WRITE_CMD;
+        }
+      emit_state.SDRAM_WRITE_CMD:
+        mig.mem_in.en = 1;
+        mig.mem_in.cmd = 0; // 0 = write
+        if (mig.mem_out.rdy) {
+          emit_state.d = emit_state.IDLE;
+        }
+      emit_state.MOCKINGBOARD0:
+        data_reg_out.d = via0.data_out;
+      emit_state.MOCKINGBOARD1:
+        data_reg_out.d = via1.data_out;
+    }
+  }
+}

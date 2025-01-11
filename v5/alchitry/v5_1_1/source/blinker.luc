@@ -1,0 +1,18 @@
+module blinker (
+    input clk,  // clock
+    input rst,  // reset
+    input counted_event,
+    output blink
+    //output count[20]
+  ) {
+
+  dff counter[20](.clk(clk), .rst(rst));
+  
+  always {
+    blink = counter.q[19];
+    //count = counter.q;
+    if (counted_event) {
+      counter.d = counter.q + 1;
+    }
+  }
+}

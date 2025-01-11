@@ -1,0 +1,40 @@
+module bus_timing (
+  input clk,
+  input rst,
+  input phi0_clean,
+  output addr_phase_begin,
+  output addr_phase_snap_bus,
+  output data_phase_emit,
+  output data_phase_snap_bus
+) {
+  dff prev_phi0(.clk(clk), .rst(rst));
+  dff addr_pipe[17](.clk(clk), .rst(rst));
+  dff data_pipe[37](.clk(clk), .rst(rst));
+  
+  sig addr_edge;
+  sig data_edge;
+
+  always {
+    addr_pipe.d[0] = 0;
+    addr_pipe.d[16:1] = addr_pipe.q[15:0];
+    data_pipe.d[0] = 0;
+    data_pipe.d[36:1] = data_pipe.q[35:0];
+    addr_edge = 0;
+    data_edge = 0;
+    if (phi0_clean == 1 && prev_phi0.q == 0) {
+      // rising phi0 edge (begin data phase)
+      data_edge = 1;
+      prev_phi0.d = 1;
+    } else if (phi0_clean == 0 && prev_phi0.q == 1) {
+      // falling phi0 edge (begin address phase)
+      addr_edge = 1;
+      prev_phi0.d = 0;
+    }
+    addr_pipe.d[0] = addr_edge;
+    data_pipe.d[0] = data_edge;
+    addr_phase_begin = addr_edge;
+    addr_phase_snap_bus = addr_pipe.q[16];
+    data_phase_emit = data_pipe.q[27];
+    data_phase_snap_bus = data_pipe.q[36];
+  }
+}

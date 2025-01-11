@@ -1,0 +1,48 @@
+pin data_pin[0] C49;
+pin data_pin[1] C46;
+pin data_pin[2] C43;
+pin data_pin[3] C40;
+pin data_pin[4] A11;
+pin data_pin[5] A8;
+pin data_pin[6] A5;
+pin data_pin[7] A2;
+
+pin addr_pin[0] A3;
+pin addr_pin[1] A6;
+pin addr_pin[2] A9;
+pin addr_pin[3] A12;
+pin addr_pin[4] A48;
+pin addr_pin[5] A49;
+pin addr_pin[6] A45;
+pin addr_pin[7] A46;
+pin addr_pin[8] A42;
+pin addr_pin[9] A43;
+pin addr_pin[10] A39;
+pin addr_pin[11] A40;
+pin addr_pin[12] A36;
+pin addr_pin[13] A37;
+pin addr_pin[14] A33;
+pin addr_pin[15] A34;
+
+pin rw_pin A15;
+
+pin phi0_pin B48;
+pin m2sel_pin B49;
+pin q3_pin B45;
+pin p7m_pin B46;
+pin m2b0_pin B42;
+
+pin inh_pin B5;
+pin res_pin B2;
+pin irq_pin B3;
+pin rdy_pin A23;
+pin nmi_pin A24;
+pin dma_pin A14;
+
+pin oe_pin C12;
+pin oe_bar_pin C11;
+
+pin board_5v_pin C8;
+
+pin addr_dir_pin C2;
+pin data_dir_pin C3;

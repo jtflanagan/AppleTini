@@ -1,0 +1,211 @@
+
+global FtInterface {
+  struct tx_in {
+    din_write_req,
+    din[32],
+    din_write
+  }
+  struct tx_out {
+    din_write_active,
+    din_write_full
+  }
+}
+
+module ft600_module #(
+    DEVICES = 2 : DEVICES > 1
+  )(
+    input clk,
+    input rst,  // reset
+    input ft_clk,
+    input ft_rxf,
+    input ft_txe,
+    inout ft_data[16],
+    inout ft_be[2],
+    output ft_rd,
+    output ft_wr,
+    output ft_oe,
+    input<FtInterface.tx_in> tx_in[DEVICES],
+    output<FtInterface.tx_out> tx_out[DEVICES],
+    output ui_dout[32],
+    output ui_dout_empty,
+    input ui_dout_read,
+    output ui_dout_len_empty,
+    input ui_dout_len_read
+  ) {
+  
+  .clk(ft_clk) {
+    dff tx_empty;
+    dff packet_counter[9];
+    fsm usb_state = {IDLE, WRITING, PRE_IDLE, START_READ, READ_SIZE, READ};
+    dff read_half;
+    dff first_half[16];
+  }
+  
+  var i;
+  
+  sig tx_in_sig[DEVICES];
+  sig tx_out_sig[DEVICES];
+  dff tx_out_dff[DEVICES](.clk(clk), .rst(rst));
+  
+  fifo_generator_0 write_fifo(.rst(rst), .wr_clk(clk), .rd_clk(ft_clk));
+  fifo_generator_1 read_fifo(.rst(rst), .wr_clk(ft_clk), .rd_clk(clk));
+  fifo_generator_3 write_fifo_hdr(.rst(rst), .wr_clk(clk), .rd_clk(ft_clk));
+  fifo_generator_3 read_fifo_hdr(.rst(rst), .wr_clk(ft_clk), .rd_clk(clk));
+
+  //async_fifo write_fifo_hdr(#SIZE(8), #DEPTH(8), .wclk(clk), .wrst(rst), .rclk(ft_clk), .rrst(ft_rst_cond.out));
+  //async_fifo read_fifo_hdr(#SIZE(8), #DEPTH(8), .wclk(ft_clk), .wrst(ft_rst_cond.out), .rclk(clk), .rrst(rst));
+  
+  always {
+    // collate the write_req signals (is there a better way?)
+    for (i = 0; i < DEVICES; i++) {
+      tx_in_sig[i] = tx_in[i].din_write_req;
+    }
+  }
+  
+  always {
+    write_fifo_hdr.din = 0; // doesn't matter, we just use it as an event
+    write_fifo_hdr.wr_en = 0;
+    
+    // calculate the tx_out source selection
+    if (tx_out_dff.q) {
+      if (tx_in_sig & tx_out_dff.q) {
+        // if there is an owning signal, and it's still asserted,
+        // that's what goes out
+        tx_out_sig = tx_out_dff.q; 
+      } else {
+        // if there is an owning signal but it has stopped being asserted,
+        // then we have finished the current write and can ding the write_fifo_hdr,
+        // and then next cycle we can check for a new source.
+        write_fifo_hdr.wr_en = 1;
+        tx_out_sig = DEVICESx{0};
+        tx_out_dff.d = DEVICESx{0};
+      }
+    } else {
+      // check to see if there is a new assertion
+      tx_out_sig = DEVICESx{0};
+      for (i = 0; i < DEVICES; i++) {
+        if (tx_in_sig[i]) {
+          tx_out_sig = 1 << i;
+        }
+      }
+      tx_out_dff.d = tx_out_sig;
+    }
+    
+    // using the tx_out source selected (if any),
+    // route the appropriate source to the write_fifo,
+    // and inform that source of the state.
+    write_fifo.wr_en = 0;
+    write_fifo.din = 32bx;
+    for (i = 0; i < DEVICES; i++) {
+      if (tx_out_sig[i]) {
+        write_fifo.wr_en = tx_in[i].din_write;
+        // swap high and low chunks because the fifo
+        // width interleaving does it awkwardly
+        write_fifo.din[31:16] = tx_in[i].din[15:0];
+        write_fifo.din[15:0] = tx_in[i].din[31:16];
+        tx_out[i].din_write_active = 1;
+        tx_out[i].din_write_full = write_fifo.full;
+      } else {
+        tx_out[i].din_write_active = 0;
+        tx_out[i].din_write_full = 0;
+      }
+    }
+
+    read_fifo.rd_en = ui_dout_read;
+    ui_dout = read_fifo.dout;
+    ui_dout_empty = read_fifo.empty;
+    
+    read_fifo_hdr.rd_en = ui_dout_len_read;
+    read_fifo_hdr.din = 0;
+    ui_dout_len_empty = read_fifo_hdr.empty;
+  }
+  
+  sig output_enabled;
+  
+  always {
+    output_enabled = 1;
+    // default values
+    ft_oe = 1;
+    ft_rd = 1;
+    ft_wr = 1;
+    ft_data.write = write_fifo.dout;
+    ft_be.write = 2b11;
+    write_fifo_hdr.rd_en = 0;
+    write_fifo.rd_en = 0;
+    read_fifo_hdr.wr_en = 0;
+    read_fifo.wr_en = 0;
+    read_fifo.din = 0;
+    
+    tx_empty.d = ft_txe;
+    
+    case (usb_state.q) {
+      usb_state.IDLE:
+        if (write_fifo_hdr.empty == 0 && tx_empty.q == 0) {
+          // packet counter gets set to 2x the 32-bit count,
+          // which is the low 8 bits of the first 32-bit value,
+          // plus 1 for the second half of the header.  First
+          // half of the header writes out in this cycle.
+          packet_counter.d[8:1] = write_fifo.dout[7:0];
+          packet_counter.d[0] = 1; // extra +1 for half header
+          write_fifo_hdr.rd_en = 1;
+          usb_state.d = usb_state.WRITING;
+          write_fifo.rd_en = 1;
+          ft_wr = 0;
+        } else if (read_fifo_hdr.full == 0 && read_fifo.full == 0 && ft_rxf == 0) {
+          // this state transition gives the transceivers time to turn around
+          usb_state.d = usb_state.START_READ;
+          output_enabled = 0;
+        }
+      usb_state.WRITING:
+        if (packet_counter.q == 0) {
+          // finished this packet, end write
+          usb_state.d = usb_state.PRE_IDLE;
+        } else {
+          packet_counter.d = packet_counter.q - 1;
+          write_fifo.rd_en = 1;
+          ft_wr = 0;
+        }
+      usb_state.PRE_IDLE:
+        // an idle cycle at the end of a write causes the ft600
+        // to cut off the packet and queue it to send
+        // rather than keep appending to the current packet
+        usb_state.d = usb_state.IDLE;
+      usb_state.START_READ:
+        ft_rd = 0;
+        output_enabled = 0;
+        usb_state.d = usb_state.READ_SIZE;
+      usb_state.READ_SIZE:
+        ft_rd = 0;
+        output_enabled = 0;
+        read_half.d = 1;
+        first_half.d = ft_data.read;
+        // retain the packet size for end of packet
+        packet_counter.d[8:1] = ft_data.read[7:0];
+        packet_counter.d[0] = 1;
+        usb_state.d = usb_state.READ;
+      usb_state.READ:
+        ft_rd = 0;
+        output_enabled = 0;
+
+        if (packet_counter.q == 0) {
+          ft_rd = 1;
+          read_fifo_hdr.wr_en = 1;
+          usb_state.d = usb_state.PRE_IDLE;
+        } else {
+          packet_counter.d = packet_counter.q - 1;
+          read_half.d = !read_half.q;
+          if (read_half.q) {
+            read_fifo.din[31:16] = ft_data.read;
+            read_fifo.din[15:0] = first_half.q;
+            read_fifo.wr_en = 1;
+          } else {
+            first_half.d = ft_data.read;
+          }
+        }
+    }
+    ft_oe = output_enabled;
+    ft_data.enable = 16x{output_enabled};
+    ft_be.enable = output_enabled;
+  }
+  
+}
