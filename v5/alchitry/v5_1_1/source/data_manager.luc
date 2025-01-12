@@ -28,7 +28,7 @@ module data_manager (
     input data_in[8],
     input data_in_en,
     input reset_pin_in,
-    input data_begin_in,
+    input addr_phase_begin_in,
     output data_out[8],
     output data_out_en,
     output inhibit_assert,
@@ -65,7 +65,6 @@ module data_manager (
   
   
   .clk(mig.ui_clk) {
-    mem_ss_manager ssm(.rw(rw), .addr_in(addr_in), .bus_reset(reset_pin_in));
     .rst(mig.sync_rst) {
       dff addr_reg_in[16];
       dff rw_reg_in;
@@ -83,8 +82,7 @@ module data_manager (
   always {
     mig.mem_in.en = 0;
     mig.mem_in.cmd = 3bx;
-    mig.mem_in.addr = 0;
-    //mig.mem_in.addr = c{9b000000000, addr_reg_in.q, 3b000}; 
+    mig.mem_in.addr = 0; 
     mig.mem_in.wr_data = 128bx;
     mig.mem_in.wr_mask = 0;
     mig.mem_in.wr_en = 0;
@@ -117,19 +115,17 @@ module data_manager (
     via1.addr = addr_reg_in.q[3:0];
     via1.data_in = data_reg_in.q;
     
-    ssm.addr_in_valid = 0;
-    
-    if (data_begin_in) {
+    if (addr_phase_begin_in) {
       inhibit_assert_en.d = 0;
+      data_reg_out_en.d = 0;
     }
     
     case (mgr_state.q) {
       mgr_state.IDLE:
         if (addr_in_en) {
           addr_reg_in.d = addr_in;
-          ssm.addr_in_valid = 1;
           rw_reg_in.d = rw;
-          data_reg_out_en.d = 0;
+
           mgr_state.d = mgr_state.ADDR_RECEIVED;
         }
         if (data_in_en) {
@@ -139,15 +135,6 @@ module data_manager (
       mgr_state.ADDR_RECEIVED:
         mgr_state.d = mgr_state.IDLE;
         // addr phase, check if we emit this byte
-        if (rw_reg_in.q == 1) {
-          if (ssm.valid_ram_access) {
-            data_reg_out_en.d = 1;
-            mig.mem_in.en = 1;
-            mig.mem_in.cmd = 1; // 1 = read;
-            mig.mem_in.addr = c{8b000000000, ssm.addr_out, 3b000};
-            emit_state.d = emit_state.SDRAM_WAIT_READ;
-          }
-        }
         if (addr_reg_in.q[15:8] == 8hc4) {
           if (rw_reg_in.q == 1) {
             data_reg_out_en.d = 1;
@@ -175,18 +162,6 @@ module data_manager (
         emit_state.d = emit_state.IDLE;
         via0.slow_clock = 1;
         via1.slow_clock = 1;
-        if (ssm.valid_ram_access) {
-          if (rw_reg_in.q == 0) {
-            mig.mem_in.wr_en = 1;
-            mig.mem_in.wr_data = data_reg_in.q;
-            mig.mem_in.addr = c{8b000000000, ssm.addr_out, 3b000};
-            if (mig.mem_out.wr_rdy) {
-              emit_state.d = emit_state.SDRAM_WAIT_WRITE;
-            } else {
-              emit_state.d = emit_state.SDRAM_WRITE_CMD;
-            }
-          }
-        }
         if (addr_reg_in.q[15:8] == 8hc4) {
           // slot 4 ROM range
           if (addr_reg_in.q[7] == 0) {

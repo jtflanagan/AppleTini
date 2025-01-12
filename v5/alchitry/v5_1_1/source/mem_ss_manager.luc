@@ -115,7 +115,7 @@ module mem_ss_manager (
     // use switch state to determine 128k ram location
     slot_access = ss_slot_access.q;
     c8_owner = c8_select.q;
-    valid_ram_access = 1;  // default to valid ram, rom or nonwritable ram will set to 0
+    valid_ram_access = 0;  // default to valid ram, rom or nonwritable ram will set to 0
     addr_out[15:0] = addr_in_reg.q[15:0];
     addr_out[16] = 0;
     if (addr_in_reg.q[15:12] == 4hc) {

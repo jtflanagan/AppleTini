@@ -237,7 +237,7 @@ module au_top (
     data_mgr.data_in = data_clean.out;
     data_mgr.data_in_en = 0;
     data_mgr.reset_pin_in = misc_clean.out[1];
-    data_mgr.data_begin_in = bus_timer.addr_phase_begin;
+    data_mgr.addr_phase_begin_in = bus_timer.addr_phase_begin;
     
     // board_5v_pin is active-low
     if (board_5v_pin) {
