@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="v5_1_1" board="Alchitry Au" language="Lucid" version="3">
   <files>
-    <src top="true">au_top.luc</src>
-    <src>mem_ss_manager.luc</src>
     <src>blinker.luc</src>
+    <src>soft_switch_manager.luc</src>
     <src>via6522.v</src>
     <component>pipeline.luc</component>
-    <component>mig_wrapper.luc</component>
     <src>bus_timing.luc</src>
     <src>data_manager.luc</src>
+    <src>blinker2.v</src>
+    <src top="true">au_top.luc</src>
+    <component>mig_wrapper.luc</component>
     <src>ft600_module.luc</src>
     <component>reset_conditioner.luc</component>
+    <src>soft_switch_manager2.v</src>
     <constraint>ft.acf</constraint>
     <constraint lib="true">alchitry.acf</constraint>
     <constraint>tini.acf</constraint>

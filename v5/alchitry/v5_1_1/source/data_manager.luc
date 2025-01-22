@@ -22,6 +22,10 @@ module data_manager (
     output ddr3_dm[2],
     output ddr3_odt,
     
+    input addr_decode[17],
+    input addr_decode_en,
+    input slot_access,
+    
     input addr_in[16],
     input addr_in_en,
     input rw,
@@ -32,7 +36,8 @@ module data_manager (
     output data_out[8],
     output data_out_en,
     output inhibit_assert,
-    output irq_assert
+    output irq_assert,
+    output sdram_error[8]
   ) {
 
     
@@ -73,7 +78,13 @@ module data_manager (
       dff data_reg_out_en;
       dff inhibit_assert_en;
       fsm mgr_state = {IDLE, ADDR_RECEIVED, DATA_RECEIVED};
-      fsm emit_state = {IDLE, SDRAM_WAIT_READ, SDRAM_WAIT_WRITE, SDRAM_WRITE_CMD, MOCKINGBOARD0, MOCKINGBOARD1};
+      fsm emit_state = {IDLE, SDRAM_WAIT_READ_BEGIN, SDRAM_READ_CMD, SDRAM_WAIT_READ_COMPLETE,
+      
+        MOCKINGBOARD0, MOCKINGBOARD1};
+      fsm sdram_write_state = {IDLE, SDRAM_WAIT_WRITE_DATA, SDRAM_WAIT_WRITE_BEGIN, SDRAM_WAIT_WRITE_COMPLETE};
+      dff sdram_error_reg[8];
+      dff sdram_write_addr[17];
+      dff sdram_write_data[8];
     }
     via6522 via0;
     via6522 via1;
@@ -82,7 +93,7 @@ module data_manager (
   always {
     mig.mem_in.en = 0;
     mig.mem_in.cmd = 3bx;
-    mig.mem_in.addr = 0; 
+    mig.mem_in.addr = 28bx; 
     mig.mem_in.wr_data = 128bx;
     mig.mem_in.wr_mask = 0;
     mig.mem_in.wr_en = 0;
@@ -114,6 +125,7 @@ module data_manager (
     via1.slow_clock = 0;
     via1.addr = addr_reg_in.q[3:0];
     via1.data_in = data_reg_in.q;
+    sdram_error = sdram_error_reg.q;
     
     if (addr_phase_begin_in) {
       inhibit_assert_en.d = 0;
@@ -125,7 +137,6 @@ module data_manager (
         if (addr_in_en) {
           addr_reg_in.d = addr_in;
           rw_reg_in.d = rw;
-
           mgr_state.d = mgr_state.ADDR_RECEIVED;
         }
         if (data_in_en) {
@@ -135,14 +146,43 @@ module data_manager (
       mgr_state.ADDR_RECEIVED:
         mgr_state.d = mgr_state.IDLE;
         // addr phase, check if we emit this byte
-        if (addr_reg_in.q[15:8] == 8hc4) {
-          if (rw_reg_in.q == 1) {
+        if (slot_access) {
+          // slot 3, vidhd signature spoofing
+          if (addr_reg_in.q[15:8] == 8hc1) {
+            // provide vidhd signature
             data_reg_out_en.d = 1;
-            if (addr_reg_in.q[7] == 0) {
-              emit_state.d = emit_state.MOCKINGBOARD0;
-            } else {
-              emit_state.d = emit_state.MOCKINGBOARD1;
+            case (addr_reg_in.q[7:0]) {
+              8h00:
+                data_reg_out.d = 8h24;
+              8h01:
+                data_reg_out.d = 8hea;
+              8h02:
+                data_reg_out.d = 8h4c;
+              default:
+                data_reg_out.d = 8h00;
             }
+          }
+          if (addr_reg_in.q[15:8] == 8hc4) {
+            if (rw_reg_in.q == 1) {
+              data_reg_out_en.d = 1;
+              if (addr_reg_in.q[7] == 0) {
+                emit_state.d = emit_state.MOCKINGBOARD0;
+              } else {
+                emit_state.d = emit_state.MOCKINGBOARD1;
+              }
+            }
+          }
+        }
+        if (addr_decode_en && rw) {
+          inhibit_assert_en.d = 1;
+          data_reg_out_en.d = 1;
+          if (sdram_write_state.q != sdram_write_state.IDLE) {
+            emit_state.d = emit_state.SDRAM_WAIT_READ_BEGIN;
+          } else {
+            mig.mem_in.en = 1;
+            mig.mem_in.cmd = 1; // 1 == read
+            mig.mem_in.addr = c{addr_decode, 3b000};
+            emit_state.d = emit_state.SDRAM_READ_CMD;
           }
         }
       //if (addr_in[15:4] == 12hfff & rw == 1) {
@@ -170,23 +210,65 @@ module data_manager (
             via1.strobe = 1;
           }
         }
+        if (addr_decode_en && !rw) {
+          // put write value onto write fifo
+          sdram_write_addr.d = addr_decode;
+          mig.mem_in.wr_en = 1;
+          mig.mem_in.wr_data = data_reg_in.q;
+          if (!mig.mem_out.wr_rdy) {
+            sdram_write_state.d = sdram_write_state.SDRAM_WAIT_WRITE_DATA;
+            sdram_write_data.d = data_reg_in.q;
+          } else {
+            sdram_write_state.d = sdram_write_state.SDRAM_WAIT_WRITE_BEGIN;
+          }
+        }
     }
     
+    case (sdram_write_state.q) {
+      sdram_write_state.SDRAM_WAIT_WRITE_DATA:
+        mig.mem_in.wr_en = 1;
+        mig.mem_in.wr_data = sdram_write_data.q;
+        if (mig.mem_out.wr_rdy) {
+          sdram_write_state.d = sdram_write_state.SDRAM_WAIT_WRITE_BEGIN;
+        }
+      sdram_write_state.SDRAM_WAIT_WRITE_BEGIN:
+        if (emit_state.q == emit_state.IDLE) {          
+          mig.mem_in.en = 1;
+          mig.mem_in.cmd = 0;
+          mig.mem_in.addr = c{sdram_write_addr.q, 3b000};
+          if (mig.mem_out.rdy) {
+            sdram_write_state.d = sdram_write_state.IDLE;
+          } else {
+            sdram_write_state.d = sdram_write_state.SDRAM_WAIT_WRITE_COMPLETE;
+          }
+        }
+      sdram_write_state.SDRAM_WAIT_WRITE_COMPLETE:
+        mig.mem_in.en = 1;
+        mig.mem_in.cmd = 0; // 0 == write
+        mig.mem_in.addr = c{sdram_write_addr.q, 3b000};
+        if (mig.mem_out.rdy) {
+          sdram_write_state.d = sdram_write_state.IDLE;
+        }
+    }
 
     case (emit_state.q) {
-      emit_state.SDRAM_WAIT_READ:
+      emit_state.SDRAM_WAIT_READ_BEGIN:
+        if (sdram_write_state.q == sdram_write_state.IDLE) {
+          mig.mem_in.en = 1;
+          mig.mem_in.cmd = 1; // 1 == read
+          mig.mem_in.addr = c{addr_decode, 3b000};
+          emit_state.d = emit_state.SDRAM_READ_CMD;
+        }
+      emit_state.SDRAM_READ_CMD:
+        mig.mem_in.en = 1;
+        mig.mem_in.cmd = 1; // 1 == read
+        mig.mem_in.addr = c{addr_decode, 3b000};
+        if (mig.mem_out.rdy) {
+          emit_state.d = emit_state.SDRAM_WAIT_READ_COMPLETE;
+        }
+      emit_state.SDRAM_WAIT_READ_COMPLETE:
         if (mig.mem_out.rd_valid) {
           data_reg_out.d = mig.mem_out.rd_data[7:0];
-          emit_state.d = emit_state.IDLE;
-        }
-      emit_state.SDRAM_WAIT_WRITE:
-        if (mig.mem_out.wr_rdy) {
-          emit_state.d = emit_state.SDRAM_WRITE_CMD;
-        }
-      emit_state.SDRAM_WRITE_CMD:
-        mig.mem_in.en = 1;
-        mig.mem_in.cmd = 0; // 0 = write
-        if (mig.mem_out.rdy) {
           emit_state.d = emit_state.IDLE;
         }
       emit_state.MOCKINGBOARD0:

@@ -67,9 +67,10 @@ module au_top (
     clk_wiz.clk_in1 = clk;
     clk_wiz.reset = !rst_n;
  }
-  
+
   data_manager data_mgr(.clk1(clk_wiz.clk_out1), .clk2(clk_wiz.clk_out2), .clk_locked(clk_wiz.locked), .ddr3_dq(ddr3_dq), .ddr3_dqs_n(ddr3_dqs_n), .ddr3_dqs_p(ddr3_dqs_p));
-  
+  soft_switch_manager2 ss_mgr(.clk(data_mgr.ui_clk), .rst(data_mgr.rst));
+      
   always {
     rst = data_mgr.rst;
     /* DDR3 Connections */
@@ -92,7 +93,7 @@ module au_top (
     fifo_generator_2 bus_event_fifo(.srst(rst));
     ft600_module ft600(.rst(rst),.ft_clk(ft_clk), .ft_data(ft_data), .ft_be(ft_be));
     .rst(rst) {
-      blinker myBlinker;
+      blinker2 myBlinker;
       dff addr_misc_bus[20];
       bus_timing bus_timer;
       fsm bus_emit_state = {IDLE, EMIT_PHASE};
@@ -231,6 +232,11 @@ module au_top (
     misc_clean.in[10] = inh_pin.read;
     misc_clean.in[11] = phi0_pin;
     
+    ss_mgr.addr_in = addr_clean.out;
+    ss_mgr.rw = misc_clean.out[0];
+    ss_mgr.addr_in_en = 0;
+    ss_mgr.bus_reset = misc_clean.out[1];
+    
     data_mgr.addr_in = addr_clean.out;
     data_mgr.addr_in_en = 0;
     data_mgr.rw = misc_clean.out[0];
@@ -238,6 +244,11 @@ module au_top (
     data_mgr.data_in_en = 0;
     data_mgr.reset_pin_in = misc_clean.out[1];
     data_mgr.addr_phase_begin_in = bus_timer.addr_phase_begin;
+    data_mgr.addr_decode = ss_mgr.addr_decode;
+    data_mgr.addr_decode_en = ss_mgr.addr_decode_en;
+    data_mgr.slot_access = ss_mgr.slot_access;
+    
+    led_val.d = data_mgr.sdram_error;
     
     // board_5v_pin is active-low
     if (board_5v_pin) {
@@ -278,6 +289,7 @@ module au_top (
       addr_misc_bus.d[15:0] = addr_clean.out;
       // first 4 misc signals are the ones we export
       addr_misc_bus.d[19:16] = misc_clean.out[3:0];
+      ss_mgr.addr_in_en = 1;
       data_mgr.addr_in_en = 1;
     }
     
