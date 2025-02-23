@@ -4,7 +4,7 @@
     "xci_name": "mig_7series_0",
     "component_reference": "xilinx.com:ip:mig_7series:4.2",
     "ip_revision": "1",
-    "gen_directory": ".",
+    "gen_directory": "../../../../v5_1_2.gen/sources_1/ip/mig_7series_0",
     "parameters": {
       "component_parameters": {
         "XML_INPUT_FILE": [ { "value": "mig_a.prj", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
@@ -85,10 +85,10 @@
         "LPDDR2_ADDR_WIDTH": [ { "value": "8", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "LPDDR2_nCK_PER_CLK": [ { "value": "2", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "LPDDR2_DATA_WIDTH": [ { "value": "8", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "FREQ_HZ": [ { "value": "81247969", "resolve_type": "generated", "format": "float", "usage": "all" } ],
+        "FREQ_HZ": [ { "value": "100000000", "resolve_type": "generated", "format": "float", "usage": "all" } ],
         "PHASE": [ { "value": "0.000", "resolve_type": "generated", "format": "float", "usage": "all" } ],
         "UI_EXTRA_CLOCKS": [ { "value": "FALSE", "resolve_type": "generated", "usage": "all" } ],
-        "MMCM_VCO": [ { "value": "649", "resolve_type": "generated", "format": "float", "usage": "all" } ],
+        "MMCM_VCO": [ { "value": "800", "resolve_type": "generated", "format": "float", "usage": "all" } ],
         "MMCM_CLKOUT0_FREQ": [ { "value": "10.0", "resolve_type": "generated", "format": "float", "usage": "all" } ],
         "MMCM_CLKOUT1_FREQ": [ { "value": "10", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "MMCM_CLKOUT2_FREQ": [ { "value": "10", "resolve_type": "generated", "format": "long", "usage": "all" } ],
@@ -1171,7 +1171,7 @@
         "PREFHDL": [ { "value": "VERILOG" } ],
         "SILICON_REVISION": [ { "value": "" } ],
         "SIMULATOR_LANGUAGE": [ { "value": "MIXED" } ],
-        "SPEEDGRADE": [ { "value": "-1" } ],
+        "SPEEDGRADE": [ { "value": "-2" } ],
         "STATIC_POWER": [ { "value": "" } ],
         "TEMPERATURE_GRADE": [ { "value": "" } ]
       },
@@ -1179,10 +1179,10 @@
         "IPCONTEXT": [ { "value": "IP_Flow" } ],
         "IPREVISION": [ { "value": "1" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "." } ],
+        "OUTPUTDIR": [ { "value": "../../../../v5_1_2.gen/sources_1/ip/mig_7series_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "." } ],
-        "SWVERSION": [ { "value": "2024.2" } ],
+        "SWVERSION": [ { "value": "2024.2.1" } ],
         "SYNTHESISFLOW": [ { "value": "OUT_OF_CONTEXT" } ]
       }
     },
@@ -1370,7 +1370,7 @@
           "abstraction_type": "xilinx.com:signal:clock_rtl:1.0",
           "mode": "master",
           "parameters": {
-            "FREQ_HZ": [ { "value": "81247969", "resolve_type": "dependent", "format": "float", "usage": "all" } ],
+            "FREQ_HZ": [ { "value": "100000000", "resolve_type": "dependent", "format": "float", "usage": "all" } ],
             "ASSOCIATED_BUSIF": [ { "value": "S_AXI:S_AXI_CTRL", "value_src": "constant", "usage": "all" } ],
             "ASSOCIATED_RESET": [ { "value": "aresetn:ui_clk_sync_rst", "value_src": "constant", "usage": "all" } ],
             "PHASE": [ { "value": "0", "resolve_type": "dependent", "format": "float", "usage": "all" } ],
