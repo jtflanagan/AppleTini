@@ -6,8 +6,8 @@
 
 module ft #(
         parameter BUS_WIDTH = 5'h10,
-        parameter TX_BUFFER = 7'h40,
-        parameter RX_BUFFER = 7'h40,
+        parameter TX_BUFFER = 8'h100,
+        parameter RX_BUFFER = 8'h100,
         parameter PRIORITY = {{8'h54, 8'h58}},
         parameter PREEMPT = 1'h0
     ) (
@@ -53,22 +53,35 @@ module ft #(
     logic M_write_fifo_rget;
     logic M_write_fifo_empty;
     
-    async_fifo #(
-        .WIDTH(_MP_WIDTH_181907911),
-        .ENTRIES(_MP_ENTRIES_181907911),
-        .SYNC_STAGES(_MP_SYNC_STAGES_181907911)
-    ) write_fifo (
-        .rclk(ft_clk),
-        .rrst(rst),
-        .wclk(clk),
-        .wrst(rst),
+    fifo_generator_0 write_fifo(
+        .rst(rst),
+        .wr_clk(clk),
+        .rd_clk(ft_clk),
         .din(M_write_fifo_din),
-        .wput(M_write_fifo_wput),
-        .full(M_write_fifo_full),
+        .wr_en(M_write_fifo_wput),
+        .rd_en(M_write_fifo_rget),
         .dout(M_write_fifo_dout),
-        .rget(M_write_fifo_rget),
+        .full(M_write_fifo_full),
         .empty(M_write_fifo_empty)
     );
+
+
+    // async_fifo #(
+    //     .WIDTH(_MP_WIDTH_181907911),
+    //     .ENTRIES(_MP_ENTRIES_181907911),
+    //     .SYNC_STAGES(_MP_SYNC_STAGES_181907911)
+    // ) write_fifo (
+    //     .rclk(ft_clk),
+    //     .rrst(rst),
+    //     .wclk(clk),
+    //     .wrst(rst),
+    //     .din(M_write_fifo_din),
+    //     .wput(M_write_fifo_wput),
+    //     .full(M_write_fifo_full),
+    //     .dout(M_write_fifo_dout),
+    //     .rget(M_write_fifo_rget),
+    //     .empty(M_write_fifo_empty)
+    // );
     
     
     localparam _MP_WIDTH_1952487625 = BUS_WIDTH + BUS_WIDTH / 4'h8;

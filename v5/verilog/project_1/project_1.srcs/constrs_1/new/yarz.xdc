@@ -6,7 +6,7 @@
 # set_property IOSTANDARD LVDS [get_ports "clk_n"]
 
 # ft_clk => 100000000Hz
-create_clock -period 10.0 -name ft_clk_0 -waveform {0.000 5.000} [get_ports ft_clk]
+# create_clock -period 10.0 -name ft_clk_0 -waveform {0.000 5.000} [get_ports ft_clk]
 set_property PACKAGE_PIN V4 [get_ports {ft_clk}]
 set_property IOSTANDARD LVCMOS18 [get_ports {ft_clk}]
 set_property PACKAGE_PIN W6 [get_ports {ft_rxf}]
@@ -100,7 +100,7 @@ set_property IOSTANDARD LVCMOS18 [get_ports {ft_oe}]
 set_property PACKAGE_PIN T4 [get_ports {ft_siwu}]
 set_property IOSTANDARD LVCMOS18 [get_ports {ft_siwu}]
 
-set_clock_groups -async -group [get_clocks -include_generated_clocks ft_clk_0]
+# set_clock_groups -async -group [get_clocks -include_generated_clocks ft_clk_0]
 
 set_property PACKAGE_PIN AA20 [get_ports {led}]
 set_property IOSTANDARD LVCMOS33 [get_ports {led}]

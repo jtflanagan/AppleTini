@@ -95,13 +95,14 @@ module alchitry_top (
 
     assign clk = M_mig_ui_clk;
     assign rst = M_mig_sync_rst;
-    assign led = M_mig_init_calib_complete;
+    //assign led = M_mig_init_calib_complete;
+    assign led = M_ft_ui_din_full;
     //assign led = M_mig_sync_rst;
     
     localparam _MP_BUS_WIDTH_803046331 = 6'h20;
-    localparam _MP_TX_BUFFER_803046331 = 9'h100;
-    localparam _MP_RX_BUFFER_803046331 = 9'h100;
-    localparam _MP_PRIORITY_803046331 = {{8'h52, 8'h58}};
+    localparam _MP_TX_BUFFER_803046331 = 12'h800;
+    localparam _MP_RX_BUFFER_803046331 = 12'h800;
+    localparam _MP_PRIORITY_803046331 = {{8'h54, 8'h58}};
     localparam _MP_PREEMPT_803046331 = 1'h0;
     logic M_ft_ft_rxf;
     logic M_ft_ft_txe;
@@ -117,18 +118,39 @@ module alchitry_top (
     logic M_ft_ui_dout_empty;
     logic M_ft_ui_dout_get;
     
-    ft #(
-        .BUS_WIDTH(_MP_BUS_WIDTH_803046331),
-        .TX_BUFFER(_MP_TX_BUFFER_803046331),
-        .RX_BUFFER(_MP_RX_BUFFER_803046331),
-        .PRIORITY(_MP_PRIORITY_803046331),
-        .PREEMPT(_MP_PREEMPT_803046331)
-    ) ft (
+    // ft #(
+    //     .BUS_WIDTH(_MP_BUS_WIDTH_803046331),
+    //     .TX_BUFFER(_MP_TX_BUFFER_803046331),
+    //     .RX_BUFFER(_MP_RX_BUFFER_803046331),
+    //     .PRIORITY(_MP_PRIORITY_803046331),
+    //     .PREEMPT(_MP_PREEMPT_803046331)
+    // ) ft (
+    //     .ft_clk(clk_out1),
+    //     .ft_data(ft_data),
+    //     .ft_be(ft_be),
+    //     .clk(clk),
+    //     .rst(rst),
+    //     .ft_rxf(M_ft_ft_rxf),
+    //     .ft_txe(M_ft_ft_txe),
+    //     .ft_rd(M_ft_ft_rd),
+    //     .ft_wr(M_ft_ft_wr),
+    //     .ft_oe(M_ft_ft_oe),
+    //     .ui_din(M_ft_ui_din),
+    //     .ui_din_be(M_ft_ui_din_be),
+    //     .ui_din_valid(M_ft_ui_din_valid),
+    //     .ui_din_full(M_ft_ui_din_full),
+    //     .ui_dout(M_ft_ui_dout),
+    //     .ui_dout_be(M_ft_ui_dout_be),
+    //     .ui_dout_empty(M_ft_ui_dout_empty),
+    //     .ui_dout_get(M_ft_ui_dout_get)
+    // );
+
+    ft601_tx_only ft(
+        .clk(clk),
+        .rst(rst),
         .ft_clk(clk_out1),
         .ft_data(ft_data),
         .ft_be(ft_be),
-        .clk(clk),
-        .rst(rst),
         .ft_rxf(M_ft_ft_rxf),
         .ft_txe(M_ft_ft_txe),
         .ft_rd(M_ft_ft_rd),
@@ -144,12 +166,13 @@ module alchitry_top (
         .ui_dout_get(M_ft_ui_dout_get)
     );
 
-    typedef enum {WRITE_DATA, WRITE_CMD, READ_CMD, WAIT_READ, FT_WRITE} mem_state_sm;
+    typedef enum {WRITE_DATA, WRITE_CMD, READ_CMD, WAIT_READ, FT_WRITE, READ_DELAY} mem_state_sm;
 
     mem_state_sm mem_state_d, mem_state_q = WRITE_DATA;
     logic [127:0] mem_val_d, mem_val_q = 128'h000102030405060708090a0b0c0d0e0f;
     logic [2:0] addr_d, addr_q = 0;
     logic [1:0] mem_shift_count_d, mem_shift_count_q = 0;
+    logic [15:0] delay_counter_d, delay_counter_q = 0;
 
     always_comb begin
         M_ft_ui_dout_get = 1;
@@ -160,6 +183,7 @@ module alchitry_top (
         mem_val_d = mem_val_q;
         addr_d = addr_q;
         mem_shift_count_d = mem_shift_count_q;
+        delay_counter_d = delay_counter_q;
         M_mig_mem_in.addr = 0;
         M_mig_mem_in.cmd = 0;
         M_mig_mem_in.enable = 0;
@@ -229,7 +253,16 @@ module alchitry_top (
                 mem_shift_count_d = mem_shift_count_q + 1;
                 if (mem_shift_count_q == 3) begin
                     mem_state_d = READ_CMD;
+                    //mem_state_d = READ_DELAY;
+                    //delay_counter_d = 16'h0007;
                 end
+            end
+        end
+        READ_DELAY: begin
+            if (delay_counter_q == 0) begin
+                mem_state_d = READ_CMD;
+            end else begin
+                delay_counter_d = delay_counter_q - 1;
             end
         end
         endcase
@@ -241,11 +274,13 @@ module alchitry_top (
             mem_val_q <= 128'h000102030405060708090a0b0c0d0e0f;
             addr_q <= 0;
             mem_shift_count_q <= 0;
+            delay_counter_q <= 0;
         end else begin
             mem_state_q <= mem_state_d;
             mem_val_q <= mem_val_d;
             addr_q <= addr_d;
             mem_shift_count_q <= mem_shift_count_d;
+            delay_counter_q <= delay_counter_d;
         end
     end
     
