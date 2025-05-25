@@ -1,0 +1,160 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 02/23/2025 03:05:17 PM
+// Design Name: 
+// Module Name: mig_wrapper
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module mig_wrapper (
+        inout wire [15:0] ddr3_dq,
+        inout wire [1:0] ddr3_dqs_n,
+        inout wire [1:0] ddr3_dqs_p,
+        output reg [13:0] ddr3_addr,
+        output reg [2:0] ddr3_ba,
+        output reg ddr3_ras_n,
+        output reg ddr3_cas_n,
+        output reg ddr3_we_n,
+        output reg ddr3_reset_n,
+        output reg ddr3_ck_p,
+        output reg ddr3_ck_n,
+        output reg ddr3_cke,
+        output reg ddr3_cs_n,
+        output reg [1:0] ddr3_dm,
+        output reg ddr3_odt,
+        input wire sys_clk,
+        input wire clk_ref,
+        input globals::Memory_in mem_in,
+        output globals::Memory_out mem_out,
+        output reg ui_clk  /* synthesis syn_isclock = 1 */, 
+        output reg sync_rst,
+        input wire sys_rst
+    );
+    logic [13:0] M_mig_ddr3_addr;
+    logic [2:0] M_mig_ddr3_ba;
+    logic M_mig_ddr3_ras_n;
+    logic M_mig_ddr3_cas_n;
+    logic M_mig_ddr3_we_n;
+    logic M_mig_ddr3_reset_n;
+    logic M_mig_ddr3_ck_p;
+    logic M_mig_ddr3_ck_n;
+    logic M_mig_ddr3_cke;
+    logic M_mig_ddr3_cs_n;
+    logic [1:0] M_mig_ddr3_dm;
+    logic M_mig_ddr3_odt;
+    logic M_mig_sys_clk_i;
+    logic M_mig_clk_ref_i;
+    logic [27:0] M_mig_app_addr;
+    logic [2:0] M_mig_app_cmd;
+    logic M_mig_app_en;
+    logic [127:0] M_mig_app_wdf_data;
+    logic M_mig_app_wdf_end;
+    logic [15:0] M_mig_app_wdf_mask;
+    logic M_mig_app_wdf_wren;
+    logic [127:0] M_mig_app_rd_data;
+    logic M_mig_app_rd_data_end;
+    logic M_mig_app_rd_data_valid;
+    logic M_mig_app_rdy;
+    logic M_mig_app_wdf_rdy;
+    logic M_mig_app_sr_req;
+    logic M_mig_app_ref_req;
+    logic M_mig_app_zq_req;
+    logic M_mig_app_sr_active;
+    logic M_mig_app_ref_ack;
+    logic M_mig_app_zq_ack;
+    logic M_mig_ui_clk;
+    logic M_mig_ui_clk_sync_rst;
+    logic M_mig_init_calib_complete;
+    logic [11:0] M_mig_device_temp;
+    logic M_mig_sys_rst;
+
+    mig_7series_0 mig (
+        .ddr3_dq(ddr3_dq),
+        .ddr3_dqs_n(ddr3_dqs_n),
+        .ddr3_dqs_p(ddr3_dqs_p),
+        .ddr3_addr(M_mig_ddr3_addr),
+        .ddr3_ba(M_mig_ddr3_ba),
+        .ddr3_ras_n(M_mig_ddr3_ras_n),
+        .ddr3_cas_n(M_mig_ddr3_cas_n),
+        .ddr3_we_n(M_mig_ddr3_we_n),
+        .ddr3_reset_n(M_mig_ddr3_reset_n),
+        .ddr3_ck_p(M_mig_ddr3_ck_p),
+        .ddr3_ck_n(M_mig_ddr3_ck_n),
+        .ddr3_cke(M_mig_ddr3_cke),
+        .ddr3_cs_n(M_mig_ddr3_cs_n),
+        .ddr3_dm(M_mig_ddr3_dm),
+        .ddr3_odt(M_mig_ddr3_odt),
+        .sys_clk_i(M_mig_sys_clk_i),
+        .clk_ref_i(M_mig_clk_ref_i),
+        .app_addr(M_mig_app_addr),
+        .app_cmd(M_mig_app_cmd),
+        .app_en(M_mig_app_en),
+        .app_wdf_data(M_mig_app_wdf_data),
+        .app_wdf_end(M_mig_app_wdf_end),
+        .app_wdf_mask(M_mig_app_wdf_mask),
+        .app_wdf_wren(M_mig_app_wdf_wren),
+        .app_rd_data(M_mig_app_rd_data),
+        .app_rd_data_end(M_mig_app_rd_data_end),
+        .app_rd_data_valid(M_mig_app_rd_data_valid),
+        .app_rdy(M_mig_app_rdy),
+        .app_wdf_rdy(M_mig_app_wdf_rdy),
+        .app_sr_req(M_mig_app_sr_req),
+        .app_ref_req(M_mig_app_ref_req),
+        .app_zq_req(M_mig_app_zq_req),
+        .app_sr_active(M_mig_app_sr_active),
+        .app_ref_ack(M_mig_app_ref_ack),
+        .app_zq_ack(M_mig_app_zq_ack),
+        .ui_clk(M_mig_ui_clk),
+        .ui_clk_sync_rst(M_mig_ui_clk_sync_rst),
+        .init_calib_complete(M_mig_init_calib_complete),
+        .device_temp(M_mig_device_temp),
+        .sys_rst(M_mig_sys_rst)
+    );
+    always @* begin
+        ddr3_addr = M_mig_ddr3_addr;
+        ddr3_ba = M_mig_ddr3_ba;
+        ddr3_ras_n = M_mig_ddr3_ras_n;
+        ddr3_cas_n = M_mig_ddr3_cas_n;
+        ddr3_we_n = M_mig_ddr3_we_n;
+        ddr3_reset_n = M_mig_ddr3_reset_n;
+        ddr3_ck_p = M_mig_ddr3_ck_p;
+        ddr3_ck_n = M_mig_ddr3_ck_n;
+        ddr3_cke = M_mig_ddr3_cke;
+        ddr3_cs_n = M_mig_ddr3_cs_n;
+        ddr3_dm = M_mig_ddr3_dm;
+        ddr3_odt = M_mig_ddr3_odt;
+        M_mig_app_sr_req = 1'h0;
+        M_mig_app_ref_req = 1'h0;
+        M_mig_app_zq_req = 1'h0;
+        M_mig_app_wdf_data = mem_in.wr_data;
+        M_mig_app_wdf_end = mem_in.wr_enable;
+        M_mig_app_wdf_wren = mem_in.wr_enable;
+        M_mig_app_wdf_mask = mem_in.wr_mask;
+        M_mig_app_cmd = mem_in.cmd;
+        M_mig_app_en = mem_in.enable;
+        M_mig_app_addr = mem_in.addr;
+        mem_out.rd_data = M_mig_app_rd_data;
+        mem_out.rd_valid = M_mig_app_rd_data_valid;
+        mem_out.rdy = M_mig_app_rdy;
+        mem_out.wr_rdy = M_mig_app_wdf_rdy;
+        M_mig_sys_clk_i = sys_clk;
+        M_mig_clk_ref_i = clk_ref;
+        M_mig_sys_rst = sys_rst;
+        sync_rst = M_mig_ui_clk_sync_rst;
+        ui_clk = M_mig_ui_clk;
+    end
+
+endmodule

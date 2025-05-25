@@ -1,0 +1,258 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 02/23/2025 09:09:58 PM
+// Design Name: 
+// Module Name: ft600_fifo
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ft600_fifo(
+    // Inouts
+    inout logic [15:0] ftdi_data_io,
+    inout logic [1:0] ftdi_be_io,
+
+    // Inputs
+     input           clk_i
+    ,input           ft_clk_i
+    ,input           rst_i
+    ,input           ftdi_rxf_i
+    ,input           ftdi_txe_i
+    ,input           inport_wr_en_i
+    ,input  [ 35:0]  inport_data_i
+    ,input           outport_rd_en_i
+
+    // Outputs
+    ,output logic         ftdi_wrn_o
+    ,output logic         ftdi_rdn_o
+    ,output logic         ftdi_oen_o
+    ,output logic         inport_full_o
+    ,output logic         outport_empty_o
+    ,output logic [ 31:0]  outport_data_o
+);
+
+logic inport_rd_en;
+logic [35:0] inport_dout;
+logic inport_empty;
+logic inport_full;
+logic [10:0] rd_data_count;
+
+fifo_async_36x512 tx_fifo(
+  .rst(rst_i),
+  .wr_clk(clk_i),
+  .rd_clk(ft_clk_i),
+  .din(inport_data_i),
+  .wr_en(inport_wr_en_i),
+  .rd_en(inport_rd_en),
+  .dout(inport_dout),
+  .full(inport_full),
+  .empty(inport_empty),
+  .wr_rst_busy(),
+  .rd_rst_busy(),
+  .rd_data_count(rd_data_count)
+);
+
+// the state machine starts in INIT.  While in INIT state, it will
+// check whether ft_rxf is asserted low.  If so, it will assert oe
+// low and transition to DRAIN state to clear out anything in RX
+// lingering from pre-reset.
+//
+// from DRAIN, it will read and discard data until ft_rxf is
+// no longer asserted, and then transit to IDLE.  The point of
+// draining all RX data on restart, is to achive packet-boundary
+// sync on RX.  It is only possible to be sure of a packet boundary
+// on a transition from ft_rxf unasserted to asserted, so pulling
+// and discarding data until ft_rxf deasserts ensures that the next
+// assertion of ft_rxf is the beginning of a packet.
+//
+// from IDLE, TX data has priority.  So if there is data in the TX
+// fifo and the FT600 is ready to send, it will transition to
+// TX_LOW_START.
+//
+// From TX_LOW_START, it will write the low half of the entry,
+// and then transition to TX_HIGH_START.  The difference from
+// TX_LOW is that it does not check the packet counter yet.
+//
+// From TX_HIGH_START, it will write the high half of the entry,
+// hit rd_en on the FIFO to pop the entry, and then transition 
+// to TX_LOW_START.  The difference from TX_HIGH is it does not
+// decrement the packet counter yet.
+//
+// From TX_LOW, it will check if the packet counter is 0, and
+// if so, transit to IDLE.
+// Otherwise, it will write the low half of the entry and transition
+// to TX_HIGH.
+//
+// From TX_HIGH, it will write the top half of the entry, hit
+// rd_en on the FIFO to pop the entry, decrement the packet
+// counter, and transit to TX_LOW.
+
+// If, while IDLE, and there either is no TX data, or the FT600
+// is not ready for TX, then it will check if the FT600 has data
+// to receive.  If there is data to receive, and room in the
+// RX fifo, it will assert oe low (to begin the FT data bus
+// turnaround), and transition to RX_LOW_START.
+//
+// From RX_LOW_START, it will assert ft_rd low, read the low
+// half of the first entry (which is also the entry count),
+// and transition to RX_HIGH_START.  It stores the entry count
+// (which counts the number of subsequent entries) to be decremented
+// in RX_HIGH state until zero, which will flag the end of the packet.
+//
+// From RX_HIGH_START, it reads the top half of the first entry,
+// and pushes the first entry onto the RX fifo with sideband bits
+// of 0001 (to indicate start of message), and transits to RX_LOW.
+//
+// From RX_LOW, it checks that ft_rxf is still asserted low.  If not.
+// it transitions to IDLE.  If there is still RX to consume, and
+// space in the RX fifo, it will read the low half of the next entry,
+// decrements the event count, and transitions to RX_HIGH.
+//
+// from RX_HIGH, it reads the top half of the next entry, pushes
+// the entry onto the RX fifo with sideband bits of 0000 (to indicate
+// continuing message data).  If the event count is zero, it
+// transitions to IDLE.  Otherwise it transitions to RX_LOW.
+
+typedef enum {INIT, DRAIN, IDLE, TX_LOW_START, TX_HIGH_START, TX_LOW, TX_HIGH, RX_LOW_START, RX_HIGH_START, RX_LOW, RX_HIGH, PRE_IDLE, PRE_IDLE2} ft600sm;
+
+ft600sm ft_state_d, ft_state_q = INIT;
+logic tx_empty_d, tx_empty_q = 1'h0;
+logic rx_full_d, rx_full_q = 1'h0;
+logic [15:0] data_out;
+logic [8:0] payload_counter_d, payload_counter_q = 0;
+
+always @* begin
+    ft_state_d = ft_state_q;
+    tx_empty_d = ftdi_txe_i;
+    rx_full_d = ftdi_rxf_i;
+    payload_counter_d = payload_counter_q;
+    inport_full_o = inport_full;
+
+    ftdi_oen_o = 1;
+    ftdi_rdn_o = 1;
+    ftdi_wrn_o = 0;
+    inport_rd_en = 0;
+    data_out = 16'h0000;
+
+    case (ft_state_q)
+    INIT: begin
+        if (rx_full_q) begin
+            ft_state_d = IDLE;
+        end else begin
+            ft_state_d = DRAIN;
+            ftdi_oen_o = 0;
+        end
+    end
+    DRAIN: begin
+        if (rx_full_q) begin
+            // done draining
+            ft_state_d = IDLE;
+        end else begin
+            //discard data, keep draining
+            ftdi_oen_o = 0;
+            ftdi_rdn_o = 0;
+        end
+    end
+    PRE_IDLE: begin
+        ft_state_d = PRE_IDLE2;
+    end
+    PRE_IDLE2: begin
+        ft_state_d = IDLE;
+    end
+    IDLE: begin
+        // if (!inport_empty && !inport_dout[35]) begin
+        //     // inport is not empty, but the front word is not a message header (flagged
+        //     // with a 1 in bit 35 instead of 0).  Drain that word (and keep draining) until
+        //     // empty or until the front word is a message header.
+        //     inport_rd_en = 1;
+        // end else 
+        begin
+            // the first message dword in the fifo has the dword count of the subsequent
+            // payload in the bottom 8 bits.  So if the fifo data count is GREATER than that
+            // (because the data count also includes the header dword), then the full message
+            // is in the buffer and can be sent without worry of underflow.
+            if (!inport_empty && !tx_empty_q && rd_data_count >= {3'b0, inport_dout[7:0]}) begin
+            //if (!inport_empty && !tx_empty_q) begin
+                payload_counter_d = inport_dout[7:0];
+                // default to tx, if tx enabled and tx data ready
+                ft_state_d = TX_LOW_START;
+            end else begin
+                // handle rx when we're ready, currently stay IDLE
+            end
+        end
+    end
+    TX_LOW_START: begin
+        ft_state_d = TX_HIGH_START;
+        data_out = inport_dout[15:0];
+        ftdi_wrn_o = 0;
+    end
+    TX_HIGH_START: begin
+        ft_state_d = TX_LOW;
+        ftdi_wrn_o = 0;
+        data_out = inport_dout[31:16];
+        inport_rd_en = 1;
+    end
+    TX_LOW: begin
+        if (payload_counter_q == 8'h00) begin
+            // new message beginning, enforce IDLE gap
+            ft_state_d = PRE_IDLE;
+        end else begin
+            ft_state_d = TX_HIGH;
+            data_out = inport_dout[15:0];
+            ftdi_wrn_o = 0;
+        end
+    end
+    TX_HIGH: begin
+        payload_counter_d = payload_counter_q - 1;
+        ft_state_d = TX_LOW;
+        ftdi_wrn_o = 0;
+        data_out = inport_dout[31:16];
+        inport_rd_en = 1;
+    end
+    RX_LOW_START:
+        ft_state_d = IDLE; // TODO
+    RX_HIGH_START:
+        ft_state_d = IDLE; // TODO
+    RX_LOW:
+        ft_state_d = IDLE; // TODO
+    RX_HIGH:
+        ft_state_d = IDLE; // TODO
+    default: begin
+        // move to INIT state on bad state
+        ft_state_d = INIT;
+    end
+    endcase
+end
+
+assign ftdi_data_io = ftdi_wrn_o ? 16'hzzzz : data_out;
+assign ftdi_be_io = ftdi_wrn_o ? 2'bzz : 2'b11;
+
+// flip flop transitions
+always @(posedge ft_clk_i) begin
+    if (rst_i) begin
+        ft_state_q <= INIT;
+        tx_empty_q <= 1;
+        rx_full_q <= 1;
+        payload_counter_q <= 8'h00;
+    end else begin
+        ft_state_q <= ft_state_d;
+        tx_empty_q <= tx_empty_d;
+        rx_full_q <= rx_full_d;
+        payload_counter_q = payload_counter_d;
+    end
+end
+
+endmodule
