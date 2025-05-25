@@ -179,8 +179,8 @@ mockingboard mb1(
 );
 
 logic nsc_enabled = 1;
-globals::NSC_time nsc_input_time = 0;
-logic nsc_input_time_en = 0;
+globals::NSC_time nsc_input_time;
+logic nsc_input_time_en;
 globals::AppleBus_write nsc_ab_write;
 logic [7:0] knock_max;
 
@@ -267,7 +267,9 @@ top_utility_handler (
     .reg_read(top_utility_reg_read),
     .tx_client(top_utility_tx_client),
     .led(led_reg_led),
-    .watchdog_fired(watchdog_fired)
+    .watchdog_fired(watchdog_fired),
+    .nsc_time(nsc_input_time),
+    .nsc_time_en(nsc_input_time_en)
 );
 
 
@@ -286,6 +288,7 @@ tini_bus(
     .ft600_rx_data_empty(ft600_rx_data_empty)
 );
 
-assign led = {8{watchdog_fired}}; //led_reg_led;
+assign led[3:0] = nsc_input_time.second_lo; //led_reg_led;
+assign led[7:4] = nsc_input_time.second_hi;
 
 endmodule

@@ -27,7 +27,9 @@ module top_utility_regs #(parameter ADDR_BASE = 0, VERSION = 0) (
     output globals::RegOpRead reg_read,
     TxRequest.client tx_client,
     output logic [7:0] led,
-    output logic watchdog_fired
+    output logic watchdog_fired,
+    output globals::NSC_time nsc_time,
+    output logic nsc_time_en
     );
 
 logic [7:0] led_d, led_q = 0;
@@ -37,6 +39,8 @@ logic [7:0] host_read_len_d, host_read_len_q = 0;
 logic host_read_incr_d, host_read_incr_q = 0;
 logic watchdog_enabled_d, watchdog_enabled_q = 0;
 logic host_read_ready_d, host_read_ready_q = 0;
+globals::NSC_time nsc_time_d, nsc_time_q = 0;
+logic nsc_time_ready_d, nsc_time_ready_q = 0;
 
 always_comb begin
     reg_read.rd_data = 32'h0;
@@ -45,6 +49,8 @@ always_comb begin
     watchdog_enabled_d = watchdog_enabled_q;
     host_read_ready_d = host_read_ready_q;
     watchdog_d = watchdog_q;
+    nsc_time_d = nsc_time_q;
+    nsc_time_ready_d = nsc_time_ready_q;
     led = led_q;
     watchdog_fired = 1;
     if (!watchdog_enabled_q) begin
@@ -61,6 +67,9 @@ always_comb begin
     tx_client.length = 0;
     tx_client.addr_incr = 0;
     tx_client.tx_request = 0;
+    nsc_time = nsc_time_q;
+    nsc_time_en = nsc_time_ready_q;
+    nsc_time_ready_d = 0;
 
     if (reg_write.new_cmd) begin
         case (reg_write.address)
@@ -69,7 +78,7 @@ always_comb begin
             reg_read.rd_data = VERSION;
             reg_read.rd_ready = 1;
         end
-        ADDR_BASE+4: begin
+        ADDR_BASE+'h4: begin
             // led
             reg_read.rd_data = led_q;
             reg_read.rd_ready = 1;
@@ -77,7 +86,7 @@ always_comb begin
                 led_d = reg_write.wr_data[7:0];
             end
         end
-        ADDR_BASE+8: begin
+        ADDR_BASE+'h8: begin
             reg_read.rd_data = watchdog_q;
             reg_read.rd_ready = 1;
             if (reg_write.is_write) begin
@@ -90,7 +99,7 @@ always_comb begin
                 end
             end
         end
-        ADDR_BASE+12: begin
+        ADDR_BASE+'hc: begin
             reg_read.rd_data = {host_read_incr_q, 23'b0, host_read_len_q};
             reg_read.rd_ready = 1;
             if (reg_write.is_write) begin
@@ -98,12 +107,41 @@ always_comb begin
                 host_read_incr_d = reg_write.wr_data[31];
             end
         end
-        ADDR_BASE+16: begin
+        ADDR_BASE+'h10: begin
             reg_read.rd_data = host_read_addr_q;
             reg_read.rd_ready = 1;
             if (reg_write.is_write) begin
                 host_read_addr_d = reg_write.wr_data;
                 host_read_ready_d = 1;
+            end
+        end
+        ADDR_BASE+'h14: begin
+            reg_read.rd_data = 0;
+            reg_read.rd_ready = 1; // TODO: make this read-back
+            if (reg_write.is_write) begin
+                nsc_time_d.centisecond_lo = reg_write.wr_data[3:0];
+                nsc_time_d.centisecond_hi = reg_write.wr_data[7:4];
+                nsc_time_d.second_lo = reg_write.wr_data[11:8];
+                nsc_time_d.second_hi = reg_write.wr_data[15:12];
+                nsc_time_d.minute_lo = reg_write.wr_data[19:16];
+                nsc_time_d.minute_hi = reg_write.wr_data[23:20];
+                nsc_time_d.hour_lo = reg_write.wr_data[27:24];
+                nsc_time_d.hour_hi = reg_write.wr_data[31:28];
+            end
+        end
+        ADDR_BASE+'h18: begin
+            reg_read.rd_data = 0;
+            reg_read.rd_ready = 1; // TODO: make this read-back
+            if (reg_write.is_write) begin
+                nsc_time_d.day_of_week_lo = reg_write.wr_data[3:0];
+                nsc_time_d.day_of_week_hi = reg_write.wr_data[7:4];
+                nsc_time_d.day_lo = reg_write.wr_data[11:8];
+                nsc_time_d.day_hi = reg_write.wr_data[15:12];
+                nsc_time_d.month_lo = reg_write.wr_data[19:16];
+                nsc_time_d.month_hi = reg_write.wr_data[23:20];
+                nsc_time_d.year_lo = reg_write.wr_data[27:24];
+                nsc_time_d.year_hi = reg_write.wr_data[31:28];
+                nsc_time_ready_d = 1;
             end
         end
         endcase
@@ -128,6 +166,8 @@ always_ff @(posedge clk) begin
         host_read_addr_q <= 0;
         host_read_len_q <= 0;
         host_read_incr_q <= 0;
+        nsc_time_q <= 0;
+        nsc_time_ready_q <= 0;
     end else begin
         host_read_ready_q <= host_read_ready_d;
         led_q <= led_d;
@@ -136,6 +176,8 @@ always_ff @(posedge clk) begin
         host_read_addr_q <= host_read_addr_d;
         host_read_len_q <= host_read_len_d;
         host_read_incr_q <= host_read_incr_d;
+        nsc_time_q <= nsc_time_d;
+        nsc_time_ready_q <= nsc_time_ready_d;
     end
 end
 
