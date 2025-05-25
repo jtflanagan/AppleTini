@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="ft600_arbiter_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="ft600_arbiter_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="188.610 ns"></ZoomEndTime>
+      <Cursor1Time time="62.136 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="404"></NameColumnWidth>
+      <ValueColumnWidth column_width="166"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/inport_full" type="logic">
+      <obj_property name="ElementShortName">inport_full</obj_property>
+      <obj_property name="ObjectShortName">inport_full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/inport_data" type="array">
+      <obj_property name="ElementShortName">inport_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">inport_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/inport_wr_en" type="logic">
+      <obj_property name="ElementShortName">inport_wr_en</obj_property>
+      <obj_property name="ObjectShortName">inport_wr_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/current_client_d" type="array">
+      <obj_property name="ElementShortName">current_client_d[1:0]</obj_property>
+      <obj_property name="ObjectShortName">current_client_d[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/current_client_q" type="array">
+      <obj_property name="ElementShortName">current_client_q[1:0]</obj_property>
+      <obj_property name="ObjectShortName">current_client_q[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/client_msg_ready" type="array">
+      <obj_property name="ElementShortName">client_msg_ready[1:0]</obj_property>
+      <obj_property name="ObjectShortName">client_msg_ready[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/client_msg_end" type="array">
+      <obj_property name="ElementShortName">client_msg_end[1:0]</obj_property>
+      <obj_property name="ObjectShortName">client_msg_end[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/client_msg" type="array">
+      <obj_property name="ElementShortName">client_msg[1:0][31:0]</obj_property>
+      <obj_property name="ObjectShortName">client_msg[1:0][31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/ft600_arb/NUM_CLIENTS" type="array">
+      <obj_property name="ElementShortName">NUM_CLIENTS[31:0]</obj_property>
+      <obj_property name="ObjectShortName">NUM_CLIENTS[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/msg1/msg" type="array">
+      <obj_property name="ElementShortName">msg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">msg[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/msg1/msg_ready" type="logic">
+      <obj_property name="ElementShortName">msg_ready</obj_property>
+      <obj_property name="ObjectShortName">msg_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/msg1/msg_rd_en" type="logic">
+      <obj_property name="ElementShortName">msg_rd_en</obj_property>
+      <obj_property name="ObjectShortName">msg_rd_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/msg2/msg" type="array">
+      <obj_property name="ElementShortName">msg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">msg[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/msg2/msg_ready" type="logic">
+      <obj_property name="ElementShortName">msg_ready</obj_property>
+      <obj_property name="ObjectShortName">msg_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ft600_arbiter_tb/msg2/msg_rd_en" type="logic">
+      <obj_property name="ElementShortName">msg_rd_en</obj_property>
+      <obj_property name="ObjectShortName">msg_rd_en</obj_property>
+   </wvobject>
+</wave_config>
