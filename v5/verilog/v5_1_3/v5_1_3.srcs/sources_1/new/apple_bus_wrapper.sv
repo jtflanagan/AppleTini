@@ -28,17 +28,13 @@ module apple_bus_wrapper(
     inout apple_rw_pin,
     input apple_phi0_pin,
     input apple_m2sel_pin,
-    input apple_q3_pin,
-    input apple_7m_pin,
     input apple_m2b0_pin,
     inout apple_inh_pin,
     inout apple_res_pin,
     inout apple_irq_pin,
     inout apple_rdy_pin,
-    inout apple_nmi_pin,
     inout apple_dma_pin,
     output reg tini_oe_pin,
-    output reg tini_oe_bar_pin,
     input tini_5v_pin,
     output reg tini_addr_dir_pin,
     output reg tini_data_dir_pin,
@@ -48,7 +44,7 @@ module apple_bus_wrapper(
 
 logic [7:0] data_clean;
 logic [15:0] addr_clean;
-logic [11:0] misc_clean;
+logic [8:0] misc_clean;
 
 synchronizer #(.WIDTH(8))
 data_clean_sync(
@@ -66,13 +62,13 @@ addr_clean_sync(
     .out(addr_clean)
 );
 
-synchronizer #(.WIDTH(12))
+synchronizer #(.WIDTH(9))
 misc_clean_sync(
     .clk(clk),
     .rst(rst),
-    .in({apple_rw_pin, apple_phi0_pin, apple_m2sel_pin, apple_q3_pin,
-        apple_7m_pin, apple_m2b0_pin, apple_inh_pin, apple_res_pin,
-        apple_irq_pin, apple_rdy_pin, apple_nmi_pin, apple_dma_pin}),
+    .in({apple_rw_pin, apple_phi0_pin, apple_m2sel_pin,
+        apple_m2b0_pin, apple_inh_pin, apple_res_pin,
+        apple_irq_pin, apple_rdy_pin, apple_dma_pin}),
     .out(misc_clean)
 );
 
@@ -123,20 +119,18 @@ always @* begin
     addr_edge = 0;
     data_edge = 0;
     if (tini_5v_pin) begin
-        tini_oe_pin = 1'b0;
-        tini_oe_bar_pin = 1'b1;
+        tini_oe_pin = 1'b1;
     end
     else begin
-        tini_oe_pin = 1'b1;
-        tini_oe_bar_pin = 1'b0;
+        tini_oe_pin = 1'b0;
     end
     tini_addr_dir_pin = 1'b0;
 
-    if (misc_clean[10] == 1 && prev_phi0_q == 0) begin
+    if (misc_clean[7] == 1 && prev_phi0_q == 0) begin
         data_edge = 1;
         prev_phi0_d = 1;
     end else begin
-        if (misc_clean[10] == 0 && prev_phi0_q == 1) begin
+        if (misc_clean[7] == 0 && prev_phi0_q == 1) begin
             addr_edge = 1;
             prev_phi0_d = 0;
         end
@@ -157,22 +151,19 @@ always @* begin
     ab_read_d.addr_en = 0;
     ab_read_d.data_en = 0;
     ab_read_d.sss_en = 0;
-    
+
     // always resnap the clocks
-    ab_read_d.phi0 = misc_clean[10];
-    ab_read_d.q3 = misc_clean[8];
-    ab_read_d.m7m = misc_clean[7];
+    ab_read_d.phi0 = misc_clean[7];
     if (addr_phase_snap_bus) begin
         // resnap addr/misc signals
         ab_read_d.addr = addr_clean;
-        ab_read_d.rw = misc_clean[11];
-        ab_read_d.m2sel = misc_clean[9];
-        ab_read_d.m2b0 = misc_clean[6];
-        ab_read_d.inh = misc_clean[5];
-        ab_read_d.res = misc_clean[4];
-        ab_read_d.irq = misc_clean[3];
-        ab_read_d.rdy = misc_clean[2];
-        ab_read_d.nmi = misc_clean[1];
+        ab_read_d.rw = misc_clean[8];
+        ab_read_d.m2sel = misc_clean[6];
+        ab_read_d.m2b0 = misc_clean[5];
+        ab_read_d.inh = misc_clean[4];
+        ab_read_d.res = misc_clean[3];
+        ab_read_d.irq = misc_clean[2];
+        ab_read_d.rdy = misc_clean[1];
         ab_read_d.dma = misc_clean[0];
         ab_read_d.addr_en = 1;
     end else if (addr_phase_sss_ready) begin

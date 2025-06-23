@@ -47,11 +47,13 @@ module au_top(
     input ft_clk,
     input ft_rxf,
     input ft_txe,
-    inout [15:0] ft_data,
-    inout [1:0] ft_be,
+    inout [31:0] ft_data,
+    inout [3:0] ft_be,
     output reg ft_rd,
     output reg ft_wr,
     output reg ft_oe,
+    output reg ft_wakeup,
+    output reg ft_reset,
 
     /* Tini Connections */
     inout [7:0] apple_data_pin,
@@ -59,17 +61,13 @@ module au_top(
     inout apple_rw_pin,
     input apple_phi0_pin,
     input apple_m2sel_pin,
-    input apple_q3_pin,
-    input apple_7m_pin,
     input apple_m2b0_pin,
     inout apple_inh_pin,
     inout apple_res_pin,
     inout apple_irq_pin,
     inout apple_rdy_pin,
-    inout apple_nmi_pin,
     inout apple_dma_pin,
     output reg tini_oe_pin,
-    output reg tini_oe_bar_pin,
     input tini_5v_pin,
     output reg tini_addr_dir_pin,
     output reg tini_data_dir_pin
@@ -138,18 +136,14 @@ apple_bus_wrapper abus(
     .apple_rw_pin(apple_rw_pin),
     .apple_phi0_pin(apple_phi0_pin),
     .apple_m2sel_pin(apple_m2sel_pin),
-    .apple_q3_pin(apple_q3_pin),
-    .apple_7m_pin(apple_7m_pin),
     .apple_m2b0_pin(apple_m2b0_pin),
     .apple_inh_pin(apple_inh_pin),
     .apple_res_pin(apple_res_pin),
     .apple_irq_pin(apple_irq_pin),
     .apple_rdy_pin(apple_rdy_pin),
-    .apple_nmi_pin(apple_nmi_pin),
     .apple_dma_pin(apple_dma_pin),
     .tini_5v_pin(tini_5v_pin),
     .tini_oe_pin(tini_oe_pin),
-    .tini_oe_bar_pin(tini_oe_bar_pin),
     .tini_addr_dir_pin(tini_addr_dir_pin),
     .tini_data_dir_pin(tini_data_dir_pin),
     .ab_read(ab_read),
@@ -213,12 +207,12 @@ bus_event_manager bus_event_mgr(
     .tx_client(bus_event_tx_client)
 );
 
-logic ft600_tx_data_en;
-logic [31:0] ft600_tx_data;
-logic ft600_tx_data_full;
-logic ft600_rx_data_en;
-logic [31:0] ft600_rx_data;
-logic ft600_rx_data_empty;
+(* MARK_DEBUG = "TRUE" *) logic ft600_tx_data_en;
+(* MARK_DEBUG = "TRUE" *) logic [31:0] ft600_tx_data;
+(* MARK_DEBUG = "TRUE" *) logic ft600_tx_data_full;
+(* MARK_DEBUG = "TRUE" *) logic ft600_rx_data_en;
+(* MARK_DEBUG = "TRUE" *) logic [31:0] ft600_rx_data;
+(* MARK_DEBUG = "TRUE" *) logic ft600_rx_data_empty;
 
 ft600_fifo ft600(
     .clk(mig_ui_clk),
@@ -233,6 +227,8 @@ ft600_fifo ft600(
     .ftdi_wr_n(ft_wr),
     .ftdi_rd_n(ft_rd),
     .ftdi_oe_n(ft_oe),
+    .ftdi_wakeup(ft_wakeup),
+    .ftdi_reset(ft_reset),
 
     // fifo interface
     .tx_data_en(ft600_tx_data_en),
@@ -251,6 +247,7 @@ blinker blink(
     .clk(mig_ui_clk),
     .rst(mig_sync_rst),
     .counted_event(ab_read.data_en),
+    //.counted_event(1),
     .blink(blink_out)
 );
 
@@ -288,7 +285,30 @@ tini_bus(
     .ft600_rx_data_empty(ft600_rx_data_empty)
 );
 
-assign led[3:0] = nsc_input_time.second_lo; //led_reg_led;
-assign led[7:4] = nsc_input_time.second_hi;
+//assign led[7:0] = {8{tini_5v_pin}};
+assign led = led_reg_led;
+//assign led[7:0] = {8{blink_out}};
+//assign led[3:0] = nsc_input_time.second_lo; //led_reg_led;
+//assign led[7:4] = nsc_input_time.second_hi;
+
+ila_0 ila(
+    .clk(clk_out1),
+    .probe0(ft600.tx_data),
+    .probe1(ft600.tx_fifo_dout),
+    .probe2(ft600.tx_fifo_rd_en),
+    .probe3(ft600.tx_data_en),
+    .probe4(ft600.tx_data_full),
+    .probe5(ft600.tx_fifo_empty),
+    .probe6(ft_txe),
+    .probe7(ft_rxf),
+    .probe8(ft_rd),
+    .probe9(ft_wr),
+    .probe10(ft_oe),
+    .probe11(ft600.wr_rst_busy),
+    .probe12(ft600.rd_rst_busy),
+    .probe13(0),
+    .probe14(0),
+    .probe15(ft600.ft_state_q)
+);
 
 endmodule

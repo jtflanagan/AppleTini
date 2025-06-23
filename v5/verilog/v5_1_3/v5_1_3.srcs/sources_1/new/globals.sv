@@ -43,14 +43,11 @@ package globals;
         logic rw;
         logic phi0;
         logic m2sel;
-        logic q3;
-        logic m7m;
         logic m2b0;
         logic inh;
         logic res;
         logic irq;
         logic rdy;
-        logic nmi;
         logic dma;
         logic data_en; // 1 in the phase that data field update
         logic addr_en; // 1 in the phase that addr/rw field updates
