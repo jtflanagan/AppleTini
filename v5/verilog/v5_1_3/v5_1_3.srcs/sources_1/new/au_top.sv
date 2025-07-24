@@ -159,9 +159,22 @@ soft_switch_manager ssm(
     .sss(sss)
 );
 
+logic[15:0] vbl_cycle;
+logic vbl_is_60hz;
+logic is_vbl;
+
+vbl_manager vblm(
+    .clk(mig_ui_clk),
+    .rst(mig_sync_rst),
+    .ab_read(ab_read),
+    .vbl_cycle(vbl_cycle),
+    .vbl_is_60hz(vbl_is_60hz),
+    .is_vbl(is_vbl)
+);
+
 globals::AppleBus_write mb1_ab_write;
 // hardcode the slot assignment for now
-logic [2:0] mb1_slot_assign = 3'h4;
+logic [2:0] mb1_slot_assign = 3'h5;
 
 mockingboard mb1(
     .clk(mig_ui_clk),
@@ -171,6 +184,25 @@ mockingboard mb1(
     .ab_read(ab_read),
     .ab_write(mb1_ab_write)
 );
+
+globals::AppleBus_write mouse_ab_write;
+logic [2:0] mouse_slot_assign = 3'h4;
+TxRequest mouse_tx_client();
+logic [7:0] mouse_debug_led;
+
+mouse_driver mouse_driver(
+    .clk(mig_ui_clk),
+    .rst(mig_sync_rst),
+    .slot_assign(mouse_slot_assign),
+    .sss(sss),
+    .ab_read(ab_read),
+    .is_vbl(is_vbl),
+    .ab_write(mouse_ab_write),
+    .tx_client(mouse_tx_client),
+    .debug_led(mouse_debug_led)
+);
+
+
 
 logic nsc_enabled = 1;
 globals::NSC_time nsc_input_time;
@@ -189,9 +221,9 @@ no_slot_clock nsc(
     .ab_write(nsc_ab_write)
 );
 
-apple_bus_write_arbiter #(.NUM_CLIENTS(2)) 
+apple_bus_write_arbiter #(.NUM_CLIENTS(3)) 
 ab_write_arb(
-    .client_writes({nsc_ab_write, mb1_ab_write}),
+    .client_writes({nsc_ab_write, mb1_ab_write, mouse_ab_write}),
     .ab_write(ab_write)
 );
 
@@ -270,13 +302,13 @@ top_utility_handler (
 );
 
 
-tini_bus_arbiter #(.NUM_REG_CLIENTS(2),.NUM_TX_CLIENTS(2))
+tini_bus_arbiter #(.NUM_REG_CLIENTS(2),.NUM_TX_CLIENTS(3))
 tini_bus(
     .clk(mig_ui_clk),
     .rst(mig_sync_rst),
     .reg_write(reg_write),
     .reg_read_clients({bus_event_reg_read, top_utility_reg_read}),
-    .tx_clients({bus_event_tx_client, top_utility_tx_client}),
+    .tx_clients({bus_event_tx_client, top_utility_tx_client, mouse_tx_client}),
     .ft600_tx_data_en(ft600_tx_data_en),
     .ft600_tx_data(ft600_tx_data),
     .ft600_tx_data_full(ft600_tx_data_full),
@@ -286,7 +318,8 @@ tini_bus(
 );
 
 //assign led[7:0] = {8{tini_5v_pin}};
-assign led = led_reg_led;
+//assign led = led_reg_led;
+assign led = mouse_debug_led;
 //assign led[7:0] = {8{blink_out}};
 //assign led[3:0] = nsc_input_time.second_lo; //led_reg_led;
 //assign led[7:4] = nsc_input_time.second_hi;

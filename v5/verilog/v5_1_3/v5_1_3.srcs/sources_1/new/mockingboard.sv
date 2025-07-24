@@ -31,7 +31,6 @@ module mockingboard(
 
 globals::AppleBus_write ab_write_d, ab_write_q = 0;
 
-logic [2:0] slot_assign_d, slot_assign_q = 0;
 
 logic via0_strobe;
 logic via1_strobe;
@@ -113,11 +112,9 @@ assign ab_write = ab_write_q;
 
 always_comb begin
     ab_write_d = ab_write_q;
-    slot_assign_d = slot_assign_q;
     via0_strobe = 0;
     via1_strobe = 0;
     via_slow_clock = 0;
-    if (slot_assign)
     if (slot_assign != 0) begin
         //ab_write_d.assert_irq = 1;
         ab_write_d.assert_irq = via0_irq | via1_irq;
